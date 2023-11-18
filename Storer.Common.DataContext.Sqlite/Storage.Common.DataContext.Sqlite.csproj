@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Storer.CommonEntityModels.Sqlite\Northwind.Common.EntityModels.Sqlite.csproj" />
+    <ProjectReference Include="../Storer.CommonEntityModels.Sqlite/Storer.CommonEntityModels.Sqlite.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,5 +7,5 @@ build_property.InvariantGlobalization =
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
-build_property.RootNamespace = Storer.CommonEntityModels.Sqlite
-build_property.ProjectDir = C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.CommonEntityModels.Sqlite\
+build_property.RootNamespace = Storage.Common.DataContext.Sqlite
+build_property.ProjectDir = C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Common.DataContext.Sqlite\

@@ -118,19 +118,19 @@ public partial class bd_storage : DbContext
             entity.Property(e => e.GroupId).ValueGeneratedNever();
         });
 
-        modelBuilder.Entity<Mantein>(entity =>
+        modelBuilder.Entity<Maintain>(entity =>
         {
-            entity.Property(e => e.ManteinId).ValueGeneratedNever();
+            entity.Property(e => e.MaintainId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<MaintenanceRegister>(entity =>
         {
-            entity.Property(e => e.MantenanceRegisterId).ValueGeneratedNever();
+            entity.Property(e => e.MaintenanceId).ValueGeneratedNever();
         });
 
-        modelBuilder.Entity<MaintenaceType>(entity =>
+        modelBuilder.Entity<MaintenanceType>(entity =>
         {
-            entity.Property(e => e.MaintenaceTypeId).ValueGeneratedNever();
+            entity.Property(e => e.MaintenanceTypeId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Petition>(entity =>
@@ -140,7 +140,7 @@ public partial class bd_storage : DbContext
 
         modelBuilder.Entity<PetitionDetail>(entity =>
         {
-            entity.Property(e => e.PetitionDetailId).ValueGeneratedNever();
+            entity.Property(e => e.PetitionDetailsId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Professor>(entity =>
@@ -153,9 +153,9 @@ public partial class bd_storage : DbContext
             entity.Property(e => e.RequestId).ValueGeneratedNever();
         });
 
-        modelBuilder.Entity<RquestDetails>(entity =>
+        modelBuilder.Entity<RequestDetail>(entity =>
         {
-            entity.Property(e => e.RequestDetailId).ValueGeneratedNever();
+            entity.Property(e => e.RequestDetailsId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Schedule>(entity =>
@@ -170,7 +170,7 @@ public partial class bd_storage : DbContext
 
         modelBuilder.Entity<Student>(entity =>
         {
-            entity.Property(e => e.StudenttId).ValueGeneratedNever();
+            entity.Property(e => e.StudentId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Subject>(entity =>

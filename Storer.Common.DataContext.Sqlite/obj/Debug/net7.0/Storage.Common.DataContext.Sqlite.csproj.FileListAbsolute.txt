@@ -1,0 +1,15 @@
+C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.csproj.AssemblyReference.cache
+C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.AssemblyInfoInputs.cache
+C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.AssemblyInfo.cs
+C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.csproj.CoreCompileInputs.cache
+C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Common.DataContext.Sqlite\bin\Debug\net7.0\Storage.Common.DataContext.Sqlite.deps.json
+C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Common.DataContext.Sqlite\bin\Debug\net7.0\Storage.Common.DataContext.Sqlite.dll
+C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Common.DataContext.Sqlite\bin\Debug\net7.0\Storage.Common.DataContext.Sqlite.pdb
+C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Common.DataContext.Sqlite\bin\Debug\net7.0\Storer.CommonEntityModels.Sqlite.dll
+C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Common.DataContext.Sqlite\bin\Debug\net7.0\Storer.CommonEntityModels.Sqlite.pdb
+C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.csproj.CopyComplete
+C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.dll
+C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\refint\Storage.Common.DataContext.Sqlite.dll
+C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.pdb
+C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\ref\Storage.Common.DataContext.Sqlite.dll

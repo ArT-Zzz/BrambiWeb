@@ -1265,24 +1265,31 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Samantha\\.nuget\\packages\\": {}
+    "C:\\Users\\artug\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\Storer.CommonEntityModels.Sqlite\\Storer.CommonEntityModels.Sqlite.csproj",
+      "projectUniqueName": "C:\\Users\\artug\\Desktop\\Practicas_ProgramacionAvanzada\\ProyectoFinalWeb\\Storer.CommonEntityModels.Sqlite\\Storer.CommonEntityModels.Sqlite.csproj",
       "projectName": "Storer.CommonEntityModels.Sqlite",
-      "projectPath": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\Storer.CommonEntityModels.Sqlite\\Storer.CommonEntityModels.Sqlite.csproj",
-      "packagesPath": "C:\\Users\\Samantha\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\Storer.CommonEntityModels.Sqlite\\obj\\",
+      "projectPath": "C:\\Users\\artug\\Desktop\\Practicas_ProgramacionAvanzada\\ProyectoFinalWeb\\Storer.CommonEntityModels.Sqlite\\Storer.CommonEntityModels.Sqlite.csproj",
+      "packagesPath": "C:\\Users\\artug\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\artug\\Desktop\\Practicas_ProgramacionAvanzada\\ProyectoFinalWeb\\Storer.CommonEntityModels.Sqlite\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Samantha\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\artug\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
