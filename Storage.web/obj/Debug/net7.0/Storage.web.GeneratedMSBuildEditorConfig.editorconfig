@@ -16,6 +16,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/AddEquipments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkRXF1aXBtZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -30,6 +34,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/UpdateEquipments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXBkYXRlRXF1aXBtZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/ViewAllEquipments.cshtml]

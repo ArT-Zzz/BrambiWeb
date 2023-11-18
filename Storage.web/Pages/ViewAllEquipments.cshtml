@@ -49,7 +49,6 @@
                 int batchS = 20;
                 int pages = countTotal / batchS;
                 if(countTotal%batchS != 0){pages+=1;}
-                int pp=1;
                 var equips = equipments.Skip(offset).Take(batchS);
                     Console.WriteLine("| {0,-15} | {1,-80} | {2,7} | {3,-22} |",
                         "EquipmentId", "Equipment Name", "Year", "Status");
@@ -68,6 +67,24 @@
         }
     }
 }
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/AddEquipments">Add Equipment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/UpdateEquipments">Update Equipments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewAllEquipments">Search for one Equipment</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</nav>
 
 <div class="text-center">
     <h1 class="display-4">@ViewData["Title"]</h1>
