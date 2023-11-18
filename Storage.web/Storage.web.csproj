@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="../Storer.Common.DataContext.Sqlite/Storage.Common.DataContext.Sqlite.csproj" />    
     <ProjectReference Include="../Storer.CommonEntityModels.Sqlite/Storer.CommonEntityModels.Sqlite.csproj" />
+    <Using Include="System.Console" Static="true" />
   </ItemGroup>
   
 

@@ -1,0 +1,119 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using AutoGens
+@{
+    ViewData["Title"] = "View All Equipments"; // title that will be shown in the page
+}
+@functions
+{
+    public List<Equipment>? AllEquipments { get; set; } //list to store all the 20 fisrt equipments in the bd
+    int Offset = 0; // start count of equipments
+    int TotalEquipments = 0; // total equipments
+    int Pages = 1;
+    public void OnGet(string action) // get all the equipments, the action is to see if th button Next or Previous was pushed
+    {
+        if (action == "Previous" && Offset >= 20)
+        {
+            Model.Offset -= 20; // to start from the last 20 equipments
+            Model.Pages -=1; // show in which page it is
+        }
+        else if (action == "Next" )
+        {
+            Model.Offset += 20; // to start from the next 20 equipments
+            Model.Pages +=1;
+        }
+        var result = ViewAllEquipments(Offset); // calling the method that will consult the bd and bring 20 equipments found, starting from the sent offset
+        Model.AllEquipments = result.EquipmentList; // Model.AllEquipments = 20 equipments
+        Model.Offset = result.Offset; // Model.Offset = when it starts
+        Model.TotalEquipments = result.Total; //Model.TotalEquipments = int how many equipments were found in the whole Equipments Table
+    }
+    // returns the equipments found, in what equipment it starts (offset), and the total of equipments
+    public static (List<Equipment>? EquipmentList,int Offset, int Total) ViewAllEquipments(int Offset) 
+    {
+        using( bd_storage db = new())
+        {
+            IQueryable<Equipment>? equipments = db.Equipments
+            .Include(e => e.Area).Include(e => e.Status).Include(e => e.Coordinator).OrderBy(e=>e.AreaId);
+            
+            int offset = Offset;
+
+            if((equipments is null) || !equipments.Any())
+            {
+                Console.WriteLine("There are no quipments found");
+                return(null, offset, 0);
+            } 
+            else 
+            {
+                int countTotal = equipments.Count();
+                int batchS = 20;
+                int pages = countTotal / batchS;
+                if(countTotal%batchS != 0){pages+=1;}
+                int pp=1;
+                var equips = equipments.Skip(offset).Take(batchS);
+                    Console.WriteLine("| {0,-15} | {1,-80} | {2,7} | {3,-22} |",
+                        "EquipmentId", "Equipment Name", "Year", "Status");
+                    Console.WriteLine("-------------------------------------------------------------------------------------------------------------------------------------");
+                    
+                    foreach( var e in equips)
+                    {
+                        Console.WriteLine("| {0,-15} | {1,-80} | {2,7} | {3,-22} |",
+                         e.EquipmentId, e.Name, e.Year, e.Status?.Value);
+                    }
+                
+                    Console.WriteLine();
+                    List<Equipment>? EquipmentsList = equips.ToList();
+            return (EquipmentsList, offset, equipments.Count());
+            }
+        }
+    }
+}
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+    
+    <h2>Total: @Model.TotalEquipments . Showing: @Model.Pages / @(@Model.TotalEquipments/20)</h2>
+    <form method="get" action="/ViewAllEquipments">
+    <button type="submit" name="action" value="Previous" @if (Model.Offset == 0) { <text>disabled</text> }>Previous</button>
+    <button type="submit" name="action" value="Next" @if (Model.Offset + 20 >= Model.TotalEquipments) { <text>disabled</text> }>Next</button>
+    </form>
+    @{
+    Console.WriteLine($"Offset: {Model.Offset}, TotalEquipments: {Model.TotalEquipments}"); // this is just so you can check
+    }
+    <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Equipment Name</th>
+                    <th>Description</th>
+                    <th>Area</th>
+                    <th>Year</th>
+                    <th>Status</th>
+                    <th>Control Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(Model.AllEquipments != null){
+                    @foreach (var c in Model.AllEquipments)
+                    {
+                        <tr>
+                            <td>@c.EquipmentId</td>
+                            <td>@c.Name</td>
+                            <td>@c.Description</td>
+                            <td>@c.Area?.Name</td>
+                            <td>@c.Year</td>
+                            <td>@c.Status?.Value</td>
+                            <td>@c.ControlNumber</td>
+                        </tr>
+                    }
+                    Console.WriteLine($"Total: {Model.TotalEquipments} . Showing: {Model.Pages} / {Model.TotalEquipments/20}");
+                }
+                else
+                {
+                    <h2>No equipments found in the inventory</h2>
+                    Console.WriteLine("No equipments found in the inventory");
+                }
+            </tbody>
+        </table>
+</div>
+

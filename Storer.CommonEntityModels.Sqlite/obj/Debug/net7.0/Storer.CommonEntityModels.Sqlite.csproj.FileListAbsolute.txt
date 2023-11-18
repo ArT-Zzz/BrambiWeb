@@ -12,3 +12,17 @@ C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.Co
 C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.CommonEntityModels.Sqlite\obj\Debug\net7.0\Storer.CommonEntityModels.Sqlite.pdb
 C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.CommonEntityModels.Sqlite\obj\Debug\net7.0\Storer.CommonEntityModels.Sqlite.genruntimeconfig.cache
 C:\Users\artug\Desktop\Practicas_ProgramacionAvanzada\ProyectoFinalWeb\Storer.CommonEntityModels.Sqlite\obj\Debug\net7.0\ref\Storer.CommonEntityModels.Sqlite.dll
+D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.CommonEntityModels.Sqlite\bin\Debug\net7.0\Storer.CommonEntityModels.Sqlite.deps.json
+D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.CommonEntityModels.Sqlite\bin\Debug\net7.0\Storer.CommonEntityModels.Sqlite.runtimeconfig.json
+D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.CommonEntityModels.Sqlite\bin\Debug\net7.0\Storer.CommonEntityModels.Sqlite.dll
+D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.CommonEntityModels.Sqlite\bin\Debug\net7.0\Storer.CommonEntityModels.Sqlite.pdb
+D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.CommonEntityModels.Sqlite\obj\Debug\net7.0\Storer.CommonEntityModels.Sqlite.csproj.AssemblyReference.cache
+D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.CommonEntityModels.Sqlite\obj\Debug\net7.0\Storer.CommonEntityModels.Sqlite.GeneratedMSBuildEditorConfig.editorconfig
+D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.CommonEntityModels.Sqlite\obj\Debug\net7.0\Storer.CommonEntityModels.Sqlite.AssemblyInfoInputs.cache
+D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.CommonEntityModels.Sqlite\obj\Debug\net7.0\Storer.CommonEntityModels.Sqlite.AssemblyInfo.cs
+D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.CommonEntityModels.Sqlite\obj\Debug\net7.0\Storer.CommonEntityModels.Sqlite.csproj.CoreCompileInputs.cache
+D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.CommonEntityModels.Sqlite\obj\Debug\net7.0\Storer.CommonEntityModels.Sqlite.dll
+D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.CommonEntityModels.Sqlite\obj\Debug\net7.0\refint\Storer.CommonEntityModels.Sqlite.dll
+D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.CommonEntityModels.Sqlite\obj\Debug\net7.0\Storer.CommonEntityModels.Sqlite.pdb
+D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.CommonEntityModels.Sqlite\obj\Debug\net7.0\Storer.CommonEntityModels.Sqlite.genruntimeconfig.cache
+D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.CommonEntityModels.Sqlite\obj\Debug\net7.0\ref\Storer.CommonEntityModels.Sqlite.dll
