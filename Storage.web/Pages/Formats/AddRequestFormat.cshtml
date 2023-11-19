@@ -21,74 +21,149 @@
     List<Professor>? AllProfessors {get; set;}
     int TotalProfessors = 0;
     Professor? ChoosenProfessor{get; set;}
+    string? StorerId {get; set;}
+    string? MinDate {get; set;}
+    string? MaxDate{get; set;}
+    bool IsWeekendSelected {get; set;}
+
     public void OnGet(int selectedOptionClass, string selectedOptionSub, string selectedOptionProf)
     {
-        if(selectedOptionClass > 0)
-        {
-            Model.ChoosenClassroom = Functions.AddClassroom(selectedOptionClass);
+        Model.StorerId = Functions.AddStorer();
+        if(Model.StorerId != ""){
+            if(selectedOptionClass > 0)
+            {
+                Model.ChoosenClassroom = Functions.AddClassroom(selectedOptionClass);
+            }
+            var resultClass = Functions.ListClassrooms();
+            Model.AllClassrooms = resultClass.ListClass;
+            Model.TotalClassrooms = resultClass.TotalCountClass;
+            if(selectedOptionSub !="0")
+            {
+                Model.ChoosenSubject = Functions.AddSubjects(selectedOptionSub);
+            }
+            var resultSub = Functions.ListSubjects();
+            Model.AllSubjects = resultSub.ListSub;
+            Model.TotalSubjects = resultSub.TotalCountSub;
+            if(selectedOptionProf !="0")
+            {
+                Model.ChoosenProfessor = Functions.AddProfessors(selectedOptionProf);
+            }
+            var resultProf = Functions.ListProfessors();
+            Model.TotalProfessors = resultProf.TotalCountProf;
+            Model.AllProfessors = resultProf.ListProf;
+
+            DateTime CurrentDate = DateTime.Now;
+            // Añade un día a la fecha actual para establecer que solo se pueda seleccionar después de un día
+            DateTime DatePlus1 = CurrentDate.AddDays(1);
+            // Formatea la fecha en el formato YYYY-MM-DD
+            Model.MinDate = DatePlus1.ToString("yyyy-MM-dd");
+            DateTime DatePlus14 = CurrentDate.AddDays(14);
+            Model.MaxDate = DatePlus14.ToString("yyyy-MM-dd");
+            Model.IsWeekendSelected = false;
         }
-        var resultClass = Functions.ListClassrooms();
-        Model.AllClassrooms = resultClass.ListClass;
-        Model.TotalClassrooms = resultClass.TotalCountClass;
-        if(selectedOptionSub is not null)
-        {
-            Model.ChoosenSubject = Functions.AddSubjects(selectedOptionSub);
-        }
-        var resultSub = Functions.ListSubjects();
-        Model.AllSubjects = resultSub.ListSub;
-        Model.TotalSubjects = resultSub.TotalCountSub;
-        if(selectedOptionProf is not null)
-        {
-            Model.ChoosenProfessor = Functions.AddProfessor(selectedOptionProf);
-        }
-        var resultProf = Functions.ListProfessors();
-        Model.TotalProfessors = resultProf.TotalCountProf;
-        Model.AllProfessors = resultProf.ListProf;
+
     }
 
+    public void OnPost(string requestedDate)
+    {
+        DateTime selectedDate = DateTime.Parse(requestedDate);
+
+        // Verificar si la fecha seleccionada es sábado o domingo
+        if (selectedDate.DayOfWeek == DayOfWeek.Saturday || selectedDate.DayOfWeek == DayOfWeek.Sunday)
+        {
+            // Puedes manejar el error o mostrar un mensaje al usuario
+            // en este caso, simplemente marcamos IsWeekendSelected como verdadero
+            Model.IsWeekendSelected = true;
+            return;
+        }
+
+        // Continuar con el procesamiento normal
+        // ...
+    }
 }
 
 <form method="get" action="/Formats/AddRequestFormat">
-    <div class="mb-3">
-        <label class="form-label">Provide the plantel:</label>
-        <select class="form-select" id="dropdown" name="plantel">
-            <option value = "colomos"> Colomos </option>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="dropdown">Selecciona un salon:</label>
-        <select id="dropdown" name="selectedOption">
-            @if(Model.AllClassrooms is not null)
-            {
-                @foreach(var c in Model.AllClassrooms)
-                { 
-                    <option value="@c.ClassroomId">@c.Name</option>
+    @if(Model.StorerId!=""){
+        <div class="mb-3">
+            <label class="form-label">Provide the plantel:</label>
+            <select class="form-select" id="dropdown" name="plantel">
+                <option value = "colomos"> Colomos </option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="dropdown">Selecciona un salon:</label>
+            <select class="form-select" id="dropdown" name="selectedOption">
+                @if(Model.AllClassrooms is not null)
+                {
+                    @foreach(var c in Model.AllClassrooms)
+                    { 
+                        <option value="@c.ClassroomId">@c.Name</option>
+                    }
                 }
-            }
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="dropdown">Selecciona una materia:</label>
-        <select id="dropdown" name="selectedOptionSub">
-            @if(Model.AllSubjects is not null)
-            {
-                @foreach(var c in Model.AllSubjects)
-                { 
-                    <option value="@c.SubjectId">@c.Name</option>
+                else
+                {
+                    <option value=0>No classrooms found</option>
                 }
-            }
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="dropdown">Selecciona un profesor:</label>
-        <select id="dropdown" name="selectedOptionProf">
-            @if(Model.AllProfessors is not null)
-            {
-                @foreach(var c in Model.AllProfessors)
-                { 
-                    <option value="@c.ProfessorId">@c.Name @c.LastNameP @c.LastNameM</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="dropdown">Selecciona una materia:</label>
+            <select class="form-select" id="dropdown" name="selectedOptionSub">
+                @if(Model.AllSubjects is not null)
+                {
+                    @foreach(var c in Model.AllSubjects)
+                    { 
+                        <option value="@c.SubjectId">@c.Name</option>
+                    }
                 }
-            }
-        </select>
-    </div>
+                else{
+                    <option value="0">No subjects found</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="dropdown">Selecciona un profesor:</label>
+            <select class="form-select" id="dropdown" name="selectedOptionProf">
+                @if(Model.AllProfessors is not null)
+                {
+                    @foreach(var c in Model.AllProfessors)
+                    { 
+                        <option value="@c.ProfessorId">@c.Name @c.LastNameP @c.LastNameM</option>
+                    }
+                }
+                else
+                {
+                    <option value="0">No professors found</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="fecha">Fecha:</label>
+            <input class="form-date" type="date" id="requestedDate" name="requestedDate" min="@Model.MinDate" max = "@Model.MaxDate" required>
+        </div>
+        @if(IsWeekendSelected==true){
+            <p style="color: red">You can not choose a Saturday or a Sunday</p>
+        }
+        <div class="mb-3">
+            <label class="form-label" for="dropdown">Selecciona un hora de inicio:</label>
+            <select class="form-select" id="dropdown" name="selectedInitHour" required>
+                <option value=1>7:00</option>
+                <option value=2>7:50</option>
+                <option value=3>8:40</option>
+                <option value=4>9:30</option>
+                <option value=5>10:20</option>
+                <option value=6>11:10</option>
+                <option value=7>12:00</option>
+                <option value=8>12:50</option>
+                <option value=9>13:40</option>
+                else
+                {
+                    <option value="0">No professors found</option>
+                }
+            </select>
+        </div>
+    } else 
+    {
+        <p style="color: red"> There's not a storer registered. Contact a superior</p>
+    }
 </form>

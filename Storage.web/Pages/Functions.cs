@@ -58,12 +58,12 @@ public static class Functions
         }
     }
 
-    public static (List<Professor>? ListProf, int TotalCountProf) ListSubjects()
+    public static (List<Professor>? ListProf, int TotalCountProf) ListProfessors()
     {
         using (bd_storage db = new())
         {
             // verifica que exista la tabla de Classroom
-            if( db.Professor is null)
+            if( db.Professors is null)
             {
                 throw new InvalidOperationException("The table does not exist.");
             } 
@@ -81,6 +81,39 @@ public static class Functions
             }
         }
     }
+
+    public static string AddStorer()
+    {
+        using (bd_storage db = new())
+        {
+            string choosenStorer = "";
+
+            if (db.Storers != null && db.Storers.Any())
+            {
+                IQueryable<AutoGens.Storer> StorerQuery = db.Storers
+                    .AsEnumerable().OrderBy(e => Guid.NewGuid()).AsQueryable();
+
+                if (StorerQuery.Any())
+                {
+                    var Random = new Random();
+                    // Se ordena por un número random que sea positivo que se especifica con el .Next()
+                    // Y se selecciona el primero
+                    var RandomStorer = StorerQuery.OrderBy(e => Random.Next()).First();
+                    choosenStorer = RandomStorer.StorerId;
+                }
+                else {
+                    choosenStorer = "";
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("The table does not exist.");
+            }
+
+            return choosenStorer;
+        }
+    }
+
     
     public static Classroom AddClassroom(int ClassroomId)
     {
@@ -97,51 +130,40 @@ public static class Functions
         }
     }
 
-    public static Subject AddSubjects(string SubjectId)
+    public static Subject? AddSubjects(string SubjectId)
     {
         using (bd_storage db = new())
         {
             IQueryable<Subject> subjectsId = db.Subjects.Where(s => s.SubjectId == SubjectId);
-                Subject subject = subjectsId.First();
+            Subject? subject= null;
             // Si no existe le pide que ingrese otra vez el valor
             if (subjectsId is null || !subjectsId.Any())
             {
                 Console.WriteLine("Not a valid key. Try again");
+                subject = null;
+            }else{
+                subject = subjectsId.First();
             }
             return subject;
         }
     }
 
-    public static (int EquipAffected, int ControlNumAffected) VerifyEquipmentIdControlNumber(string EquipmentId, string ControlNumber)
+    public static Professor? AddProfessors(string ProfessorId)
     {
-        int equipmentIdAffected = 0;
-        int controlNumberAffected = 0;
-        using(bd_storage db = new())
+        using (bd_storage db = new())
         {
-            IQueryable<Equipment> equipments = db.Equipments
-                .Where(e=> e.ControlNumber == ControlNumber);                
-                if(equipments is null || !equipments.Any())
-                {
-                    equipmentIdAffected = 0;
-                }
-                else
-                {
-                    Console.WriteLine("That control number is already in use, try again.");
-                    equipmentIdAffected = 1;
-                }
-            IQueryable<Equipment> equipmentsId = db.Equipments
-                .Where(e=> e.EquipmentId == EquipmentId);
-                if(equipmentsId is null || !equipmentsId.Any())
-                {
-                    controlNumberAffected = 0;
-                }
-                else
-                {
-                    Console.WriteLine("That control number is already in use, try again.");
-                    controlNumberAffected = 1;
-                } 
+            IQueryable<Professor> ProfessorsQuery = db.Professors.Where(p => p.ProfessorId == ProfessorId);
+            Professor? professor= null;
+            // Si no existe le pide que ingrese otra vez el valor
+            if (ProfessorsQuery is null || !ProfessorsQuery.Any())
+            {
+                Console.WriteLine("Not a valid key. Try again");
+                professor = null;
+            }else{
+                professor = ProfessorsQuery.First();
+            }
+            return professor;
         }
-        return (equipmentIdAffected, controlNumberAffected);
     }
 
     public static List<Equipment>? ViewAllEquipments()
@@ -178,6 +200,32 @@ public static class Functions
             return areas.ToList();
         }
     }
+    public static string EncryptPass(string PlainText) // encrypts with a specified key a string
+    {
+        using (Aes aesAlg = Aes.Create())
+        {
+
+            aesAlg.Key = Encoding.UTF8.GetBytes("llave secreta".PadRight(32));//32 caracteres hexadecimales
+            //cada byte esta representado por 2 hex, cada hex son 4 bytes
+            //con esta cantidad de bytes se tienen 32 digitos (0-9 y A-F)
+            //32 caracteres hex * 4 bytes que recordemos que cada hex son 4 bytes=128
+            aesAlg.IV = new byte[16]; 
+
+            ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+
+            using (MemoryStream msEncrypt = new MemoryStream())
+            {
+                using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                {
+                    using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                    {
+                        swEncrypt.Write(PlainText);
+                    }
+                }
+                return Convert.ToBase64String(msEncrypt.ToArray());
+            }
+        }
+    }
     public static string Decrypt(string? CipherText) // decrypts previously encrypted text with the key it was encrypted with
     {
         using (Aes aesAlg = Aes.Create())
@@ -186,17 +234,19 @@ public static class Functions
             aesAlg.IV = new byte[16];
 
             ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-
-            using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(CipherText)))
-            {
-                using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+            if(CipherText is not null){
+                using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(CipherText)))
                 {
-                    using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                     {
-                        return srDecrypt.ReadToEnd();
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        {
+                            return srDecrypt.ReadToEnd();
+                        }
                     }
                 }
             }
+            return "";
         }
     }
     public static List<Coordinator>? ListCoordinators()
@@ -240,6 +290,38 @@ public static class Functions
             }
             return status.ToList();
         }
+    }
+
+    public static (int EquipAffected, int ControlNumAffected) VerifyEquipmentIdControlNumber(string EquipmentId, string ControlNumber)
+    {
+        int equipmentIdAffected = 0;
+        int controlNumberAffected = 0;
+        using(bd_storage db = new())
+        {
+            IQueryable<Equipment> equipments = db.Equipments
+                .Where(e=> e.ControlNumber == ControlNumber);                
+                if(equipments is null || !equipments.Any())
+                {
+                    equipmentIdAffected = 0;
+                }
+                else
+                {
+                    Console.WriteLine("That control number is already in use, try again.");
+                    equipmentIdAffected = 1;
+                }
+            IQueryable<Equipment> equipmentsId = db.Equipments
+                .Where(e=> e.EquipmentId == EquipmentId);
+                if(equipmentsId is null || !equipmentsId.Any())
+                {
+                    controlNumberAffected = 0;
+                }
+                else
+                {
+                    Console.WriteLine("That control number is already in use, try again.");
+                    controlNumberAffected = 1;
+                } 
+        }
+        return (equipmentIdAffected, controlNumberAffected);
     }
 
 }

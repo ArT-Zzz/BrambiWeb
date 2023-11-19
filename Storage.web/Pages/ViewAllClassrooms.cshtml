@@ -85,7 +85,7 @@
             <h2>There are no classrooms registered, sorry</h2>
         }
     </tbody>
-    @if(Model.ChoosenClassroom is not null )
+    @if(Model.ChoosenClassroom is not null && Model.ChoosenClassroomSpinner is not null )
     {
         <h3>@Model.ChoosenClassroom.Name</h3>
         <h3>@Model.ChoosenClassroomSpinner.Name</h3>

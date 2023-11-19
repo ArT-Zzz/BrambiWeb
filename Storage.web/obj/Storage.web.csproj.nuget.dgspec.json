@@ -4,77 +4,14 @@
     "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\Storage.web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\Storage.web.csproj": {
+    "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\Storage.web.csproj",
-        "projectName": "Storage.web",
-        "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\Storage.web.csproj",
-        "packagesPath": "C:\\Users\\aacar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\aacar\\AppData\\Roaming\\NuGet\\NuGet.Config"
-        ],
-        "originalTargetFrameworks": [
-          "net7.0"
-        ],
-        "sources": {
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
-            "projectReferences": {
-              "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storer.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj": {
-                "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storer.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj"
-              },
-              "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storer.CommonEntityModels.Sqlite\\Storer.CommonEntityModels.Sqlite.csproj": {
-                "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storer.CommonEntityModels.Sqlite\\Storer.CommonEntityModels.Sqlite.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storer.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storer.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj",
+        "projectUniqueName": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj",
         "projectName": "Storage.Common.DataContext.Sqlite",
-        "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storer.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj",
+        "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj",
         "packagesPath": "C:\\Users\\aacar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storer.Common.DataContext.Sqlite\\obj\\",
+        "outputPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Common.DataContext.Sqlite\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\aacar\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -89,8 +26,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storer.CommonEntityModels.Sqlite\\Storer.CommonEntityModels.Sqlite.csproj": {
-                "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storer.CommonEntityModels.Sqlite\\Storer.CommonEntityModels.Sqlite.csproj"
+              "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj": {
+                "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj"
               }
             }
           }
@@ -130,14 +67,14 @@
         }
       }
     },
-    "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storer.CommonEntityModels.Sqlite\\Storer.CommonEntityModels.Sqlite.csproj": {
+    "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storer.CommonEntityModels.Sqlite\\Storer.CommonEntityModels.Sqlite.csproj",
-        "projectName": "Storer.CommonEntityModels.Sqlite",
-        "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storer.CommonEntityModels.Sqlite\\Storer.CommonEntityModels.Sqlite.csproj",
+        "projectUniqueName": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj",
+        "projectName": "Storage.CommonEntityModels.Sqlite",
+        "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj",
         "packagesPath": "C:\\Users\\aacar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storer.CommonEntityModels.Sqlite\\obj\\",
+        "outputPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\aacar\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -187,6 +124,69 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\Storage.web.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\Storage.web.csproj",
+        "projectName": "Storage.web",
+        "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\Storage.web.csproj",
+        "packagesPath": "C:\\Users\\aacar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\aacar\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj": {
+                "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj"
+              },
+              "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj": {
+                "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
