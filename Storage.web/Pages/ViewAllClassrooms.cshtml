@@ -19,13 +19,9 @@
         {
             Model.ChoosenClassroom = AddClassroom(selectedOption);
         }
-        if(spinner > 0 )
-        {
-            Model.ChoosenClassroomSpinner = AddClassroom(spinner);
-        }
         var result = Functions.ListClassrooms();
-        Model.AllClassrooms = result.List;
-        Model.TotalClassrooms = result.TotalCount;
+        Model.AllClassrooms = result.ListClass;
+        Model.TotalClassrooms = result.TotalCountClass;
     }
 
 
@@ -33,13 +29,13 @@
     {
         using (bd_storage db = new())
         {
-                IQueryable<Classroom> classroomsId = db.Classrooms.Where(c => c.ClassroomId == ClassroomId);
-                    Classroom classroom = classroomsId.First();
-                // Si no existe le pide que ingrese otra vez el valor
-                if (classroomsId is null || !classroomsId.Any())
-                {
-                    Console.WriteLine("Not a valid key. Try again");
-                }
+            IQueryable<Classroom> classroomsId = db.Classrooms.Where(c => c.ClassroomId == ClassroomId);
+                Classroom classroom = classroomsId.First();
+            // Si no existe le pide que ingrese otra vez el valor
+            if (classroomsId is null || !classroomsId.Any())
+            {
+                Console.WriteLine("Not a valid key. Try again");
+            }
             return classroom;
         }
     }

@@ -1,0 +1,94 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using System.Globalization;
+@using System.Security.Cryptography;
+@using System.Text;
+@{
+    ViewData["Title"] = "Add Requests";
+    //await Html.RenderPartialAsync("Functions.cshtml");
+}
+<h1>@ViewData["Title"]</h1>
+
+@functions
+{
+    List<Classroom>? AllClassrooms {get; set;}
+    int TotalClassrooms = 0;
+    Classroom? ChoosenClassroom {get; set;}
+    List<Subject>? AllSubjects {get; set;}
+    int TotalSubjects = 0;
+    Subject? ChoosenSubject{get; set;}
+    List<Professor>? AllProfessors {get; set;}
+    int TotalProfessors = 0;
+    Professor? ChoosenProfessor{get; set;}
+    public void OnGet(int selectedOptionClass, string selectedOptionSub, string selectedOptionProf)
+    {
+        if(selectedOptionClass > 0)
+        {
+            Model.ChoosenClassroom = Functions.AddClassroom(selectedOptionClass);
+        }
+        var resultClass = Functions.ListClassrooms();
+        Model.AllClassrooms = resultClass.ListClass;
+        Model.TotalClassrooms = resultClass.TotalCountClass;
+        if(selectedOptionSub is not null)
+        {
+            Model.ChoosenSubject = Functions.AddSubjects(selectedOptionSub);
+        }
+        var resultSub = Functions.ListSubjects();
+        Model.AllSubjects = resultSub.ListSub;
+        Model.TotalSubjects = resultSub.TotalCountSub;
+        if(selectedOptionProf is not null)
+        {
+            Model.ChoosenProfessor = Functions.AddProfessor(selectedOptionProf);
+        }
+        var resultProf = Functions.ListProfessors();
+        Model.TotalProfessors = resultProf.TotalCountProf;
+        Model.AllProfessors = resultProf.ListProf;
+    }
+
+}
+
+<form method="get" action="/Formats/AddRequestFormat">
+    <div class="mb-3">
+        <label class="form-label">Provide the plantel:</label>
+        <select class="form-select" id="dropdown" name="plantel">
+            <option value = "colomos"> Colomos </option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="dropdown">Selecciona un salon:</label>
+        <select id="dropdown" name="selectedOption">
+            @if(Model.AllClassrooms is not null)
+            {
+                @foreach(var c in Model.AllClassrooms)
+                { 
+                    <option value="@c.ClassroomId">@c.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="dropdown">Selecciona una materia:</label>
+        <select id="dropdown" name="selectedOptionSub">
+            @if(Model.AllSubjects is not null)
+            {
+                @foreach(var c in Model.AllSubjects)
+                { 
+                    <option value="@c.SubjectId">@c.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="dropdown">Selecciona un profesor:</label>
+        <select id="dropdown" name="selectedOptionProf">
+            @if(Model.AllProfessors is not null)
+            {
+                @foreach(var c in Model.AllProfessors)
+                { 
+                    <option value="@c.ProfessorId">@c.Name @c.LastNameP @c.LastNameM</option>
+                }
+            }
+        </select>
+    </div>
+</form>

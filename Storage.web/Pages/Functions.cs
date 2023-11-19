@@ -7,7 +7,7 @@ using System.Text;
 public static class Functions
 {
     
-    public static (List<Classroom>? List, int TotalCount) ListClassrooms()
+    public static (List<Classroom>? ListClass, int TotalCountClass) ListClassrooms()
     {
         // Indice de la lista
         int i = 1;
@@ -34,6 +34,53 @@ public static class Functions
         }
     }
 
+    public static (List<Subject>? ListSub, int TotalCountSub) ListSubjects()
+    {
+        using (bd_storage db = new())
+        {
+            // verifica que exista la tabla de Classroom
+            if( db.Subjects is null)
+            {
+                throw new InvalidOperationException("The table does not exist.");
+            } 
+            else 
+            {
+                // Muestra toda la lista de classrooms con un indice y la clave de este
+                IQueryable<Subject> Subjects = db.Subjects;
+                
+                foreach (var s in Subjects)
+                {
+                    Console.WriteLine($"{s.SubjectId}. {s.Name}");
+                
+                }
+                return (Subjects.ToList(),Subjects.Count());
+            }
+        }
+    }
+
+    public static (List<Professor>? ListProf, int TotalCountProf) ListSubjects()
+    {
+        using (bd_storage db = new())
+        {
+            // verifica que exista la tabla de Classroom
+            if( db.Professor is null)
+            {
+                throw new InvalidOperationException("The table does not exist.");
+            } 
+            else 
+            {
+                // Muestra toda la lista de classrooms con un indice y la clave de este
+                IQueryable<Professor> Professors = db.Professors;
+                
+                foreach (var p in Professors)
+                {
+                    Console.WriteLine($"{p.Name} {p.LastNameP} {p.LastNameM}");
+                
+                }
+                return (Professors.ToList(),Professors.Count());
+            }
+        }
+    }
     
     public static Classroom AddClassroom(int ClassroomId)
     {
@@ -48,6 +95,53 @@ public static class Functions
                 }
             return classroom;
         }
+    }
+
+    public static Subject AddSubjects(string SubjectId)
+    {
+        using (bd_storage db = new())
+        {
+            IQueryable<Subject> subjectsId = db.Subjects.Where(s => s.SubjectId == SubjectId);
+                Subject subject = subjectsId.First();
+            // Si no existe le pide que ingrese otra vez el valor
+            if (subjectsId is null || !subjectsId.Any())
+            {
+                Console.WriteLine("Not a valid key. Try again");
+            }
+            return subject;
+        }
+    }
+
+    public static (int EquipAffected, int ControlNumAffected) VerifyEquipmentIdControlNumber(string EquipmentId, string ControlNumber)
+    {
+        int equipmentIdAffected = 0;
+        int controlNumberAffected = 0;
+        using(bd_storage db = new())
+        {
+            IQueryable<Equipment> equipments = db.Equipments
+                .Where(e=> e.ControlNumber == ControlNumber);                
+                if(equipments is null || !equipments.Any())
+                {
+                    equipmentIdAffected = 0;
+                }
+                else
+                {
+                    Console.WriteLine("That control number is already in use, try again.");
+                    equipmentIdAffected = 1;
+                }
+            IQueryable<Equipment> equipmentsId = db.Equipments
+                .Where(e=> e.EquipmentId == EquipmentId);
+                if(equipmentsId is null || !equipmentsId.Any())
+                {
+                    controlNumberAffected = 0;
+                }
+                else
+                {
+                    Console.WriteLine("That control number is already in use, try again.");
+                    controlNumberAffected = 1;
+                } 
+        }
+        return (equipmentIdAffected, controlNumberAffected);
     }
 
     public static List<Equipment>? ViewAllEquipments()
