@@ -73,7 +73,7 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/AddEquipments">Add Equipment</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/AddEquipments " asp-page-handler="ListClassrooms">Add Equipment</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/UpdateEquipments">Update Equipments</a>
@@ -91,8 +91,8 @@
     
     <h2>Total: @Model.TotalEquipments . Showing: @Model.Pages / @(@Model.TotalEquipments/20)</h2>
     <form method="get" action="/ViewAllEquipments">
-    <button type="submit" name="action" value="Previous" @if (Model.Offset == 0) { <text>disabled</text> }>Previous</button>
-    <button type="submit" name="action" value="Next" @if (Model.Offset + 20 >= Model.TotalEquipments) { <text>disabled</text> }>Next</button>
+        <button type="submit" name="action" value="Previous" @if (Model.Offset == 0) { <text>disabled</text> }>Previous</button>
+        <button type="submit" name="action" value="Next" @if (Model.Offset + 20 >= Model.TotalEquipments) { <text>disabled</text> }>Next</button>
     </form>
     @{
     Console.WriteLine($"Offset: {Model.Offset}, TotalEquipments: {Model.TotalEquipments}"); // this is just so you can check
