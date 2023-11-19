@@ -41,7 +41,7 @@
                 }
             }
             if(response.ControlNumAffected == 1){Model.Message ="That Control Number is already in use";}
-            if(response.EquipAffected == 1){Model.Message ="That Equipment ID is already in use";}
+            if(response.EquipAffected == 1){Model.Message = "That Equipment ID is already in use";}
         }
         else if(Model.Message == ""){}
         else
@@ -166,7 +166,7 @@ else
         </select>
     </div>
 
-    <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirmar</button>
+    <button type="submit" class="btn btn-primary" name="action" value="confirm">Add Equipment</button>
 
 </form>
 }

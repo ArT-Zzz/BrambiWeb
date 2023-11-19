@@ -206,4 +206,50 @@ public static class Functions
         return (equipmentIdAffected, controlNumberAffected);
     }
 
+    public static int VerifyEquipmentIdControlNumberMinusThis(string EquipmentId, string ControlNumber)
+    {
+        Console.Write("EquipmentID: ");
+        Console.WriteLine(EquipmentId);
+        Console.Write("Control NUMber: ");
+        Console.WriteLine(ControlNumber);
+        int controlNumberAffected = 0;
+        using(bd_storage db = new())
+        {
+            IQueryable<Equipment> equipments = db.Equipments
+                .Where(e=> e.ControlNumber == ControlNumber && e.EquipmentId != EquipmentId);                
+                if(equipments is null || !equipments.Any())
+                {
+                    controlNumberAffected = 0;
+                }
+                else
+                {
+                    Console.WriteLine("That control number is already in use, try again.");
+                    controlNumberAffected = 1;
+                }
+        }
+        return controlNumberAffected;
+    }
+
+    public static Equipment? VerifyEquipmentIdExistence(string EquipmentId)
+    {
+        using(bd_storage db = new())
+        {
+            IQueryable<Equipment> equipments = db.Equipments
+                .Include(e => e.Area)
+                .Include(e => e.Status)
+                .Include(e => e.Coordinator)
+                .Where(e => e.EquipmentId == EquipmentId);
+                                        
+                if(equipments is null || !equipments.Any()) // checks if the query returned anything
+                {
+                    Console.WriteLine("That equipment ID doesn't exist in the database");
+                    return null;
+                }
+                else
+                {
+                    return equipments.First();
+                }
+        }
+    }
+
 }
