@@ -22,38 +22,12 @@
         {
             Model.ChoosenClassroomSpinner = AddClassroom(spinner);
         }
-        var result = ListClassrooms();
+        var result = Functions.ListClassrooms();
         Model.AllClassrooms = result.List;
         Model.TotalClassrooms = result.TotalCount;
     }
 
-    
-    public static (List<Classroom>? List, int TotalCount) ListClassrooms()
-    {
-        // Indice de la lista
-        int i = 1;
 
-        using (bd_storage db = new())
-        {
-            // verifica que exista la tabla de Classroom
-            if( db.Classrooms is null)
-            {
-                throw new InvalidOperationException("The table does not exist.");
-            } 
-            else 
-            {
-                // Muestra toda la lista de classrooms con un indice y la clave de este
-                IQueryable<Classroom> Classrooms = db.Classrooms;
-                
-                foreach (var cl in Classrooms)
-                {
-                    Console.WriteLine($"{cl.ClassroomId}. {cl.Clave}");
-                    i++;
-                }
-                return (Classrooms.ToList(),Classrooms.Count());
-            }
-        }
-    }
     public static Classroom AddClassroom(int ClassroomId)
     {
         using (bd_storage db = new())

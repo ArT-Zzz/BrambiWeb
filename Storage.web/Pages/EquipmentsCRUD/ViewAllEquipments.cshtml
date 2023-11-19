@@ -23,13 +23,13 @@
             Model.Offset += 20; // to start from the next 20 equipments
             Model.Pages +=1;
         }
-        var result = ViewAllEquipments(Offset); // calling the method that will consult the bd and bring 20 equipments found, starting from the sent offset
+        var result = ViewAllEquipmentsByOffset(Offset); // calling the method that will consult the bd and bring 20 equipments found, starting from the sent offset
         Model.AllEquipments = result.EquipmentList; // Model.AllEquipments = 20 equipments
         Model.Offset = result.Offset; // Model.Offset = when it starts
         Model.TotalEquipments = result.Total; //Model.TotalEquipments = int how many equipments were found in the whole Equipments Table
     }
     // returns the equipments found, in what equipment it starts (offset), and the total of equipments
-    public static (List<Equipment>? EquipmentList,int Offset, int Total) ViewAllEquipments(int Offset) 
+    public static (List<Equipment>? EquipmentList,int Offset, int Total) ViewAllEquipmentsByOffset(int Offset) 
     {
         using( bd_storage db = new())
         {
@@ -73,13 +73,13 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/AddEquipments " asp-page-handler="ListClassrooms">Add Equipment</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/AddEquipments">Add Equipment</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/UpdateEquipments">Update Equipments</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/UpdateEquipments">Update Equipments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewAllEquipments">Search for one Equipment</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments">Search for one Equipment</a>
                     </li>
                 </ul>
             </div>
@@ -90,7 +90,7 @@
     <h1 class="display-4">@ViewData["Title"]</h1>
     
     <h2>Total: @Model.TotalEquipments . Showing: @Model.Pages / @(@Model.TotalEquipments/20)</h2>
-    <form method="get" action="/ViewAllEquipments">
+    <form method="get" action="/EquipmentsCRUD/ViewAllEquipments">
         <button type="submit" name="action" value="Previous" @if (Model.Offset == 0) { <text>disabled</text> }>Previous</button>
         <button type="submit" name="action" value="Next" @if (Model.Offset + 20 >= Model.TotalEquipments) { <text>disabled</text> }>Next</button>
     </form>
