@@ -1,0 +1,97 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using System.Globalization;
+@using System.Security.Cryptography;
+@using System.Text;
+@{
+    ViewData["Title"] = "Add Equipments";
+    //await Html.RenderPartialAsync("Functions.cshtml");
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to add equipments.</p>
+
+@functions
+{
+    string EquipmentId = "";
+    string Name = "";
+    int AreaId = -1;
+    string Description = "";
+    int Year = 0;
+    byte StatusId = 0;
+    string ControlNumber = "";
+    string CoordinatorId = "";
+    List<Equipment>? AllEquipments {get; set;}
+    List<Area>? AllAreas{get; set;}  
+    List<Coordinator>? AllCoordinators {get; set;}
+    List<Status>? AllStatus {get; set;}
+    public void OnGet()
+    {
+        Model.AllEquipments = Functions.ViewAllEquipments();
+        Model.AllAreas = Functions.ListAreas();
+        Model.AllCoordinators = Functions.ListCoordinators();
+        Model.AllStatus = Functions.ListStatus();
+    }
+
+}
+
+<form method="get" action="/AddEquipments">
+    <br><label>Provide the new Equipment ID: </label>
+    <input type="text" id="EquipmentIdText" name="EquipmentIdText" maxlength="15" required> 
+    <br><label>Provide the new Equipment Name: </label>
+    <input type="text" id="NameText" name="NameText" maxlength="40" required> 
+    <br><label>Provide the new Equipment Area:</label>
+    <select id="dropdown" name="AreaText">
+        @if(Model.AllAreas is not null)
+        {
+            @foreach(var a in Model.AllAreas)
+            { 
+                <option value="@a.AreaId">@a.Name</option>
+            }
+        }
+        else
+        {
+            <option value ="None">No areas Found</option>
+        }
+    </select>
+    <br><label>Provide the new Equipment Description:</label>
+    <input type="textarea" id="Description" name="DescriptionText"maxlength="255" required>
+    <br><label>Provide the new Equipment Status: </label>
+    <select id="dropdown" name="StatusText">
+        @if(Model.AllStatus is not null)
+        {
+            foreach(var s in Model.AllStatus)
+            {
+                <option value ="@s.StatusId">@s.Value</option>
+            }
+        }
+        else
+        {
+            <option value ="None">No Status Found</option>
+        }
+    </select>
+    <br><label>Provide the Equipment Control Number</label>
+    <input type="text" id="ControlNumber" name="ControlNumberText"maxlength="20" required>
+    <br>
+    <br><label>Provide the Coordinator in charge of the Equipment: </label>
+    <select id="dropdown" name="StatusText">
+        @if(Model.AllCoordinators is not null)
+        {
+            @foreach(var c in Model.AllCoordinators)
+            {
+                <option value ="@c.CoordinatorId">@c.Name @c.LastNameP @c.LastNameM</option>
+            }
+        }
+        else
+        {
+            <option value ="None">"No Coordinators found"</option>
+        }
+
+    </select>
+    <br><label>Provide the Equipment Control Number</label>
+
+
+    <button type="submit" name="action" value="confirm">Confirmar</button>
+</form>
+
