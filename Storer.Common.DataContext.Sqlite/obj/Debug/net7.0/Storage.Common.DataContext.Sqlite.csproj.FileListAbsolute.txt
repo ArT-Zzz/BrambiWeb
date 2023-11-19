@@ -28,3 +28,18 @@ D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.Common.DataCon
 D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\refint\Storage.Common.DataContext.Sqlite.dll
 D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.pdb
 D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\ref\Storage.Common.DataContext.Sqlite.dll
+C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storer.Common.DataContext.Sqlite\bin\Debug\net7.0\Storage.Common.DataContext.Sqlite.deps.json
+C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storer.Common.DataContext.Sqlite\bin\Debug\net7.0\Storage.Common.DataContext.Sqlite.dll
+C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storer.Common.DataContext.Sqlite\bin\Debug\net7.0\Storage.Common.DataContext.Sqlite.pdb
+C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storer.Common.DataContext.Sqlite\bin\Debug\net7.0\Storer.CommonEntityModels.Sqlite.dll
+C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storer.Common.DataContext.Sqlite\bin\Debug\net7.0\Storer.CommonEntityModels.Sqlite.pdb
+C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.csproj.AssemblyReference.cache
+C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.AssemblyInfoInputs.cache
+C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.AssemblyInfo.cs
+C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.csproj.CoreCompileInputs.cache
+C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.csproj.CopyComplete
+C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.dll
+C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\refint\Storage.Common.DataContext.Sqlite.dll
+C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\Storage.Common.DataContext.Sqlite.pdb
+C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storer.Common.DataContext.Sqlite\obj\Debug\net7.0\ref\Storage.Common.DataContext.Sqlite.dll

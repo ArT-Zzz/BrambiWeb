@@ -9,53 +9,61 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Storage.web
 build_property.RootNamespace = Storage.web
-build_property.ProjectDir = D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\
+build_property.ProjectDir = C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storage.web\
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web
+build_property.MSBuildProjectDirectory = C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storage.web
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/AddEquipments.cshtml]
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/AddEquipments.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcQWRkRXF1aXBtZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/UpdateEquipments.cshtml]
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/UpdateEquipments.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcVXBkYXRlRXF1aXBtZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/ViewAllEquipments.cshtml]
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/ViewAllEquipments.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcVmlld0FsbEVxdWlwbWVudHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Error.cshtml]
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Index.cshtml]
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Privacy.cshtml]
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/LogIn.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nSW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/ViewAllClassrooms.cshtml]
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/SignUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2lnblVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/ViewAllClassrooms.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlld0FsbENsYXNzcm9vbXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/_ViewImports.cshtml]
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/_ViewStart.cshtml]
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Shared/_Layout.cshtml]
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-clgn3f7z30
