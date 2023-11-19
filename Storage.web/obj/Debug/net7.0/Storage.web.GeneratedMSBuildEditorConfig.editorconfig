@@ -20,12 +20,24 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcQWRkRXF1aXBtZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/EquipmentUpdate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcRXF1aXBtZW50VXBkYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/EquipmentUpdate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcRXF1aXBtZW50VXBkYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/UpdateEquipments.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcVXBkYXRlRXF1aXBtZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/ViewAllEquipments.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcVmlld0FsbEVxdWlwbWVudHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/ViewOneEquipment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcVmlld09uZUVxdWlwbWVudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Error.cshtml]
@@ -42,6 +54,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/LogIn.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nSW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/MaintenanceCRUD/ViewMaintenanceNotMade.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbnRlbmFuY2VDUlVEXFZpZXdNYWludGVuYW5jZU5vdE1hZGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Privacy.cshtml]

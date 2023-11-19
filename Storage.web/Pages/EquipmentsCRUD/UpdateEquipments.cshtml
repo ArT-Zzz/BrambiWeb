@@ -1,7 +1,166 @@
 @page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
 @{
     ViewData["Title"] = "Update Equipments";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to add equipments.</p>
+<p>Use this page to Update Equipments equipments.</p>
+@functions
+{
+    bool Ban = false;
+    Equipment? EquipmentSearched {get; set;}
+    string Message = "";
+    //list that will be shown to update
+    List<Area>? AllAreas {get; set;}
+    List<Coordinator>? AllCoordinators {get; set;}
+    List<Status>? AllStatus {get; set;}
+    // predetermined function of OnGet when the button of the forms is clicked, it sends here all the info of the forms, each parameters corresponds to the name="" of a camp
+    public void OnGet(string EquipmentId, string NameText, short AreaText, string DescriptionText, byte StatusText, int YearText, string CoordinatorText, string ControlNumberText)
+    {
+        
+        if(EquipmentId != null && EquipmentId != "")
+        {
+            //Checks that an Equipment with the EquipmentId sent exists, if yes returns an Equipment object, if not, returns null
+            Model.EquipmentSearched = Functions.VerifyEquipmentIdExistence(EquipmentId);  
+            if(Model.EquipmentSearched != null) // if the EquipmentId was found in the Equipments table
+            {
+                Model.Ban = true; 
+                Model.Message = $"This are the fields you can update from the equipment {EquipmentId}:";
+                // gets the lists of Areas, Coordinators, Status, and returns the corresponding list of objects (will be used in the html dropdown lists)
+                Model.AllAreas = Functions.ListAreas(); 
+                Model.AllCoordinators = Functions.ListCoordinators();
+                Model.AllStatus = Functions.ListStatus();
+            }
+            else // equipmentId not found
+            {
+                Model.Message = "That Equipment Id is not registered in the inventory, sorry.";
+                Model.Ban = false;
+            } 
+        }
+    }
+}
+
+@if(Model.Ban == false)
+{
+<h3>Provide the equipment ID you would like to modify:</h3>
+    @if (Model.Message!= "")
+    {
+        <div class="error-message">
+            @Model.Message
+        </div>
+    }
+    <form method="get" action="/EquipmentsCRUD/UpdateEquipments">
+        <input type="text" class="form-control" id="EquipmentIdText" name="EquipmentId" maxlength="15" required>
+        <br>
+        <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirmar</button>
+    </form>
+}
+else
+{
+    <h3 class="mb-4">@Model.Message</h3>
+    <br>
+
+    //show every single camp    
+    @if(EquipmentSearched is not null)
+    {
+        <form method="get" action="/EquipmentsCRUD/EquipmentUpdate">
+            <input hidden type = "text" name= "EquipmentId" value=@EquipmentSearched.EquipmentId readonly>
+            <div class="mb-3">
+                <label class="form-label">Provide the new Equipment Name: </label>
+                <input type="text" class="form-control" id="NameText" name="NameText" value="@EquipmentSearched.Name" maxlength="40" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the new Equipment Year of Fabrication: </label>
+                <input type="number" class="form-control" id="YearText" name="YearText" maxlength="4" min="1900" max="2100" value="@EquipmentSearched.Year" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the new Equipment Area:</label>
+                <select class="form-select" id="dropdown" name="AreaText">
+                    @if(Model.AllAreas is not null)
+                    {
+                        @foreach(var a in Model.AllAreas)
+                        {  // checks if the statusId of each status found matches the one of the equipment showed, if yes isSelected = "selected" is not isSelected=""
+                            if(a.AreaId == EquipmentSearched.AreaId)
+                            {
+                                <option value="@a.AreaId" selected>@a.Name</option> 
+                            }
+                            else
+                            {
+                                <option value="@a.AreaId">@a.Name</option> 
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <option value = 0>No areas Found</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the new Equipment Description:</label>
+                <input type="textarea" class="form-control" id="Description" name="DescriptionText" maxlength="255" value="@EquipmentSearched.Description" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the new Equipment Status: </label>
+                <select class="form-select" id="dropdown" name="StatusText">
+                    @if(Model.AllStatus is not null)
+                    {
+                        foreach(var s in Model.AllStatus)
+                        {
+                            if(s.StatusId == EquipmentSearched.StatusId)
+                            {
+                                <option value ="@s.StatusId" selected>@s.Value</option>
+                            }
+                            else
+                            {   
+                                <option value ="@s.StatusId">@s.Value</option>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <option value = 0>No Status Found</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the Equipment Control Number</label>
+                <input type="text" class="form-control" id="ControlNumber" name="ControlNumberText" value="@EquipmentSearched.ControlNumber" maxlength="20" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the Coordinator in charge of the Equipment: </label>
+                <select class="form-select" id="dropdown" name="CoordinatorText">
+                    @if(Model.AllCoordinators is not null)
+                    {
+                        @foreach(var c in Model.AllCoordinators)
+                        {
+                            if(c.CoordinatorId == EquipmentSearched.CoordinatorId)
+                            {
+                                <option value ="@c.CoordinatorId" selected>@c.Name @c.LastNameP @c.LastNameM</option>
+                            }
+                            else
+                            {
+                                <option value ="@c.CoordinatorId">@c.Name @c.LastNameP @c.LastNameM</option>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <option value = "0">No Coordinators found</option>
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary" name="action" value="confirm">Update Equipment</button>
+        </form>
+    }
+}
