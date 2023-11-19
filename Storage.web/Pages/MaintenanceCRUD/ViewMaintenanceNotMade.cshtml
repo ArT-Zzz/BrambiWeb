@@ -1,0 +1,156 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using AutoGens
+@{
+    ViewData["Title"] = "View All Equipments"; // title that will be shown in the page
+}
+@functions
+{
+    public List<Maintain>? AllPendingMaintenances { get; set; } // list that stores first 20 pending maintenance registers
+    int Offset = 0; // start count of pending maintenance registers
+    int TotalMaintenances = 0; // total maintenance registers
+    int Pages = 1;
+    public void OnGet(string action) // get all the equipments, the action is to see if th button Next or Previous was pushed
+    {
+        if (action == "Previous" && Offset >= 20)
+        {
+            Model.Offset -= 20; // to start from the last 20 equipments
+            Model.Pages -=1; // show in which page it is
+        }
+        else if (action == "Next" )
+        {
+            Model.Offset += 20; // to start from the next 20 equipments
+            Model.Pages +=1;
+        }
+        var result = ViewMaintenanceNotMade(Offset); // calling the method that will consult the bd and bring 20 equipments found, starting from the sent offset
+        Model.AllPendingMaintenances = result.pendingMaintenanceRegisters; // Model.AllEquipments = 20 equipments
+        Model.Offset = result.Offset; // Model.Offset = when it starts
+        Model.TotalMaintenances = result.Total; //Model.TotalEquipments = int how many equipments were found in the whole Equipments Table
+    }
+
+    public static (List<Maintain>? pendingMaintenanceRegisters,int Offset, int Total) ViewMaintenanceNotMade(int Offset)
+    {
+        using (bd_storage db = new())
+        {
+            DateTime dateTime = new(year: 2001, month: 01, day: 01);
+            IQueryable<Maintain>? maintain = db.Maintain
+                .Include(m => m.Maintenance)
+                .Include(m => m.Maintenance.MaintenanceType)
+                .Include(m => m.Equipment)
+                .Include(m => m.Maintenance.Storer)
+                .Where(m => m.Maintenance.MaintenanceDescription == "0")
+                .Where(m => m.Maintenance.ExitDate.Date == dateTime.Date)
+                .Where(m => m.Maintenance.MaintenanceMaterialsDescription == "0")
+                .OrderBy(m => m.MaintainId);
+            // var maintainGroup = maintain.GroupBy(ma=>ma.Maintenance.MaintenanceId);
+
+            int offset = Offset;
+
+            if (maintain is null || !maintain.Any())
+            {
+                Console.WriteLine("There are no pending maintenance registers right now");
+                return(null, offset, 0);
+            }
+
+            int countTotal = maintain.Count();
+            int batchS = 20;
+            int pages = countTotal / batchS;
+            if(countTotal%batchS != 0){pages+=1;}
+            var pendingMaintenance = maintain.Skip(offset).Take(batchS);
+
+            Console.WriteLine(
+                "|{0,-3}|{1,-12}|{2,-55}|{3,-11}|{4,-75}|{5, -15}|{6, -15}|",
+                "ID",
+                "ID Equipment",
+                "Equipment",
+                "Maintenance",
+                "Instructions for maintenance",
+                "Started",
+                "Storer ID"
+            );
+            Console.WriteLine(
+                "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+            );
+            foreach (var m in pendingMaintenance)
+            {
+                Console.WriteLine(
+                "|{0,-3}|{1,-12}|{2,-55}|{3,-11}|{4,-75}|{5, -15}|{6, -15}|",
+                    m.Maintenance?.MaintenanceId,
+                    m.Equipment?.EquipmentId,
+                    m.Equipment?.Name,
+                    m.Maintenance?.MaintenanceType?.Name,
+                    m.Maintenance?.MaintenanceInstructions,
+                    m.Maintenance?.ProgrammedDate.ToString("dd-MM-yyyy"),
+                    Functions.Decrypt(m.Maintenance?.Storer?.StorerId)
+                );
+            }
+            Console.WriteLine();
+            List<Maintain>? pMaintain = pendingMaintenance.ToList();
+            return (pMaintain, offset, pMaintain.Count());
+        }
+    }
+}
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/AddEquipments">Add Maintenance Report</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/UpdateEquipments">Finish Pending Maintenance</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</nav>
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+    
+    <h2>Total: @Model.TotalMaintenances . Showing: @Model.Pages / @(@Model.TotalMaintenances/20)</h2>
+    <form method="get" action="/MaintenanceCRUD/ViewMaintenanceNotMade">
+        <button type="submit" name="action" value="Previous" @if (Model.Offset == 0) { <text>disabled</text> }>Previous</button>
+        <button type="submit" name="action" value="Next" @if (Model.Offset + 20 >= Model.TotalMaintenances) { <text>disabled</text> }>Next</button>
+    </form>
+    @{
+    Console.WriteLine($"Offset: {Model.Offset}, TotalMaintenances: {Model.TotalMaintenances}"); // this is just so you can check
+    }
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Equipment ID</th>
+                <th>Equipment Name</th>
+                <th>Maintenance</th>
+                <th>Instructions</th>
+                <th>Date Started</th>
+                <th>Storer ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model.AllPendingMaintenances != null){
+                @foreach (var pMaintenance in Model.AllPendingMaintenances)
+                {
+                    <tr>
+                        <td>@pMaintenance.Maintenance?.MaintenanceId</td>
+                        <td>@pMaintenance.Equipment?.EquipmentId</td>
+                        <td>@pMaintenance.Equipment?.Name</td>
+                        <td>@pMaintenance.Maintenance?.MaintenanceType?.Name</td>
+                        <td>@pMaintenance.Maintenance?.MaintenanceInstructions</td>
+                        <td>@pMaintenance.Maintenance?.ProgrammedDate.ToString("dd-MM-yyyy")</td>
+                        <td>@Functions.Decrypt(pMaintenance.Maintenance?.Storer?.StorerId)</td>
+                    </tr>
+                }
+                Console.WriteLine($"Total: {Model.TotalMaintenances} . Showing: {Model.Pages} / {Model.TotalMaintenances/20}");
+            }
+            else
+            {
+                <h2>No Maintenances Registers have been summited yet</h2>
+                Console.WriteLine("No Maintenances Registers have been summited yet");
+            }
+        </tbody>
+    </table>
+</div>
