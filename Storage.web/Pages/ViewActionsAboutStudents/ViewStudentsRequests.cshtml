@@ -1,0 +1,122 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using AutoGens
+@{
+    // this page shows all the student general information, and also has a button in each one that can send them to the search student history of requests
+    ViewData["Title"] = "View All Approved Students Equipments Requests"; // title that will be shown in the page
+// next is the navigation bar for what the storer can see from the student
+}
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudents">View All Students</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/SearchStudentHistory">Search For a Student's History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/StudentsWithLateReturn">Student's with Late Returning</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudentsRequests">View Students Requests</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</nav>
+
+<h1>@ViewData["Title"]</h1>
+<p>View all the Equipments requests made by students, and that are already approved by the assigned teacher</p>
+
+@functions
+{
+    List<RequestDetail>? AllRequestsFound {get; set;} // declaration of the list that will store all the approved request details 
+    string? Message {get; set;} // declare the string that later will store the sent messages
+
+    public void OnGet()
+    {
+        Model.AllRequestsFound = ListEquipmentsRequests(); // saves in the model, all the RequestDetails with ProfessorNip = 1 (accepted)
+        if(Model.AllRequestsFound is null)
+        {
+            Model.Message = "There are no Requests Found.";
+        }
+        else
+        {
+            Model.Message = "This is the Historial of all Approved Requests of Equipments";
+        }
+    }
+    
+    public static List<RequestDetail>? ListEquipmentsRequests()
+    {
+        using (bd_storage db = new())
+        {
+            IQueryable<RequestDetail>? requestDetails = db.RequestDetails
+            .Include( e => e.Equipment)
+            .Include( s => s.Status)
+            .Include(e=> e.Request.Student)
+            .Where( r => r.ProfessorNip == 1)
+            .OrderByDescending( f  => f.RequestedDate);
+
+            if ((requestDetails is null) || !requestDetails.Any())
+            {
+                Console.WriteLine("There are no request found");
+                return null;
+            }
+
+            return requestDetails.ToList();
+        }
+    }
+}
+
+    @if(Model.AllRequestsFound is null)
+    { // there are no requests for this student
+        <h4>There are no Requests Found.</h4>
+    }
+    else
+    { // found history of requests for this student
+        // group  the Request Details by Request Id,and use the grouped one to show later the info
+        var groupedRequests = Model.AllRequestsFound.GroupBy(r => r.RequestId);
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Dispatch Time</th>
+                    <th>Return Time</th>
+                    <th> Request Date </th>
+                    <th>Day of Made Request</th>
+                    <th>Student Info</th>
+                    <th>Status</th>
+                    <th>Approved By Teacher</th>
+                    <th>Equipments</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var group in groupedRequests)
+                { // to show every single one of the requests found
+                    var firstRequest = group.First(); // the First is so it is just one group, and we will have access to the attributes of it (REquestId, DispatchTime...) 
+                    <tr>
+                        <td>@firstRequest.RequestId</td>
+                        <td>@firstRequest.DispatchTime.TimeOfDay</td>
+                        <td>@firstRequest.ReturnTime.TimeOfDay</td>
+                        <td>@firstRequest.RequestedDate.Day / @firstRequest.RequestedDate.Month / @firstRequest.RequestedDate.Year</td>
+                        <td>@firstRequest.CurrentDate.Day / @firstRequest.CurrentDate.Month / @firstRequest.CurrentDate.Year</td>
+                        <td>@firstRequest.Request?.Student?.Name @firstRequest.Request?.Student?.LastNameP</td>
+                        <td>@firstRequest.Status?.Value</td>
+                        @if(firstRequest.ProfessorNip == 1){<td>Accepted</td>}
+                        <td>
+                            <ul>
+                                @foreach (var r in group)
+                                { // so all the equipments of the request will be seen in the same celd of the same request of course
+                                    <li>@r.Equipment?.Name</li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                }      
+            </tbody>
+        </table>
+    }
+

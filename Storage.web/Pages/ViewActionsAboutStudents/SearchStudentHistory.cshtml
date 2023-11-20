@@ -5,6 +5,26 @@
 @{
     ViewData["Title"] = "Search for a Student History By HIS/HER Id "; // title that will be shown in the page
 }
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudents">View All Students</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/SearchStudentHistory">Search For a Student's History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/StudentsWithLateReturn">Student's with Late Returning</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudentsRequests">View Students Requests</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</nav>
 
 @functions
 {
