@@ -12,54 +12,57 @@
 
 @functions
 {
-    List<Classroom>? AllClassrooms {get; set;}
-    int TotalClassrooms = 0;
-    Classroom? ChoosenClassroom {get; set;}
-    List<Subject>? AllSubjects {get; set;}
-    int TotalSubjects = 0;
-    Subject? ChoosenSubject{get; set;}
-    List<Professor>? AllProfessors {get; set;}
-    int TotalProfessors = 0;
-    Professor? ChoosenProfessor{get; set;}
-    string? StorerId {get; set;}
-    string? MinDate {get; set;}
-    string? MaxDate{get; set;}
-    bool IsWeekendSelected {get; set;}
+    List<Classroom> AllClassrooms { get; set; }
+    int? ChoosenClassroom { get; set; }
+    List<Subject> AllSubjects { get; set; }
+    string? ChoosenSubject { get; set; }
+    List<Professor> AllProfessors { get; set; }
+    string? ChoosenProfessor { get; set; }
+    string StorerId { get; set; }
+    string? MinDate { get; set; }
+    string? MaxDate { get; set; }
+    bool IsWeekendSelected { get; set; }
+    bool RequestRegistered { get; set; }
+    bool ShowSpecificInformation { get; set; }
 
-    public void OnGet(int selectedOptionClass, string selectedOptionSub, string selectedOptionProf)
+    public void OnGet(string username, int selectedOptionClass, string selectedOptionSub, string selectedOptionProf)
     {
         Model.StorerId = Functions.AddStorer();
         if(Model.StorerId != ""){
-            if(selectedOptionClass > 0)
-            {
-                Model.ChoosenClassroom = Functions.AddClassroom(selectedOptionClass);
-            }
+            if(selectedOptionClass > 0 && selectedOptionProf != "" && selectedOptionSub !=""){
+                if(selectedOptionClass > 0)
+                {
+                    Model.ChoosenClassroom = Functions.AddClassroom(selectedOptionClass);
+                }
+                if(selectedOptionSub !="0")
+                {
+                    Model.ChoosenSubject = Functions.AddSubjects(selectedOptionSub);
+                }
+                if(selectedOptionProf !="0")
+                {
+                    Model.ChoosenProfessor = Functions.AddProfessors(selectedOptionProf);
+                }
+                DateTime CurrentDate = DateTime.Now;
+                // Añade un día a la fecha actual para establecer que solo se pueda seleccionar después de un día
+                DateTime DatePlus1 = CurrentDate.AddDays(1);
+                // Formatea la fecha en el formato YYYY-MM-DD
+                Model.MinDate = DatePlus1.ToString("yyyy-MM-dd");
+                DateTime DatePlus14 = CurrentDate.AddDays(14);
+                Model.MaxDate = DatePlus14.ToString("yyyy-MM-dd");
+                Model.IsWeekendSelected = false;
+                var request = Functions.AddRequest(Model.ChoosenClassroom, Model.ChoosenProfessor, username, Model.StorerId, Model.ChoosenSubject);
+                if (request.Affected>0){
+                    ShowSpecificInformation = true;
+                } else{
+                    ShowSpecificInformation = false;
+                } 
+            }  
             var resultClass = Functions.ListClassrooms();
             Model.AllClassrooms = resultClass.ListClass;
-            Model.TotalClassrooms = resultClass.TotalCountClass;
-            if(selectedOptionSub !="0")
-            {
-                Model.ChoosenSubject = Functions.AddSubjects(selectedOptionSub);
-            }
-            var resultSub = Functions.ListSubjects();
-            Model.AllSubjects = resultSub.ListSub;
-            Model.TotalSubjects = resultSub.TotalCountSub;
-            if(selectedOptionProf !="0")
-            {
-                Model.ChoosenProfessor = Functions.AddProfessors(selectedOptionProf);
-            }
             var resultProf = Functions.ListProfessors();
-            Model.TotalProfessors = resultProf.TotalCountProf;
             Model.AllProfessors = resultProf.ListProf;
-
-            DateTime CurrentDate = DateTime.Now;
-            // Añade un día a la fecha actual para establecer que solo se pueda seleccionar después de un día
-            DateTime DatePlus1 = CurrentDate.AddDays(1);
-            // Formatea la fecha en el formato YYYY-MM-DD
-            Model.MinDate = DatePlus1.ToString("yyyy-MM-dd");
-            DateTime DatePlus14 = CurrentDate.AddDays(14);
-            Model.MaxDate = DatePlus14.ToString("yyyy-MM-dd");
-            Model.IsWeekendSelected = false;
+            var resultSub = Functions.ListSubjects();
+            Model.AllSubjects = resultSub.ListSub;  
         }
 
     }
@@ -76,94 +79,102 @@
             Model.IsWeekendSelected = true;
             return;
         }
-
-        // Continuar con el procesamiento normal
-        // ...
     }
 }
 
 <form method="get" action="/Formats/AddRequestFormat">
     @if(Model.StorerId!=""){
-        <div class="mb-3">
-            <label class="form-label">Provide the plantel:</label>
-            <select class="form-select" id="dropdown" name="plantel">
-                <option value = "colomos"> Colomos </option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label" for="dropdown">Selecciona un salon:</label>
-            <select class="form-select" id="dropdown" name="selectedOption">
-                @if(Model.AllClassrooms is not null)
-                {
-                    @foreach(var c in Model.AllClassrooms)
-                    { 
-                        <option value="@c.ClassroomId">@c.Name</option>
+        <fieldset>
+            <legend>General Information</legend>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the plantel:</label>
+                <select class="form-select" id="dropdown" name="plantel" required>
+                    <option value="colomos"> Colomos </option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="dropdown">Select a classroom:</label>
+                <select class="form-select" id="dropdown" name="selectedOptionClass" required>
+                    @if(Model.AllClassrooms is not null)
+                    {
+                        @foreach(var c in Model.AllClassrooms)
+                        { 
+                            <option value="@c.ClassroomId">@c.Name</option>
+                        }
                     }
-                }
-                else
-                {
-                    <option value=0>No classrooms found</option>
-                }
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label" for="dropdown">Selecciona una materia:</label>
-            <select class="form-select" id="dropdown" name="selectedOptionSub">
-                @if(Model.AllSubjects is not null)
-                {
-                    @foreach(var c in Model.AllSubjects)
-                    { 
-                        <option value="@c.SubjectId">@c.Name</option>
+                    else
+                    {
+                        <option value=0>No classrooms found</option>
                     }
-                }
-                else{
-                    <option value="0">No subjects found</option>
-                }
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label" for="dropdown">Selecciona un profesor:</label>
-            <select class="form-select" id="dropdown" name="selectedOptionProf">
-                @if(Model.AllProfessors is not null)
-                {
-                    @foreach(var c in Model.AllProfessors)
-                    { 
-                        <option value="@c.ProfessorId">@c.Name @c.LastNameP @c.LastNameM</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="dropdown">Select a subject:</label>
+                <select class="form-select" id="dropdown" name="selectedOptionSub" required>
+                    @if(Model.AllSubjects is not null)
+                    {
+                        @foreach(var c in Model.AllSubjects)
+                        { 
+                            <option value="@c.SubjectId">@c.Name</option>
+                        }
                     }
-                }
-                else
+                    else{
+                        <option value="0">No subjects found</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="dropdown">Select a professor:</label>
+                <select class="form-select" id="dropdown" name="selectedOptionProf" required>
+                    @if(Model.AllProfessors is not null)
+                    {
+                        @foreach(var c in Model.AllProfessors)
+                        { 
+                            <option value="@c.ProfessorId">@c.Name @c.LastNameP @c.LastNameM</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="0">No professors found</option>
+                    }
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" name="action" value="confirm"> Continue </button>
+        </fieldset>
+        @if (Model.ShowSpecificInformation==true)
+        {
+            <fieldset>
+                <legend>Specific Information</legend>
+
+                <div class="mb-3">
+                    <label class="form-label" for="fecha">Select the date of the request:</label>
+                    <input class="form-control" type="date" id="requestedDate" name="requestedDate" min="@Model.MinDate" max="@Model.MaxDate" required>
+                </div>
+                @if (Model.IsWeekendSelected == true)
                 {
-                    <option value="0">No professors found</option>
+                    <p style="color: red">You can not choose a Saturday or a Sunday</p>
                 }
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label" for="fecha">Fecha:</label>
-            <input class="form-date" type="date" id="requestedDate" name="requestedDate" min="@Model.MinDate" max = "@Model.MaxDate" required>
-        </div>
-        @if(IsWeekendSelected==true){
-            <p style="color: red">You can not choose a Saturday or a Sunday</p>
+
+                <div class="mb-3">
+                    <label class="form-label" for="dropdown">Selecciona un hora de inicio:</label>
+                    <select class="form-select" id="dropdown" name="selectedInitHour" required>
+                        <option value=1>7:00</option>
+                        <option value=2>7:50</option>
+                        <option value=3>8:40</option>
+                        <option value=4>9:30</option>
+                        <option value=5>10:20</option>
+                        <option value=6>11:10</option>
+                        <option value=7>12:00</option>
+                        <option value=8>12:50</option>
+                        <option value=9>13:40</option>
+                    </select>
+                </div>
+            </fieldset>
         }
-        <div class="mb-3">
-            <label class="form-label" for="dropdown">Selecciona un hora de inicio:</label>
-            <select class="form-select" id="dropdown" name="selectedInitHour" required>
-                <option value=1>7:00</option>
-                <option value=2>7:50</option>
-                <option value=3>8:40</option>
-                <option value=4>9:30</option>
-                <option value=5>10:20</option>
-                <option value=6>11:10</option>
-                <option value=7>12:00</option>
-                <option value=8>12:50</option>
-                <option value=9>13:40</option>
-                else
-                {
-                    <option value="0">No professors found</option>
-                }
-            </select>
-        </div>
-    } else 
-    {
-        <p style="color: red"> There's not a storer registered. Contact a superior</p>
     }
 </form>
+
