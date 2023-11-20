@@ -7,7 +7,7 @@ using System.Text;
 public static class Functions
 {
     
-    public static (List<Classroom>? List, int TotalCount) ListClassrooms()
+    public static (List<Classroom>? ListClass, int TotalCountClass) ListClassrooms()
     {
         // Indice de la lista
         int i = 1;
@@ -34,6 +34,86 @@ public static class Functions
         }
     }
 
+    public static (List<Subject>? ListSub, int TotalCountSub) ListSubjects()
+    {
+        using (bd_storage db = new())
+        {
+            // verifica que exista la tabla de Classroom
+            if( db.Subjects is null)
+            {
+                throw new InvalidOperationException("The table does not exist.");
+            } 
+            else 
+            {
+                // Muestra toda la lista de classrooms con un indice y la clave de este
+                IQueryable<Subject> Subjects = db.Subjects;
+                
+                foreach (var s in Subjects)
+                {
+                    Console.WriteLine($"{s.SubjectId}. {s.Name}");
+                
+                }
+                return (Subjects.ToList(),Subjects.Count());
+            }
+        }
+    }
+
+    public static (List<Professor>? ListProf, int TotalCountProf) ListProfessors()
+    {
+        using (bd_storage db = new())
+        {
+            // verifica que exista la tabla de Classroom
+            if( db.Professors is null)
+            {
+                throw new InvalidOperationException("The table does not exist.");
+            } 
+            else 
+            {
+                // Muestra toda la lista de classrooms con un indice y la clave de este
+                IQueryable<Professor> Professors = db.Professors;
+                
+                foreach (var p in Professors)
+                {
+                    Console.WriteLine($"{p.Name} {p.LastNameP} {p.LastNameM}");
+                
+                }
+                return (Professors.ToList(),Professors.Count());
+            }
+        }
+    }
+
+    public static string AddStorer()
+    {
+        using (bd_storage db = new())
+        {
+            string choosenStorer = "";
+
+            if (db.Storers != null && db.Storers.Any())
+            {
+                IQueryable<AutoGens.Storer> StorerQuery = db.Storers
+                    .AsEnumerable().OrderBy(e => Guid.NewGuid()).AsQueryable();
+
+                if (StorerQuery.Any())
+                {
+                    var Random = new Random();
+                    // Se ordena por un número random que sea positivo que se especifica con el .Next()
+                    // Y se selecciona el primero
+                    var RandomStorer = StorerQuery.OrderBy(e => Random.Next()).First();
+                    choosenStorer = RandomStorer.StorerId;
+                }
+                else {
+                    choosenStorer = "";
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("The table does not exist.");
+            }
+
+            return choosenStorer;
+        }
+    }
+
     
     public static Classroom AddClassroom(int ClassroomId)
     {
@@ -47,6 +127,42 @@ public static class Functions
                     Console.WriteLine("Not a valid key. Try again");
                 }
             return classroom;
+        }
+    }
+
+    public static Subject? AddSubjects(string SubjectId)
+    {
+        using (bd_storage db = new())
+        {
+            IQueryable<Subject> subjectsId = db.Subjects.Where(s => s.SubjectId == SubjectId);
+            Subject? subject= null;
+            // Si no existe le pide que ingrese otra vez el valor
+            if (subjectsId is null || !subjectsId.Any())
+            {
+                Console.WriteLine("Not a valid key. Try again");
+                subject = null;
+            }else{
+                subject = subjectsId.First();
+            }
+            return subject;
+        }
+    }
+
+    public static Professor? AddProfessors(string ProfessorId)
+    {
+        using (bd_storage db = new())
+        {
+            IQueryable<Professor> ProfessorsQuery = db.Professors.Where(p => p.ProfessorId == ProfessorId);
+            Professor? professor= null;
+            // Si no existe le pide que ingrese otra vez el valor
+            if (ProfessorsQuery is null || !ProfessorsQuery.Any())
+            {
+                Console.WriteLine("Not a valid key. Try again");
+                professor = null;
+            }else{
+                professor = ProfessorsQuery.First();
+            }
+            return professor;
         }
     }
 
@@ -118,17 +234,19 @@ public static class Functions
             aesAlg.IV = new byte[16];
 
             ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-
-            using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(CipherText)))
-            {
-                using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+            if(CipherText is not null){
+                using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(CipherText)))
                 {
-                    using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                     {
-                        return srDecrypt.ReadToEnd();
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        {
+                            return srDecrypt.ReadToEnd();
+                        }
                     }
                 }
             }
+            return "";
         }
     }
     public static List<Coordinator>? ListCoordinators()
@@ -204,6 +322,101 @@ public static class Functions
                 } 
         }
         return (equipmentIdAffected, controlNumberAffected);
+    }
+
+    public static int VerifyEquipmentIdControlNumberMinusThis(string EquipmentId, string ControlNumber)
+    {
+        Console.Write("EquipmentID: ");
+        Console.WriteLine(EquipmentId);
+        Console.Write("Control NUMber: ");
+        Console.WriteLine(ControlNumber);
+        int controlNumberAffected = 0;
+        using(bd_storage db = new())
+        {
+            IQueryable<Equipment> equipments = db.Equipments
+                .Where(e=> e.ControlNumber == ControlNumber && e.EquipmentId != EquipmentId);                
+                if(equipments is null || !equipments.Any())
+                {
+                    controlNumberAffected = 0;
+                }
+                else
+                {
+                    Console.WriteLine("That control number is already in use, try again.");
+                    controlNumberAffected = 1;
+                }
+        }
+        return controlNumberAffected;
+    }
+
+    public static Equipment? VerifyEquipmentIdExistence(string EquipmentId)
+    {
+        using(bd_storage db = new())
+        {
+            IQueryable<Equipment> equipments = db.Equipments
+                .Include(e => e.Area)
+                .Include(e => e.Status)
+                .Include(e => e.Coordinator)
+                .Where(e => e.EquipmentId == EquipmentId);
+                                        
+                if(equipments is null || !equipments.Any()) // checks if the query returned anything
+                {
+                    Console.WriteLine("That equipment ID doesn't exist in the database");
+                    return null;
+                }
+                else
+                {
+                    return equipments.First();
+                }
+        }
+    }
+
+    public static List<Equipment>? SearchEquipmentsByName(string? SearchTerm)
+    {
+        List<Equipment>? equipmentsList;
+        if (string.IsNullOrEmpty(SearchTerm))
+        {
+            throw new InvalidOperationException();
+        }
+        using (bd_storage db = new())
+        {
+                IQueryable<Equipment>? equipments = db.Equipments
+                    .Include(e => e.Area)
+                    .Include(e => e.Status)
+                    .Include(e => e.Coordinator)
+                    .Where(e => e.Name.StartsWith(SearchTerm)); // Utiliza StartsWith para buscar equipos cuyos nombres comiencen con el término de búsqueda
+
+                if (!equipments.Any())
+                {
+                    Console.WriteLine("No equipment found matching the search term: " + SearchTerm);
+                    return null;
+                }
+                equipmentsList = equipments.ToList();
+        }
+        return equipmentsList;
+    }
+
+    
+    public static List<Equipment>? SearchEquipmentsById(string? SearchTerm)
+    {
+        if (string.IsNullOrEmpty(SearchTerm))
+        {
+            throw new InvalidOperationException();
+        }
+        using (bd_storage db = new())
+        {
+            IQueryable<Equipment>? equipments = db.Equipments
+                .Include(e => e.Area)
+                .Include(e => e.Status)
+                .Include(e => e.Coordinator)
+                .Where(e => e.EquipmentId.StartsWith(SearchTerm)); // Utiliza StartsWith para buscar equipos cuyos nombres comiencen con el término de búsqueda
+
+            if (!equipments.Any())
+            {
+                Console.WriteLine("No equipment found matching the search term: " + SearchTerm);
+                return null;
+            }
+            return equipments.ToList();
+        }
     }
 
 }

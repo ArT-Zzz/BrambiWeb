@@ -8,12 +8,13 @@
 @functions
 {
     public List<Equipment>? AllEquipments { get; set; } //list to store all the 20 fisrt equipments in the bd
-    int Offset = 0; // start count of equipments
+    int Offset {get; set;} // start count of equipments
     int TotalEquipments = 0; // total equipments
-    int Pages = 1;
-    int TotalPages = 0;
+    int Pages {get; set;}
+    int TotalPages {get; set;}
     public void OnGet(string action) // get all the equipments, the action is to see if th button Next or Previous was pushed
     {
+        if(Offset < 0){Model.Offset = 0;}
         if (action == "Previous" && Model.Offset >= 20)
         {
             Model.Offset -= 20; // to start from the last 20 equipments
@@ -92,7 +93,10 @@
                         <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/UpdateEquipments">Update Equipments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments">Search for one Equipment</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/SearchEquipmentById">Search for One Equipment ID</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/SearchEquipmentsByName">Search By Equipment Name</a>
                     </li>
                 </ul>
             </div>

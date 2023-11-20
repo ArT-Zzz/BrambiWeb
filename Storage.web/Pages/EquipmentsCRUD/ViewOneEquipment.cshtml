@@ -1,0 +1,78 @@
+@page
+@using AutoGens 
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@functions
+{
+    public string? EquipmentIdReceived {get; set;} // this is the string where the equipmentId passed will be received
+    public string? InformationShown {get; set;} // comes with how many camps of the equipment were updated ( come from EquipmentUpdate or others)
+    Equipment? EquipmentFound {get; set;} //the Equipment object that correspond to the EquipmentId received
+    public void OnGet()
+    {
+        EquipmentIdReceived = TempData["EquipmentId"] as string; // temporal data from EquipmentUpdate ...(can come from other pages)
+        InformationShown = TempData["ResultInfoShown"] as string; // temporal data from EquipmentUpdate ... ( can come from other pages)
+        //just the page that sends the info must have a TempData with the name of "EquipmentId" or ResultInfoShown
+        if(EquipmentIdReceived is not null)
+        {
+            EquipmentFound = Functions.VerifyEquipmentIdExistence(EquipmentIdReceived); // searches for a Equipment in the bd with the EquipmentId sent
+            //returns a Equipment object that corresponds for the EquipmentIdReceived
+        }
+        TempData.Remove("EquipmentId");
+        TempData.Remove("ResultInfoShown"); // removing so it is not available for future solicitudes
+    }
+}
+@{
+    ViewData["Title"] = "Information of the Equipment : " + EquipmentIdReceived; 
+}
+
+<h1>@ViewData["Title"]</h1>
+@if(InformationShown == "0") // 0 means that comes from EquipmentUpdate.cshtml and the register was not updated
+{
+    <h3>The camps of the equipment were not updated</h3>
+    <br>
+}
+else if(InformationShown == "1") // 1 means that comes from EquipmentUpdate.cshtml and the register was updated
+{
+    <h3>The camps of the equipment were updated!</h3><br>
+}
+
+@if(EquipmentFound is not null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th colspan="2" class="text-center">Equipment ID: @EquipmentIdReceived</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Equipment Name</th>
+                <td>@EquipmentFound.Name</td>
+            </tr>
+            <tr>
+                <th>Equipment Area</th>
+                <td>@EquipmentFound.Area?.Name</td>
+            </tr>
+            <tr>
+                <th>Equipment Description</th>
+                <td>@EquipmentFound.Description</td>
+            </tr>
+            <tr>
+                <th>Equipment Status</th>
+                <td>@EquipmentFound.Status?.Value</td>
+            </tr>
+            <tr>
+                <th>Equipment Year of Fabrication</th>
+                <td>@EquipmentFound.Year</td>
+            </tr>
+            <tr>
+                <th>Equipment Control Number</th>
+                <td>@EquipmentFound.ControlNumber</td>
+            </tr>
+            <tr>
+                <th>Equipment Coordinator in Charge</th>
+                <td>@EquipmentFound.Coordinator?.Name @EquipmentFound.Coordinator?.LastNameP @EquipmentFound.Coordinator?.LastNameM</td>
+            </tr>
+        </tbody>
+    </table>
+}
