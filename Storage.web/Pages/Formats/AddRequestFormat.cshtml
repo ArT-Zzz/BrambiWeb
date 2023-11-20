@@ -18,7 +18,7 @@
     string? ChoosenSubject { get; set; }
     List<Professor> AllProfessors { get; set; }
     string? ChoosenProfessor { get; set; }
-    string? StorerId { get; set; }
+    string StorerId { get; set; }
     string? MinDate { get; set; }
     string? MaxDate { get; set; }
     bool IsWeekendSelected { get; set; }
@@ -29,50 +29,40 @@
     {
         Model.StorerId = Functions.AddStorer();
         if(Model.StorerId != ""){
-            if(selectedOptionClass > 0)
-            {
-                Model.ChoosenClassroom = Functions.AddClassroom(selectedOptionClass);
-            }
-            else{
-                Model.ChoosenClassroom = 22;
-            }
+            if(selectedOptionClass > 0 && selectedOptionProf != "" && selectedOptionSub !=""){
+                if(selectedOptionClass > 0)
+                {
+                    Model.ChoosenClassroom = Functions.AddClassroom(selectedOptionClass);
+                }
+                if(selectedOptionSub !="0")
+                {
+                    Model.ChoosenSubject = Functions.AddSubjects(selectedOptionSub);
+                }
+                if(selectedOptionProf !="0")
+                {
+                    Model.ChoosenProfessor = Functions.AddProfessors(selectedOptionProf);
+                }
+                DateTime CurrentDate = DateTime.Now;
+                // Añade un día a la fecha actual para establecer que solo se pueda seleccionar después de un día
+                DateTime DatePlus1 = CurrentDate.AddDays(1);
+                // Formatea la fecha en el formato YYYY-MM-DD
+                Model.MinDate = DatePlus1.ToString("yyyy-MM-dd");
+                DateTime DatePlus14 = CurrentDate.AddDays(14);
+                Model.MaxDate = DatePlus14.ToString("yyyy-MM-dd");
+                Model.IsWeekendSelected = false;
+                var request = Functions.AddRequest(Model.ChoosenClassroom, Model.ChoosenProfessor, username, Model.StorerId, Model.ChoosenSubject);
+                if (request.Affected>0){
+                    ShowSpecificInformation = true;
+                } else{
+                    ShowSpecificInformation = false;
+                } 
+            }  
             var resultClass = Functions.ListClassrooms();
             Model.AllClassrooms = resultClass.ListClass;
-            if(selectedOptionSub !="0")
-            {
-                Model.ChoosenSubject = Functions.AddSubjects(selectedOptionSub);
-            }
-            else
-            {
-                Model.ChoosenSubject= "aaaaaaaaaaa" ;
-            }
-            var resultSub = Functions.ListSubjects();
-            Model.AllSubjects = resultSub.ListSub;
-            if(selectedOptionProf !="0")
-            {
-                Model.ChoosenProfessor = Functions.AddProfessors(selectedOptionProf);
-            }
-            else 
-            {
-                Model.ChoosenProfessor= Functions.EncryptPass("1111111111");
-            }
             var resultProf = Functions.ListProfessors();
             Model.AllProfessors = resultProf.ListProf;
-
-            DateTime CurrentDate = DateTime.Now;
-            // Añade un día a la fecha actual para establecer que solo se pueda seleccionar después de un día
-            DateTime DatePlus1 = CurrentDate.AddDays(1);
-            // Formatea la fecha en el formato YYYY-MM-DD
-            Model.MinDate = DatePlus1.ToString("yyyy-MM-dd");
-            DateTime DatePlus14 = CurrentDate.AddDays(14);
-            Model.MaxDate = DatePlus14.ToString("yyyy-MM-dd");
-            Model.IsWeekendSelected = false;
-            var request = Functions.AddRequest(Model.ChoosenClassroom, Model.ChoosenProfessor, username, Model.StorerId, Model.ChoosenSubject);
-            if (request.Affected>0){
-                ShowSpecificInformation = true;
-            } else{
-                ShowSpecificInformation = false;
-            }     
+            var resultSub = Functions.ListSubjects();
+            Model.AllSubjects = resultSub.ListSub;  
         }
 
     }
@@ -106,7 +96,7 @@
 
             <div class="mb-3">
                 <label class="form-label" for="dropdown">Select a classroom:</label>
-                <select class="form-select" id="dropdown" name="selectedOption" required>
+                <select class="form-select" id="dropdown" name="selectedOptionClass" required>
                     @if(Model.AllClassrooms is not null)
                     {
                         @foreach(var c in Model.AllClassrooms)
@@ -155,14 +145,14 @@
             </div>
             <button type="submit" class="btn btn-primary" name="action" value="confirm"> Continue </button>
         </fieldset>
-        @if (Model.ShowSpecificInformation)
+        @if (Model.ShowSpecificInformation==true)
         {
             <fieldset>
                 <legend>Specific Information</legend>
 
                 <div class="mb-3">
                     <label class="form-label" for="fecha">Select the date of the request:</label>
-                    <input class="form-date" type="date" id="requestedDate" name="requestedDate" min="@Model.MinDate" max="@Model.MaxDate" required>
+                    <input class="form-control" type="date" id="requestedDate" name="requestedDate" min="@Model.MinDate" max="@Model.MaxDate" required>
                 </div>
                 @if (Model.IsWeekendSelected == true)
                 {

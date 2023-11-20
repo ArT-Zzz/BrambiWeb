@@ -143,11 +143,11 @@ partial class Functions
         }
     }
 
-    public static string? AddStorer()
+    public static string AddStorer()
     {
         using (bd_storage db = new())
         {
-            string? choosenStorer = "";
+            string choosenStorer = "";
 
             if (db.Storers != null && db.Storers.Any())
             {

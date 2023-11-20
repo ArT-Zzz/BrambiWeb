@@ -9,14 +9,16 @@
     Equipment? EquipmentFound {get; set;} //the Equipment object that correspond to the EquipmentId received
     public void OnGet()
     {
-        EquipmentIdReceived = TempData["EquipmentId"] as string; // temporal data from UpdateEquipment ...(can come from other pages)
-        InformationShown = TempData["ResultInfoShown"] as string; // temporal data from UpdateEquipment ... ( can come from other pages)
+        EquipmentIdReceived = TempData["EquipmentId"] as string; // temporal data from EquipmentUpdate ...(can come from other pages)
+        InformationShown = TempData["ResultInfoShown"] as string; // temporal data from EquipmentUpdate ... ( can come from other pages)
         //just the page that sends the info must have a TempData with the name of "EquipmentId" or ResultInfoShown
         if(EquipmentIdReceived is not null)
         {
             EquipmentFound = Functions.VerifyEquipmentIdExistence(EquipmentIdReceived); // searches for a Equipment in the bd with the EquipmentId sent
             //returns a Equipment object that corresponds for the EquipmentIdReceived
         }
+        TempData.Remove("EquipmentId");
+        TempData.Remove("ResultInfoShown"); // removing so it is not available for future solicitudes
     }
 }
 @{

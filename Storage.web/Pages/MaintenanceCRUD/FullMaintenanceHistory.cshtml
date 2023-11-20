@@ -3,53 +3,50 @@
 @using Microsoft.EntityFrameworkCore.ChangeTracking
 @using AutoGens
 @{
-    ViewData["Title"] = "View Pending Maintenance Registers"; // title that will be shown in the page
+    ViewData["Title"] = "Maintenance Register History"; // title that will be shown in the page
 }
 @functions
 {
-    public List<Maintain>? AllPendingMaintenances { get; set; } // list that stores first 20 pending maintenance registers
+    public List<Maintain>? AllMaintenances { get; set; } // list that stores first 20 pending maintenance registers
     int Offset = 0; // start count of pending maintenance registers
     int TotalMaintenances = 0; // total maintenance registers
     int Pages = 1;
-    public void OnGet(string action) // the action is to see if the Next or Previous button was pushed
+    public void OnGet(string action) // get all the equipments, the action is to see if th button Next or Previous was pushed
     {
-        var result = ViewMaintenanceNotMade(Offset); // gets the 20 maintenance registers afetr the offset
-        Model.AllPendingMaintenances = result.pendingMaintenanceRegisters; // sends to html maintenance registers batch
-        Model.Offset = result.Offset; // sends to html the offset
-        Model.TotalMaintenances = result.Total; // sends to html how many maintenance registers there are in total
         if (action == "Previous" && Offset >= 20)
         {
-            Model.Offset -= 20; // first batch first 20 maintenance registers
+            Model.Offset -= 20; // to start from the last 20 equipments
             Model.Pages -=1; // show in which page it is
         }
         else if (action == "Next" )
         {
-            Model.Offset += 20; // each batch shows the next 20 maintenance registers
-            Model.Pages +=1; // advances page
-        }        
+            Model.Offset += 20; // to start from the next 20 equipments
+            Model.Pages +=1;
+        }
+        var result = ViewMaintenanceHistory(Offset); // calling the method that will consult the bd and bring 20 equipments found, starting from the sent offset
+        Model.AllMaintenances = result.MaintenanceRegisters; // Model.AllEquipments = 20 equipments
+        Model.Offset = result.Offset; // Model.Offset = when it starts
+        Model.TotalMaintenances = result.Total; //Model.TotalEquipments = int how many equipments were found in the whole Equipments Table
     }
 
-    public static (List<Maintain>? pendingMaintenanceRegisters,int Offset, int Total) ViewMaintenanceNotMade(int Offset)
+    public static (List<Maintain>? MaintenanceRegisters,int Offset, int Total) ViewMaintenanceHistory(int Offset)
     {
         using (bd_storage db = new())
         {
-            DateTime dateTime = new(year: 2001, month: 01, day: 01);
             IQueryable<Maintain>? maintain = db.Maintain
                 .Include(m => m.Maintenance)
                 .Include(m => m.Maintenance.MaintenanceType)
                 .Include(m => m.Equipment)
                 .Include(m => m.Maintenance.Storer)
-                .Where(m => m.Maintenance.MaintenanceDescription == "0")
-                .Where(m => m.Maintenance.ExitDate.Date == dateTime.Date)
-                .Where(m => m.Maintenance.MaintenanceMaterialsDescription == "0")
-                .OrderBy(m => m.MaintainId);
+                .OrderBy(m => m.MaintenanceId)
+                .OrderByDescending(m => m.Maintenance.ProgrammedDate);
             // var maintainGroup = maintain.GroupBy(ma=>ma.Maintenance.MaintenanceId);
 
             int offset = Offset;
 
             if (maintain is null || !maintain.Any())
             {
-                Console.WriteLine("There are no pending maintenance registers right now");
+                Console.WriteLine("There are no Maintenance Registers summited yet");
                 return(null, offset, 0);
             }
 
@@ -57,7 +54,7 @@
             int batchS = 20;
             int pages = countTotal / batchS;
             if(countTotal%batchS != 0){pages+=1;}
-            var pendingMaintenance = maintain.Skip(offset).Take(batchS);
+            var Maintenance = maintain.Skip(offset).Take(batchS);
 
             Console.WriteLine(
                 "|{0,-3}|{1,-12}|{2,-55}|{3,-11}|{4,-75}|{5, -15}|{6, -15}|",
@@ -66,13 +63,17 @@
                 "Equipment",
                 "Maintenance",
                 "Instructions for maintenance",
+                "Maintenance Description",
                 "Started",
-                "Storer ID"
+                "Returned",
+                "Storer ID",
+                "",
+                "Used Materials"
             );
             Console.WriteLine(
                 "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
             );
-            foreach (var m in pendingMaintenance)
+            foreach (var m in Maintenance)
             {
                 Console.WriteLine(
                 "|{0,-3}|{1,-12}|{2,-55}|{3,-11}|{4,-75}|{5, -15}|{6, -15}|",
@@ -81,13 +82,17 @@
                     m.Equipment?.Name,
                     m.Maintenance?.MaintenanceType?.Name,
                     m.Maintenance?.MaintenanceInstructions,
+                    m.Maintenance?.MaintenanceDescription,
                     m.Maintenance?.ProgrammedDate.ToString("dd-MM-yyyy"),
-                    Functions.Decrypt(m.Maintenance?.Storer?.StorerId)
+                    m.Maintenance?.ExitDate.ToString("dd-MM-yyyy"),
+                    m.Maintenance?.Storer?.Name,
+                    m.Maintenance?.Storer?.LastNameP,
+                    m.Maintenance?.MaintenanceMaterialsDescription
                 );
             }
             Console.WriteLine();
-            List<Maintain>? pMaintain = pendingMaintenance.ToList();
-            return (pMaintain, offset, maintain.Count());
+            List<Maintain>? Maintain = Maintenance.ToList();
+            return (Maintain, offset, maintain.Count());
         }
     }
 }
@@ -129,13 +134,17 @@
                 <th>Equipment Name</th>
                 <th>Maintenance</th>
                 <th>Instructions</th>
+                <th>Description</th>
                 <th>Date Started</th>
-                <th>Storer ID</th>
+                <th>Date Finished</th>
+                <th>Storer Name</th>
+                <th></th>
+                <th>Materials Used</th>
             </tr>
         </thead>
         <tbody>
-            @if(Model.AllPendingMaintenances != null){
-                @foreach (var pMaintenance in Model.AllPendingMaintenances)
+            @if(Model.AllMaintenances != null){
+                @foreach (var pMaintenance in Model.AllMaintenances)
                 {
                     <tr>
                         <td>@pMaintenance.Maintenance?.MaintenanceId</td>
@@ -143,8 +152,12 @@
                         <td>@pMaintenance.Equipment?.Name</td>
                         <td>@pMaintenance.Maintenance?.MaintenanceType?.Name</td>
                         <td>@pMaintenance.Maintenance?.MaintenanceInstructions</td>
+                        <td>@pMaintenance.Maintenance?.MaintenanceDescription</td>
                         <td>@pMaintenance.Maintenance?.ProgrammedDate.ToString("dd-MM-yyyy")</td>
-                        <td>@Functions.Decrypt(pMaintenance.Maintenance?.Storer?.StorerId)</td>
+                        <td>@pMaintenance.Maintenance?.ExitDate.ToString("dd-MM-yyyy")</td>
+                        <td>@pMaintenance.Maintenance?.Storer?.Name</td>
+                        <td>@pMaintenance.Maintenance?.Storer?.LastNameP</td>
+                        <td>@pMaintenance.Maintenance?.MaintenanceMaterialsDescription</td>
                     </tr>
                 }
                 Console.WriteLine($"Total: {Model.TotalMaintenances} . Showing: {Model.Pages} / {Model.TotalMaintenances/20}");

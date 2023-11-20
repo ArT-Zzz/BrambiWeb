@@ -118,9 +118,7 @@ D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\bin\Debug
 D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\bin\Debug\net7.0\runtimes\win-x64\native\e_sqlite3.dll
 D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\bin\Debug\net7.0\runtimes\win-x86\native\e_sqlite3.dll
 D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\bin\Debug\net7.0\Storage.Common.DataContext.Sqlite.dll
-D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\bin\Debug\net7.0\Storer.CommonEntityModels.Sqlite.dll
 D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\bin\Debug\net7.0\Storage.Common.DataContext.Sqlite.pdb
-D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\bin\Debug\net7.0\Storer.CommonEntityModels.Sqlite.pdb
 D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\obj\Debug\net7.0\staticwebassets\msbuild.Storage.web.Microsoft.AspNetCore.StaticWebAssets.props
 D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\obj\Debug\net7.0\staticwebassets\msbuild.build.Storage.web.props
 D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.Storage.web.props
@@ -202,3 +200,5 @@ C:\Users\aacar\Documents\PA1\BrambiWeb\Storage.web\obj\Debug\net7.0\refint\Stora
 C:\Users\aacar\Documents\PA1\BrambiWeb\Storage.web\obj\Debug\net7.0\Storage.web.pdb
 C:\Users\aacar\Documents\PA1\BrambiWeb\Storage.web\obj\Debug\net7.0\Storage.web.genruntimeconfig.cache
 C:\Users\aacar\Documents\PA1\BrambiWeb\Storage.web\obj\Debug\net7.0\ref\Storage.web.dll
+D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\bin\Debug\net7.0\Storage.CommonEntityModels.Sqlite.dll
+D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\bin\Debug\net7.0\Storage.CommonEntityModels.Sqlite.pdb

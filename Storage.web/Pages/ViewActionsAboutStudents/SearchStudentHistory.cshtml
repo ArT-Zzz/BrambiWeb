@@ -1,0 +1,169 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using AutoGens
+@{
+    ViewData["Title"] = "Search for a Student History By HIS/HER Id "; // title that will be shown in the page
+}
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudents">View All Students</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/SearchStudentHistory">Search For a Student's History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/StudentsWithLateReturn">Student's with Late Returning</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudentsRequests">View Students Requests</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</nav>
+
+@functions
+{
+    string? Message {get; set;}
+    Student? StudentExistence {get; set;}
+    bool Ban {get; set;}
+    List<RequestDetail>? StudentRequests {get; set;}
+
+    public void OnGet(string StudentIdText)
+    {
+        Model.Message = "";
+        Model.Ban = false;
+        if(StudentIdText != "" && StudentIdText is not null)
+        {
+            Model.StudentExistence = Functions.VerifyStudentIdExistence(StudentIdText);
+            if(StudentExistence == null)
+            {
+                //didn't found student
+                Model.Message = $"No students found matching the Student ID : {StudentIdText}";
+                Model.Ban = false;
+            }
+            else
+            {
+                //found student
+                Model.Ban = true;
+                Model.StudentRequests = FindStudentRequests(StudentIdText);
+                if(StudentRequests is null)
+                {
+                    Model.Message = "No History found.";
+                }
+                else
+                {
+                    //history found
+                    // Agrupa los Request Details por su Request Id
+                }
+
+            }
+        }
+
+    }
+
+    public static List<RequestDetail>? FindStudentRequests(string StudentId)
+    {
+        using(bd_storage db = new())
+        {
+            // Se realiza una lista de los permisos que ha solicitado el estudiante
+            var requests = db.Requests.Where(r => r.StudentId == StudentId).ToList();
+            // Si no hay se manda de nuevo al menu y se muestra el mensaje explicativo
+            if (requests.Count == 0)
+            {
+                Console.WriteLine("No history found for the student.");
+                return null;
+            }
+            // Realiza una lista de enteros de los Id de los request del estudiante
+            List<int>? requestIds = requests.Select(r => r.RequestId).ToList();
+            //query that will return the request details that have any of the request id connected to the student we are looking for
+            IQueryable<RequestDetail> RequestDetails = db.RequestDetails
+            .Include(s=>s.Status)
+            .Where(rd => requestIds.Contains((int)rd.RequestId))
+            .Include(rd => rd.Equipment);
+
+            if(RequestDetails is null || !RequestDetails.Any())
+            {// if no requests were found
+                return null;
+            }
+
+            return RequestDetails.ToList();
+        }
+    }
+}
+
+@if(Model.Ban == false)
+{ // first part, so the storer can provide the Student ID
+    <h3>Provide the Student ID you are looking for:  </h3>
+        @if (Model.Message!= "") // this message just appear if in the OnGet there was an error, so it shows here
+        {
+            <div class="error-message">
+                @Model.Message
+            </div>
+        /*in the next line i will be sending the student id provided by the storer to the method OnGet(), by a forms*/
+        }
+    <form method="get" action="/ViewActionsAboutStudents/SearchStudentHistory">
+        <input type="text" class="form-control" id="StudentIdText" name="StudentIdText" maxlength="8" required>
+        <br>
+        <button type="submit" class="btn btn-primary" name="action" value="confirm">Search For Student</button>
+    </form>
+}
+else
+{ // found the student in the bd, show the general information
+    <h4>Student Information:</h4>
+    <h5>Name:  </h5>
+    <p>@Model.StudentExistence?.Name @Model.StudentExistence?.LastNameP @Model.StudentExistence?.LastNameM</p>
+    <h5>Register: </h5>
+    <p>@Model.StudentExistence?.StudentId</p>
+    <h5>Group: </h5>
+    <p>@Model.StudentExistence?.Group?.Name</p>
+
+    if(Model.StudentRequests is null)
+    { // there are no requests for this student
+        <h4>No history found for this Student</h4>
+    }
+    else
+    { // found history of requests for this student
+        // group  the Request Details by Request Id,and use the grouped one to show later the info
+        var groupedRequests = Model.StudentRequests.GroupBy(r => r.RequestId);
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>RequestDetail ID</th>
+                    <th>Dispatch Time</th>
+                    <th>Return Time</th>
+                    <th>Request Date</th>
+                    <th>Day of Made Request</th>
+                    <th>Equipments</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var group in groupedRequests)
+                { // to show every single one of the requests found
+                    var firstRequest = group.First(); // the First is so it is just one group, and we will have access to the attributes of it (REquestId, DispatchTime...) 
+                    <tr>
+                        <td>@firstRequest.RequestId</td>
+                        <td>@firstRequest.DispatchTime.TimeOfDay</td>
+                        <td>@firstRequest.ReturnTime.TimeOfDay</td>
+                        <td>@firstRequest.RequestedDate.Day / @firstRequest.RequestedDate.Month / @firstRequest.RequestedDate.Year</td>
+                        <td>@firstRequest.CurrentDate.Day / @firstRequest.CurrentDate.Month / @firstRequest.CurrentDate.Year</td>
+     
+                        <td>
+                            <ul>
+                                @foreach (var r in group)
+                                { // so all the equipments of the request will be seen in the same celd of the same request of course
+                                    <li>@r.Equipment?.Name</li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                }      
+            </tbody>
+        </table>
+    }
+}
+

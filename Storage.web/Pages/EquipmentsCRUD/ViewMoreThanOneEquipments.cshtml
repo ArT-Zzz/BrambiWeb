@@ -1,0 +1,86 @@
+@page
+@using AutoGens 
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@functions
+{
+    string? EquipmentNameFound {get; set;} // this is the string where the equipmentId passed will be received
+    string? EquipmentIdFound {get; set;}
+    public string? InformationShown {get; set;} // comes with how many camps of the equipment were updated ( come from EquipmentUpdate or others)
+    List<Equipment>? EquipmentsFound {get; set;} //the Equipment object that correspond to the EquipmentId received
+    public void OnGet()
+    {
+        EquipmentNameFound = TempData["NameSearched"] as string;
+        EquipmentIdFound = TempData["IdSearched"] as string;
+        if(EquipmentNameFound != "")
+        {
+            Model.EquipmentsFound = Functions.SearchEquipmentsByName(EquipmentNameFound);
+        }
+        else if(EquipmentIdFound != "")
+        {
+            Model.EquipmentsFound = Functions.SearchEquipmentsById(EquipmentIdFound);
+        }
+    }
+}
+@{
+    ViewData["Title"] = "Information of the found Equipments : "; 
+}
+
+<h1>@ViewData["Title"]</h1>
+@if(InformationShown == "0") // 0 means that comes from EquipmentUpdate.cshtml and the register was not updated
+{
+    <h3>The camps of the equipment were not updated</h3>
+    <br>
+}
+else if(InformationShown == "1") // 1 means that comes from EquipmentUpdate.cshtml and the register was updated
+{
+    <h3>The camps of the equipment were updated!</h3><br>
+}
+
+@if(EquipmentIdFound is not null)
+{
+    <h3>Equipments found with the search term of ID : @EquipmentIdFound</h3>
+}
+else if(EquipmentNameFound is not null)
+{
+    <h3>Equipments found with the search term of Name : @EquipmentNameFound</h3>
+}
+
+<div>
+    <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Equipment Name</th>
+                    <th>Description</th>
+                    <th>Area</th>
+                    <th>Year</th>
+                    <th>Status</th>
+                    <th>Control Number</th>
+                    <th>Coordinator</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(Model.EquipmentsFound != null){
+                    @foreach (var c in Model.EquipmentsFound)
+                    {
+                        <tr>
+                            <td>@c.EquipmentId</td>
+                            <td>@c.Name</td>
+                            <td>@c.Description</td>
+                            <td>@c.Area?.Name</td>
+                            <td>@c.Year</td>
+                            <td>@c.Status?.Value</td>
+                            <td>@c.ControlNumber</td>
+                            <td>@c.Coordinator?.Name @c.Coordinator?.LastNameP </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <h2>No equipments found with this Search Term</h2>
+                    Console.WriteLine("No equipments found in the inventory");
+                }
+            </tbody>
+        </table>
+</div>

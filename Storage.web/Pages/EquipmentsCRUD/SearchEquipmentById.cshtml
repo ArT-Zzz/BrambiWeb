@@ -1,0 +1,52 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@{
+    ViewData["Title"] = "Search Equipment By Equipment ID";
+}
+<h1>@ViewData["Title"]</h1>
+
+@functions
+{
+    string? Message {get; set;} // message of error if the equipment id doesn't exist
+    bool EquipmentExist {get; set;}
+
+    // IActionResult is a flexible interface, you can choose what you want to return for the client, views, redirect to other pages, like in this case
+    public IActionResult OnGet(string EquipmentId)
+    {
+        Model.Message = "";
+        if(EquipmentId != null && EquipmentId != "")
+        {
+            EquipmentExist = Functions.SearchEquipmentById(EquipmentId);
+            if(EquipmentExist == true)
+            {
+                Console.WriteLine("Equipment ID is not registered");
+                Model.Message = $"There are no Equipments found with the Equipment Id {EquipmentId}";
+            }
+            else
+            {
+                TempData["EquipmentId"] = EquipmentId;
+                TempData["ReturnInfoShown"] = ""; // no message to send
+                Console.WriteLine("The Equipment Id exists");
+                return RedirectToPage("/EquipmentsCRUD/ViewOneEquipment");
+            }
+        }
+        return Page();
+    }
+}
+
+
+<h4>Provide the equipment ID you would like to see:</h4>
+    @if (Model.Message!= "")
+    {
+        <div class="error-message">
+            @Model.Message
+        </div>
+    }
+    <form method="get" action="/EquipmentsCRUD/SearchEquipmentById">
+        <input type="text" class="form-control" id="EquipmentId" name="EquipmentId" maxlength="15" required>
+        <br>
+        <button type="submit" class="btn btn-primary" name="action" value="confirm">Search</button>
+    </form>
+

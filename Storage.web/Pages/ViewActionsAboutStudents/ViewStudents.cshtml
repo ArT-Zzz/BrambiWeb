@@ -1,0 +1,86 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using AutoGens
+@{
+    // this page shows all the student general information, and also has a button in each one that can send them to the search student history of requests
+    ViewData["Title"] = "View All Students"; // title that will be shown in the page
+// next is the navigation bar for what the storer can see from the student
+}
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudents">View All Students</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/SearchStudentHistory">Search For a Student's History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/StudentsWithLateReturn">Student's with Late Returning</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudentsRequests">View Students Requests</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</nav>
+
+<h1>@ViewData["Title"]</h1>
+<p>View the basic information about all students registered</p>
+
+@functions
+{
+    List<Student>? AllStudents {get; set;} // list that will get from the bd all the students
+    public void OnGet()
+    {
+        Model.AllStudents = Functions.ListStudents(); // model that gets all students
+        // ListStudents returns a list of students found in the bd
+    }
+}
+
+<div>
+    @if(Model.AllStudents != null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Register</th>
+                    <th>Names</th>
+                    <th>Paternal Last Name</th>
+                    <th>Maternal Last Name</th>
+                    <th>Group</th>
+                    <th>See Student History</th>
+                </tr>
+            </thead>
+            <tbody>
+                    @foreach (var c in Model.AllStudents)
+                    {
+                        <tr>
+                            <td>@c.StudentId</td>
+                            <td>@c.Name</td>
+                            <td>@c.LastNameP</td>
+                            <td>@c.LastNameM</td>
+                            <td>@c.Group?.Name</td>
+                            <td>
+                                
+                                <form method="get" action="/ViewActionsAboutStudents/SearchStudentHistory">
+                                    <input type="hidden" name="StudentIdText" value="@c.StudentId">
+                                    <button type="submit" class="btn btn-primary" name="action" value="confirm">View Request History</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h2>No Students found.</h2>
+        Console.WriteLine("No students found.");
+    }
+</div>
+
+
