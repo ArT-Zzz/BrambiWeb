@@ -20,11 +20,7 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcQWRkRXF1aXBtZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/EquipmentUpdate.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcRXF1aXBtZW50VXBkYXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/EquipmentUpdate.cshtml]
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/EquipmentUpdate.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcRXF1aXBtZW50VXBkYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
@@ -36,12 +32,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcVmlld0FsbEVxdWlwbWVudHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/ViewOneEquipment.cshtml]
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/ViewOneEquipment.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcVmlld09uZUVxdWlwbWVudC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Error.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Formats/AddRequestFormat.cshtml]
@@ -56,12 +48,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nSW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/MaintenanceCRUD/ViewMaintenanceNotMade.cshtml]
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/MaintenanceCRUD/ViewMaintenanceNotMade.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbnRlbmFuY2VDUlVEXFZpZXdNYWludGVuYW5jZU5vdE1hZGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Shared/_ValidationScriptsPartial.cshtml]
@@ -72,12 +60,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2lnblVwLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Users/StudentPrincipal.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3R1ZGVudFByaW5jaXBhbC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/ViewAllClassrooms.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlld0FsbENsYXNzcm9vbXMuY3NodG1s
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Users/StudentsPrincipal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3R1ZGVudHNQcmluY2lwYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/_ViewImports.cshtml]

@@ -5,17 +5,19 @@
 @{
     ViewData["Title"] = "Login";
     string? rol = null;
+    string? username = null;
     bool logged = false;
 
     if (Request.Method == "POST")
     {
-        (logged, rol) = IniciarSesion(out string? Rol, Request.Form["username"], Request.Form["password"]);
+        (logged, rol, username) = IniciarSesion(out string? Rol, Request.Form["username"], Request.Form["password"]);
         if (logged)
         {
             // Redirigir a la página principal del usuario según su rol
             if (rol == "students")
             {
-                Response.Redirect("/StudentsPrincipal");
+                TempData["Username"] = username;
+                Response.Redirect("/Users/StudentsPrincipal");
             }
             else if (rol == "professors")
             {
@@ -43,10 +45,10 @@
         </div>
 
         <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" class="form-control" required />
+            <label class="form-label" for="password">Password:</label>
+            <input class="form-control" type="password" id="password" name="password" class="form-control" required />
         </div>
-
+        <p></p>
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
 
@@ -59,7 +61,7 @@
 </div>
 
 @functions {
-    public static (bool logged, string? username) IniciarSesion(out string? Rol, string username, string password)
+    public static (bool logged, string? rol, string username) IniciarSesion(out string? Rol, string username, string password)
     {
         using (bd_storage db = new())
         {
@@ -85,7 +87,7 @@
                     else
                     {
                         Rol = "students";
-                        return (true, username);
+                        return (true, Rol, username);
                     }
                 }
                 else if (idUser == "professorId")
@@ -101,7 +103,7 @@
                     else
                     {
                         Rol = "professors";
-                        return (true, username);
+                        return (true, Rol, username);
                     }
                 }
                 else if (idUser == "storerId")
@@ -116,7 +118,7 @@
                     else
                     {
                         Rol = "storers";
-                        return (true, username);
+                        return (true, Rol, username);
                     }
                 }
                 else if (idUser == "coordinatorId")
@@ -132,13 +134,13 @@
                     else
                     {
                         Rol = "coordinators";
-                        return (true, username);
+                        return (true, Rol, username);
                     }
                 }
             }
 
             Rol = null;
-            return (false, null);
+            return (true, Rol, username);
         }
     }
 }
