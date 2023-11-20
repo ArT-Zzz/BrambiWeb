@@ -20,7 +20,6 @@
     // predetermined function of OnGet when the button of the forms is clicked, it sends here all the info of the forms, each parameters corresponds to the name="" of a camp
     public void OnGet(string EquipmentId, string NameText, short AreaText, string DescriptionText, byte StatusText, int YearText, string CoordinatorText, string ControlNumberText)
     {
-        
         if(EquipmentId != null && EquipmentId != "")
         {
             //Checks that an Equipment with the EquipmentId sent exists, if yes returns an Equipment object, if not, returns null
