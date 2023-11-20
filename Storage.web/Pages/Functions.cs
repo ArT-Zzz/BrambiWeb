@@ -5,8 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 
 public static class Functions
-{
-    
+{ 
     public static (List<Classroom>? List, int TotalCount) ListClassrooms()
     {
         // Indice de la lista
@@ -249,6 +248,55 @@ public static class Functions
                 {
                     return equipments.First();
                 }
+        }
+    }
+
+    public static List<Equipment>? SearchEquipmentsByName(string? SearchTerm)
+    {
+        List<Equipment>? equipmentsList;
+        if (string.IsNullOrEmpty(SearchTerm))
+        {
+            throw new InvalidOperationException();
+        }
+        using (bd_storage db = new())
+        {
+                IQueryable<Equipment>? equipments = db.Equipments
+                    .Include(e => e.Area)
+                    .Include(e => e.Status)
+                    .Include(e => e.Coordinator)
+                    .Where(e => e.Name.StartsWith(SearchTerm)); // Utiliza StartsWith para buscar equipos cuyos nombres comiencen con el término de búsqueda
+
+                if (!equipments.Any())
+                {
+                    Console.WriteLine("No equipment found matching the search term: " + SearchTerm);
+                    return null;
+                }
+                equipmentsList = equipments.ToList();
+        }
+        return equipmentsList;
+    }
+
+    
+    public static List<Equipment>? SearchEquipmentsById(string? SearchTerm)
+    {
+        if (string.IsNullOrEmpty(SearchTerm))
+        {
+            throw new InvalidOperationException();
+        }
+        using (bd_storage db = new())
+        {
+            IQueryable<Equipment>? equipments = db.Equipments
+                .Include(e => e.Area)
+                .Include(e => e.Status)
+                .Include(e => e.Coordinator)
+                .Where(e => e.EquipmentId.StartsWith(SearchTerm)); // Utiliza StartsWith para buscar equipos cuyos nombres comiencen con el término de búsqueda
+
+            if (!equipments.Any())
+            {
+                Console.WriteLine("No equipment found matching the search term: " + SearchTerm);
+                return null;
+            }
+            return equipments.ToList();
         }
     }
 
