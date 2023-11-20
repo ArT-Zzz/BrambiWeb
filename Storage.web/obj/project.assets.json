@@ -499,7 +499,7 @@
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "7.0.13",
-          "Storer.CommonEntityModels.Sqlite": "1.0.0"
+          "Storage.CommonEntityModels.Sqlite": "1.0.0"
         },
         "compile": {
           "bin/placeholder/Storage.Common.DataContext.Sqlite.dll": {}
@@ -508,17 +508,17 @@
           "bin/placeholder/Storage.Common.DataContext.Sqlite.dll": {}
         }
       },
-      "Storer.CommonEntityModels.Sqlite/1.0.0": {
+      "Storage.CommonEntityModels.Sqlite/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Sqlite": "7.0.12"
         },
         "compile": {
-          "bin/placeholder/Storer.CommonEntityModels.Sqlite.dll": {}
+          "bin/placeholder/Storage.CommonEntityModels.Sqlite.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Storer.CommonEntityModels.Sqlite.dll": {}
+          "bin/placeholder/Storage.CommonEntityModels.Sqlite.dll": {}
         }
       }
     }
@@ -1161,19 +1161,19 @@
     },
     "Storage.Common.DataContext.Sqlite/1.0.0": {
       "type": "project",
-      "path": "../Storer.Common.DataContext.Sqlite/Storage.Common.DataContext.Sqlite.csproj",
-      "msbuildProject": "../Storer.Common.DataContext.Sqlite/Storage.Common.DataContext.Sqlite.csproj"
+      "path": "../Storage.Common.DataContext.Sqlite/Storage.Common.DataContext.Sqlite.csproj",
+      "msbuildProject": "../Storage.Common.DataContext.Sqlite/Storage.Common.DataContext.Sqlite.csproj"
     },
-    "Storer.CommonEntityModels.Sqlite/1.0.0": {
+    "Storage.CommonEntityModels.Sqlite/1.0.0": {
       "type": "project",
-      "path": "../Storer.CommonEntityModels.Sqlite/Storer.CommonEntityModels.Sqlite.csproj",
-      "msbuildProject": "../Storer.CommonEntityModels.Sqlite/Storer.CommonEntityModels.Sqlite.csproj"
+      "path": "../Storage.CommonEntityModels.Sqlite/Storage.CommonEntityModels.Sqlite.csproj",
+      "msbuildProject": "../Storage.CommonEntityModels.Sqlite/Storage.CommonEntityModels.Sqlite.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
       "Storage.Common.DataContext.Sqlite >= 1.0.0",
-      "Storer.CommonEntityModels.Sqlite >= 1.0.0"
+      "Storage.CommonEntityModels.Sqlite >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -1208,11 +1208,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storer.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj": {
-              "projectPath": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storer.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj"
+            "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj": {
+              "projectPath": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj"
             },
-            "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storer.CommonEntityModels.Sqlite\\Storer.CommonEntityModels.Sqlite.csproj": {
-              "projectPath": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storer.CommonEntityModels.Sqlite\\Storer.CommonEntityModels.Sqlite.csproj"
+            "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj": {
+              "projectPath": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj"
             }
           }
         }

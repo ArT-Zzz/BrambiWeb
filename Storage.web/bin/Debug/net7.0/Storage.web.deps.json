@@ -9,7 +9,7 @@
       "Storage.web/1.0.0": {
         "dependencies": {
           "Storage.Common.DataContext.Sqlite": "1.0.0",
-          "Storer.CommonEntityModels.Sqlite": "1.0.0"
+          "Storage.CommonEntityModels.Sqlite": "1.0.0"
         },
         "runtime": {
           "Storage.web.dll": {}
@@ -297,18 +297,18 @@
       "Storage.Common.DataContext.Sqlite/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "7.0.13",
-          "Storer.CommonEntityModels.Sqlite": "1.0.0"
+          "Storage.CommonEntityModels.Sqlite": "1.0.0"
         },
         "runtime": {
           "Storage.Common.DataContext.Sqlite.dll": {}
         }
       },
-      "Storer.CommonEntityModels.Sqlite/1.0.0": {
+      "Storage.CommonEntityModels.Sqlite/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Sqlite": "7.0.12"
         },
         "runtime": {
-          "Storer.CommonEntityModels.Sqlite.dll": {}
+          "Storage.CommonEntityModels.Sqlite.dll": {}
         }
       }
     }
@@ -492,7 +492,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Storer.CommonEntityModels.Sqlite/1.0.0": {
+    "Storage.CommonEntityModels.Sqlite/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

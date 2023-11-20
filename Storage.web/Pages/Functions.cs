@@ -5,8 +5,9 @@ using System.Security.Cryptography;
 using System.Text;
 
 public static class Functions
-{ 
-    public static (List<Classroom>? List, int TotalCount) ListClassrooms()
+{
+    
+    public static (List<Classroom>? ListClass, int TotalCountClass) ListClassrooms()
     {
         // Indice de la lista
         int i = 1;
@@ -33,6 +34,86 @@ public static class Functions
         }
     }
 
+    public static (List<Subject>? ListSub, int TotalCountSub) ListSubjects()
+    {
+        using (bd_storage db = new())
+        {
+            // verifica que exista la tabla de Classroom
+            if( db.Subjects is null)
+            {
+                throw new InvalidOperationException("The table does not exist.");
+            } 
+            else 
+            {
+                // Muestra toda la lista de classrooms con un indice y la clave de este
+                IQueryable<Subject> Subjects = db.Subjects;
+                
+                foreach (var s in Subjects)
+                {
+                    Console.WriteLine($"{s.SubjectId}. {s.Name}");
+                
+                }
+                return (Subjects.ToList(),Subjects.Count());
+            }
+        }
+    }
+
+    public static (List<Professor>? ListProf, int TotalCountProf) ListProfessors()
+    {
+        using (bd_storage db = new())
+        {
+            // verifica que exista la tabla de Classroom
+            if( db.Professors is null)
+            {
+                throw new InvalidOperationException("The table does not exist.");
+            } 
+            else 
+            {
+                // Muestra toda la lista de classrooms con un indice y la clave de este
+                IQueryable<Professor> Professors = db.Professors;
+                
+                foreach (var p in Professors)
+                {
+                    Console.WriteLine($"{p.Name} {p.LastNameP} {p.LastNameM}");
+                
+                }
+                return (Professors.ToList(),Professors.Count());
+            }
+        }
+    }
+
+    public static string AddStorer()
+    {
+        using (bd_storage db = new())
+        {
+            string choosenStorer = "";
+
+            if (db.Storers != null && db.Storers.Any())
+            {
+                IQueryable<AutoGens.Storer> StorerQuery = db.Storers
+                    .AsEnumerable().OrderBy(e => Guid.NewGuid()).AsQueryable();
+
+                if (StorerQuery.Any())
+                {
+                    var Random = new Random();
+                    // Se ordena por un número random que sea positivo que se especifica con el .Next()
+                    // Y se selecciona el primero
+                    var RandomStorer = StorerQuery.OrderBy(e => Random.Next()).First();
+                    choosenStorer = RandomStorer.StorerId;
+                }
+                else {
+                    choosenStorer = "";
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("The table does not exist.");
+            }
+
+            return choosenStorer;
+        }
+    }
+
     
     public static Classroom AddClassroom(int ClassroomId)
     {
@@ -46,6 +127,42 @@ public static class Functions
                     Console.WriteLine("Not a valid key. Try again");
                 }
             return classroom;
+        }
+    }
+
+    public static Subject? AddSubjects(string SubjectId)
+    {
+        using (bd_storage db = new())
+        {
+            IQueryable<Subject> subjectsId = db.Subjects.Where(s => s.SubjectId == SubjectId);
+            Subject? subject= null;
+            // Si no existe le pide que ingrese otra vez el valor
+            if (subjectsId is null || !subjectsId.Any())
+            {
+                Console.WriteLine("Not a valid key. Try again");
+                subject = null;
+            }else{
+                subject = subjectsId.First();
+            }
+            return subject;
+        }
+    }
+
+    public static Professor? AddProfessors(string ProfessorId)
+    {
+        using (bd_storage db = new())
+        {
+            IQueryable<Professor> ProfessorsQuery = db.Professors.Where(p => p.ProfessorId == ProfessorId);
+            Professor? professor= null;
+            // Si no existe le pide que ingrese otra vez el valor
+            if (ProfessorsQuery is null || !ProfessorsQuery.Any())
+            {
+                Console.WriteLine("Not a valid key. Try again");
+                professor = null;
+            }else{
+                professor = ProfessorsQuery.First();
+            }
+            return professor;
         }
     }
 
@@ -117,17 +234,19 @@ public static class Functions
             aesAlg.IV = new byte[16];
 
             ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-
-            using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(CipherText)))
-            {
-                using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+            if(CipherText is not null){
+                using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(CipherText)))
                 {
-                    using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                     {
-                        return srDecrypt.ReadToEnd();
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        {
+                            return srDecrypt.ReadToEnd();
+                        }
                     }
                 }
             }
+            return "";
         }
     }
     public static List<Coordinator>? ListCoordinators()

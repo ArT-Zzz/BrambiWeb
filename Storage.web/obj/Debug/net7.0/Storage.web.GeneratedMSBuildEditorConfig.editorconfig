@@ -52,6 +52,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Formats/AddRequestFormat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9ybWF0c1xBZGRSZXF1ZXN0Rm9ybWF0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -74,6 +78,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/SignUp.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2lnblVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/StudentPrincipal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3R1ZGVudFByaW5jaXBhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/ViewAllClassrooms.cshtml]
