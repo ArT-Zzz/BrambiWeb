@@ -1,0 +1,91 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using AutoGens
+@{
+    ViewData["Title"] = "Students with Late Return of Equipment Requests "; // title that will be shown in the page
+// this page shows all the late return equipments from student's requests
+}
+<h1>@ViewData["Title"]</h1>
+
+@functions
+{
+    List<RequestDetail>? AllLateRequests {get; set;} // list that will store all the requestDetails with late returning
+    string? Message {get; set;} // messages that will be shown throughout the page
+    public void OnGet()
+    {
+        Model.Message = "";
+        Model.AllLateRequests = StudentsLateReturn(); // this function finds all the late return requestDetails, returns a List<RequestDetail>
+        if(Model.AllLateRequests is null)
+        { // no late requests
+            Console.WriteLine("There are no requests due to return past their return date.");
+            Model.Message = "There are no late return of equipments requests to be returned.";
+        }
+        else
+        {
+            //found late requests
+            Model.Message = "This are the late return of equipment requests from all students:";
+        }
+    }
+    // finds and returns a list of RequestDetails that have overdue date of returning the equipments
+    public static List<RequestDetail>? StudentsLateReturn()
+    {
+        using (bd_storage db = new()) 
+        {
+            var currentDate = DateTime.Now;
+
+            IQueryable<RequestDetail> requestDetails = db.RequestDetails
+            .Include(r => r.Request.Student.Group)
+            .Include(r => r.Equipment)
+            .Where(s => s.StatusId == 2 && s.ProfessorNip == 1 && s.RequestedDate < currentDate)
+            .OrderBy(r=>r.RequestId); // where the status of the request is In Use, and the request was accepted by the teacher and the requesteddate is from before todays date 
+
+            if (!requestDetails.Any())
+            {
+                Console.WriteLine("No students found with overdue equipment.");
+                return null; // returns a null because nothing was found
+            }
+            return requestDetails.ToList(); // returns a list of request details
+        }
+    }
+}
+@if (Model.Message!= "") // this message is declared in the OnGet() 
+{
+    <div class="error-message">
+        @Model.Message
+    </div>
+}
+@if(Model.AllLateRequests is not null) // found equipments with late returning date
+{ // the header of the table
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>RequestDetail ID</th>
+                    <th>Student ID</th>
+                    <th>Student</th>
+                    <th>Group</th>
+                    <th>Equipment ID</th>
+                    <th>Equipment Name</th>
+                    <th>Return Time</th>
+                    <th>Request Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in Model.AllLateRequests)
+                { // to show every single one of the requests found
+                    <tr>
+                        <td>@r.RequestId</td>
+                        <td>@r.Request?.StudentId</td>
+                        <td>@r.Request?.Student?.Name @r.Request?.Student?.LastNameP </td>
+                        <td>@r.Request?.Student?.Group?.Name</td>
+                        <td>@r.EquipmentId</td>
+                        <td>@r.Equipment?.Name</td>
+                        <td>@r.ReturnTime.TimeOfDay</td>
+                        <td>@r.RequestedDate.Day / @r.RequestedDate.Month / @r.RequestedDate.Year</td>
+                    </tr>
+                }      
+            </tbody>
+        </table>
+}
+
+

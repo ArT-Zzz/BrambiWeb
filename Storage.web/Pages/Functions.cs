@@ -278,7 +278,8 @@ public static class Functions
     {
         using (bd_storage db = new())
         {
-            IQueryable<Student> students = db.Students;
+            IQueryable<Student> students = db.Students
+            .Include(s=>s.Group).OrderByDescending(s=>s.StudentId);
             if ((students is null) || !students.Any())
             {
                 Console.WriteLine("There are no registered students found");
@@ -456,5 +457,24 @@ public static class Functions
             }
         }
         return aux;
+    }
+
+    public static Student? VerifyStudentIdExistence(string StudentId)
+    {
+        using(bd_storage db = new())
+        {
+            IQueryable<Student> students = db.Students
+            .Include(s=>s.Group)
+            .Where(s=>s.StudentId == StudentId);
+            if(students is null || !students.Any())
+            {
+                //no matching studentId
+                return null;
+            }
+            else
+            {
+                return students.First();
+            }
+        }
     }
 }
