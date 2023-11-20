@@ -1,0 +1,207 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@{
+    ViewData["Title"] = "Create Report of Damage or Lost Equipment";
+}
+<h1>@ViewData["Title"]</h1>
+
+@functions
+{
+    string? Message {get; set;}
+    string ? SubMessage {get; set;}
+    List<Student>? AllStudents  {get; set;}
+    List<Coordinator>? AllCoordinators {get; set;}
+    bool EquipmentExist {get; set;}
+
+    public void OnGet(DateTime DateDebtText, string DebtText, string CoordinatorText, string StudentText, DateTime DateText, string DescriptionText, byte StatusText, string EquipmentIdText)
+    { 
+        DateTime datedefault  = new (year: 0001, month:01, day: 01);
+        Model.Message = "";
+        Model.SubMessage ="";
+        if(EquipmentIdText != "" && EquipmentIdText is not null)
+        {
+            if(StudentText != "0" && CoordinatorText != "0" )
+            {
+                if(datedefault.Date != DateDebtText.Date && datedefault.Date != DateText.Date)
+                {
+                        EquipmentExist = Functions.SearchEquipmentById(EquipmentIdText);
+                        if(EquipmentExist == false)
+                        {
+                            var result = CreateReportDamagedLost( StatusText,  EquipmentIdText, DescriptionText, DateText.Date, StudentText,  CoordinatorText,  DebtText, DateDebtText.Date);
+                            if(result.Affected == 1)
+                            {
+                                Console.WriteLine($"The damage or lost report {result.DyLequipmentId} was succesfully created!");
+                                Model.Message = $"The damage or lost report {result.DyLequipmentId} was succesfully created!";
+
+                                //update the status of the equipments
+                                int affected = UpdateEquipmentStatus(StatusText, EquipmentIdText);
+                                if(affected > 0)
+                                {
+                                    Model.SubMessage = $"The status of the equipment {EquipmentIdText} was updated";
+                                }
+                                else
+                                {
+                                    Model.SubMessage = $"There was an error updating the status of the equipment : {EquipmentIdText}";
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("The damage or lost report was not created, sorry");
+                                Model.Message = "The damage or lost report was not created, sorry";
+                            }
+                        }
+                        else
+                        {
+                            Model.Message = "This Equipment Id is not registered in the Inventory";
+                        }
+                }
+                else
+                {
+                    Model.Message ="The date you have just entered is not correct, try again";
+                }
+            }
+            else
+            {
+                Model.Message = "There are missing registers of Student or Coordinator  in our Database, return later";
+            }
+        }
+        Model.AllStudents = Functions.ListStudents();
+        Model.AllCoordinators = Functions.ListCoordinators();
+    }
+
+    public static (int Affected, int DyLequipmentId) CreateReportDamagedLost(byte StatusId, string EquipmentId, string Description, DateTime DateOfEvent, string StudentId, string? CoordinatorId, string ReturnDescrip, DateTime ReturnDate)
+    {
+        using(bd_storage db = new())
+        {
+            IQueryable<DyLequipment> damageLostEquipments = db.DyLequipments
+                .OrderByDescending(d=>d.DyLequipmentId);
+                int BiggestId = damageLostEquipments.First().DyLequipmentId;
+
+            if(db.DyLequipments is null){ return(0,0);}
+            DyLequipment dl = new() 
+            {
+                DyLequipmentId = (BiggestId + 1),
+                StatusId = StatusId,
+                EquipmentId = EquipmentId, 
+                Description = Description,
+                DateOfEvent = DateOfEvent,
+                StudentId = StudentId,
+                CoordinatorId = CoordinatorId,
+                DateOfReturn = ReturnDate,
+                objectReturn = ReturnDescrip
+            };            
+
+            EntityEntry<DyLequipment> entity = db.DyLequipments.Add(dl);
+            int affected = db.SaveChanges();   
+            
+            
+            return (affected, dl.DyLequipmentId);
+        }
+    }
+
+    public static int UpdateEquipmentStatus(byte NewStatus, string EquipmentIdNew ) // returns 1 if the register data was changed, 0 if not
+    {
+        int Affected = 0;
+        using(bd_storage db = new()) // create new connection with the database
+        {
+            //query that finds equipment from the table Equipment where the EquipmentId matches the sent equipmentID
+            IQueryable<Equipment> Equipments = db.Equipments
+            .Where(e=> e.EquipmentId == EquipmentIdNew);
+
+            Equipments.First().StatusId = NewStatus; //change the status of one equipment to the new status
+            Affected = db.SaveChanges(); //save the changes in the database
+        }
+        return Affected;
+    }
+}
+
+@if(Model.Message != "")
+{
+    <h3>@Model.Message</h3>
+}
+@if(Model.SubMessage != "")
+{
+    <p>@Model.SubMessage</p>
+}
+else
+{
+    
+<p>Use this page to create report of equipments that were returned from any student in bad conditions, or not returned at all.</p>
+
+<form method="get" action="/Formats/CreateReportDamage&Lost">
+    <div class="mb-3">
+        <label class="form-label">What was the damaged or lost equipment ID ? </label>
+        <input type="text" class="form-control" id="EquipmentIdText" name="EquipmentIdText" maxlength="15" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Was the equipment 'Lost' or 'Damaged'? </label>
+        <select class="form-select" id="dropdown" name="StatusText">
+           <option value =3>Lost</option>
+           <option value =4>Damaged</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">How did it happened?</label>
+        <input type="textarea" class="form-control" id="Description" name="DescriptionText" maxlength="200" required>
+    </div>
+
+    <div class="mb-3">
+    <label for="fecha">When did it happened?</label>
+    <input type="date" class="form-control" id="fecha" name="DateText" pattern="\d{4}-\d{2}-\d{2}" maxlength="10" placeholder="YYYY-MM-DD" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Which student was in charge of the equipment when it happened?</label>
+        <select class="form-select" id="dropdown" name="StudentText">
+            @if(Model.AllStudents is not null)
+            {
+                @foreach(var s in Model.AllStudents)
+                { 
+                    <option value="@s.StudentId">@s.Name @s.LastNameP @s.LastNameM</option>
+                }
+            }
+            else
+            {
+                <option value = "0">No students Found</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Provide the Coordinator in charge of the Equipment: </label>
+        <select class="form-select" id="dropdown" name="CoordinatorText">
+            @if(Model.AllCoordinators is not null)
+            {
+                @foreach(var c in Model.AllCoordinators)
+                {
+                    <option value ="@c.CoordinatorId">@c.Name @c.LastNameP @c.LastNameM</option>
+                }
+            }
+            else
+            {
+                <option value = "0">No Coordinators found</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">
+            What is the debt of the student? What will he/she have to bring to replace the damage? 
+            Explain, with quantities, models and especifications if it is the case.
+        </label>
+        <input type="textarea" class="form-control" id="DescriptionDebt" name="DebtText" maxlength="100" required>
+    </div>
+
+    <div class="mb-3">
+    <label for="fecha">When is the maximum date the student has to replace his/her debt?</label>
+    <input type="date" class="form-control" id="fecha" name="DateDebtText" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD" required>
+    </div>
+    
+    <button type="submit" class="btn btn-primary" name="action" value="confirm">Create Report</button>
+
+</form>
+}

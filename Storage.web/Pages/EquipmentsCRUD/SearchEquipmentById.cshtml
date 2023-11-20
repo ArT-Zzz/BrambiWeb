@@ -18,7 +18,7 @@
         Model.Message = "";
         if(EquipmentId != null && EquipmentId != "")
         {
-            EquipmentExist = SearchEquipmentById(EquipmentId);
+            EquipmentExist = Functions.SearchEquipmentById(EquipmentId);
             if(EquipmentExist == true)
             {
                 Console.WriteLine("Equipment ID is not registered");
@@ -33,34 +33,6 @@
             }
         }
         return Page();
-    }
-
-    public static bool SearchEquipmentById(string? SearchTerm)
-    {
-        bool aux = false;
-        if (string.IsNullOrEmpty(SearchTerm))
-        {
-            throw new InvalidOperationException();
-        }
-        using (bd_storage db = new())
-        {
-            IQueryable<Equipment>? equipments = db.Equipments
-                .Include(e => e.Area)
-                .Include(e => e.Status)
-                .Include(e => e.Coordinator)
-                .Where(e => e.EquipmentId.Equals(SearchTerm)); // Utiliza StartsWith para buscar equipos cuyos nombres comiencen con el término de búsqueda
-
-            if (!equipments.Any())
-            {
-                Console.WriteLine("No equipment found matching the search term: " + SearchTerm);
-                aux = true;
-            }
-            else
-            {
-                aux = false;
-            }
-        }
-        return aux;
     }
 }
 

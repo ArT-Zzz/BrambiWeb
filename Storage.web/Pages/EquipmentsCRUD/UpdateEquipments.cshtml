@@ -114,13 +114,16 @@ else
                     {
                         foreach(var s in Model.AllStatus)
                         {
-                            if(s.StatusId == EquipmentSearched.StatusId)
+                            if(s.StatusId != 6)
                             {
-                                <option value ="@s.StatusId" selected>@s.Value</option>
-                            }
-                            else
-                            {   
-                                <option value ="@s.StatusId">@s.Value</option>
+                                if(s.StatusId == EquipmentSearched.StatusId)
+                                {
+                                    <option value ="@s.StatusId" selected>@s.Value</option>
+                                }
+                                else
+                                {   
+                                    <option value ="@s.StatusId">@s.Value</option>
+                                }
                             }
                         }
                     }

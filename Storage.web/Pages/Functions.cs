@@ -273,6 +273,21 @@ public static class Functions
         }
     }
 
+    
+    public static List<Student>? ListStudents()
+    {
+        using (bd_storage db = new())
+        {
+            IQueryable<Student> students = db.Students;
+            if ((students is null) || !students.Any())
+            {
+                Console.WriteLine("There are no registered students found");
+                return null;
+            }
+            return students.ToList();
+        }
+    }
+
     public static List<Status>? ListStatus()
     {
         using( bd_storage db = new())
@@ -419,4 +434,27 @@ public static class Functions
         }
     }
 
+    public static bool SearchEquipmentById(string? SearchTerm)
+    {
+        bool aux = false;
+        using (bd_storage db = new())
+        {
+            IQueryable<Equipment>? equipments = db.Equipments
+                .Include(e => e.Area)
+                .Include(e => e.Status)
+                .Include(e => e.Coordinator)
+                .Where(e => e.EquipmentId.Equals(SearchTerm)); // Utiliza StartsWith para buscar equipos cuyos nombres comiencen con el término de búsqueda
+
+            if (!equipments.Any())
+            {
+                Console.WriteLine("No equipment found matching the search term: " + SearchTerm);
+                aux = true;
+            }
+            else
+            {
+                aux = false;
+            }
+        }
+        return aux;
+    }
 }
