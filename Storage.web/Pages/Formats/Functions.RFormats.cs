@@ -195,4 +195,59 @@ partial class Functions
             }
         }
     }
+
+    public static List<RequestDetail>? TodayRequestsForStudents(string? StudentID)
+    {
+        using(bd_storage db = new())
+        {
+            DateTime today = DateTime.Now.Date;  // save today's date, it will be used later
+            // query : select * from RequestDetails as rd JOIN Equipments as e ON rd.EquipmentId = e.EquipmentId
+            // JOIN Status as s ON rd.StatusId = s.StatusId WHERE el ProfessorNip = 1 and StudentId of Request = register introduced
+            IQueryable<RequestDetail> requestDetailsToday;
+            if(StudentID is not null)
+            {
+                requestDetailsToday = db.RequestDetails
+                .Include( e => e.Equipment).Include(e=> e.Status)
+                .Where( r => r.ProfessorNip == 1)
+                .Where(r => r.DispatchTime != DateTime.MinValue && r.RequestedDate.Date == today)
+                .Where(r=>r.Request.StudentId == StudentID)
+                .Where(r=>r.StatusId != 2).OrderBy(r=>r.RequestId);
+                
+            }
+            else
+            {
+                requestDetailsToday = db.RequestDetails
+                .Include( e => e.Equipment).Include(e=> e.Status)
+                .Where( r => r.ProfessorNip == 1)
+                .Where(r => r.DispatchTime != DateTime.MinValue && r.RequestedDate.Date == today)
+                .Where(r=>r.StatusId != 2).OrderBy(r=>r.RequestId);
+            }
+            if ((requestDetailsToday is null) || !requestDetailsToday.Any())
+            {
+                WriteLine($"There are no requests for today.");
+                return null; // returning the count of 0, and an empty list
+            }
+            else
+            {
+                return requestDetailsToday.ToList();
+            }
+        }
+    }
+
+    public static List<RequestDetail>? RequestInfoSpecific(int RequestID)
+    {
+        using(bd_storage db = new())
+        {
+            IQueryable<RequestDetail> requestDetails = db.RequestDetails.Include(e=>e.Status).Include(e=>e.Equipment).Where(e=>e.RequestId.Equals(RequestID));
+            if(requestDetails is null || !requestDetails.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return requestDetails.ToList();
+            }
+        }
+    }
+
 }
