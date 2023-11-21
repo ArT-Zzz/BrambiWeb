@@ -1,7 +1,404 @@
 @page
 @using Microsoft.EntityFrameworkCore
-@using System.Security.Cryptography;
+@using Microsoft.EntityFrameworkCore.ChangeTracking
 @using AutoGens
+@{
+    ViewData["Title"] = "Sign Up";
+}
+
+    <form method="get" action="/Index">
+        <button type="submit" class="btn">Return to the Home Menu</button>
+    </form>
+    <br><br>
+    <h1>@ViewData["Title"]</h1>
+@if(Model.Ban != 3 && Model.Ban != 1 && Model.Ban != 2 && Model.Ban != 4 && Model.Ban != 5)
 {
+    <p>Choose the type of user you are going to be:</p>
+    <form method="get" action="/SignUp">
+        <button type="submit" class="btn btn-primary" name="SignUp" value="students" style="width: 500px; height:80px; font-size: 22px;">Sign Up as a Student</button>
+    </form>
+    <br>
+    <form method="get" action="/SignUp">
+        <button type="submit" class="btn btn-primary" name="SignUp" value="professors" style="width: 500px; height:80px; font-size: 22px;" >Sign Up as a Professor</button>
+    </form>
+    <br>
+    <form method="get" action="/SignUp">
+        <button type="submit" class="btn btn-primary" name="SignUp" value="storers" style="width: 500px; height:80px; font-size: 22px;" >Sign Up as a Storer</button>
+    </form>
+    <br>
+    <form method="get" action="/SignUp">
+        <button type="submit" class="btn btn-primary" name="SignUp" value="coordinators" style="width: 500px; height:80px;  font-size: 22px;" >Sign Up as a Coordinator</button>
+    </form>
+}
+
+@functions
+{
+    short Ban {get; set;}
+    List<Group>? AllGroups {get; set;}
+    string? Message {get; set;}
+    public IActionResult OnGet(string? SignUp)
+    {
+        Model.Message = "";
+        Model.AllGroups = Functions.ListGroups();
+        if(SignUp == "students")
+        {
+            Model.Ban = 1;
+        }
+        else if(SignUp == "professors")
+        {
+            Model.Ban = 2;
+        }
+        else if(SignUp == "storers" )
+        {
+            Model.Ban = 3;
+        }
+        else if(SignUp == "coordinators")
+        {
+            Model.Ban = 4;
+        }
+        return Page();
+    }
+
+    public void OnPostAddStudent(int Register, string Name, string LastNameP, string LastNameM, int Group, string Password)
+    {
+        Model.Ban = 1;
+        if(Group != 0)
+        {
+            Student? student = Functions.VerifyStudentIdExistence(Register.ToString());
+            if(student is null )
+            {
+                int affected = AddStudents(Register.ToString(), Name, LastNameP, LastNameM, Group, Password);
+                if(affected == 0)
+                {
+                    Model.Message = "Your Account was not created, sorry";
+                    Console.WriteLine(Model.Message);
+                }
+                else
+                {
+                   Model.Message = "Your account was succesfully created!";
+                   Model.Ban = 5;
+                   Console.WriteLine(Model.Message); 
+                }
+            }
+            else
+            {
+                Model.Message ="This register or StudentId is already signed up";
+            }
+        }
+        else
+        {
+            Model.Message = "There are no registered groups at the moment, so we cannot sign you up, sorry";
+            Console.WriteLine(Model.Message);
+        }
+        Model.AllGroups = Functions.ListGroups();
+    }
+
+    public void OnPostAddProfessor(int Payroll, string Name, string LastNameP, string LastNameM, int Nip, string Password)
+    {
+        Model.Ban = 2;        
+            Professor? professor = Functions.VerifyProfessorIdExistence(Payroll.ToString());
+            if(professor is null )
+            {
+                    int affected = AddProfessor(Payroll.ToString(), Name, LastNameP, LastNameM, Password, Nip.ToString());
+                    if(affected == 0)
+                    {
+                        Model.Message = "Your Account was not created, sorry";
+                        Console.WriteLine(Model.Message);
+                    }
+                    else
+                    {
+                    Model.Message = "Your account was succesfully created!";
+                    Model.Ban = 5;
+                    Console.WriteLine(Model.Message); 
+                    }
+            }
+            else
+            {
+                Model.Message ="This payroll number or ProfessorId is already signed up";
+                Console.WriteLine(Model.Message);
+            }
+        Model.AllGroups = Functions.ListGroups();
+    }
+
+    public void OnPostAddStorer(int Payroll, string Name, string LastNameP, string LastNameM, string Password)
+    {
+        Model.Ban = 3;
+        
+            Storer? storer = Functions.VerifyStorerIdExistence(Payroll.ToString());
+            if(storer is null )
+            {
+                int affected = AddStorer(Payroll.ToString(), Name, LastNameP, LastNameM, Password);
+                if(affected == 0)
+                {
+                    Model.Message = "Your Account was not created, sorry";
+                    Console.WriteLine(Model.Message);
+                }
+                else
+                {
+                   Model.Message = "Your account was succesfully created!";
+                   Model.Ban = 5;
+                   Console.WriteLine(Model.Message); 
+                }
+            }
+            else
+            {
+                Model.Message ="This payroll number is already signed up";
+                Console.WriteLine(Model.Message);
+            }
+        Model.AllGroups = Functions.ListGroups();
+    }
+
     
+    public void OnPostAddCoordinator(int Payroll, string Name, string LastNameP, string LastNameM, string Password)
+    {
+        Model.Ban = 4;
+            Coordinator? coordinator = Functions.VerifyCoordinatorIdExistence(Payroll.ToString());
+            if(coordinator is null )
+            {
+                int affected = AddCoordinator(Payroll.ToString(), Name, LastNameP, LastNameM, Password);
+                if(affected == 0)
+                {
+                    Model.Message = "Your Account was not created, sorry";
+                    Console.WriteLine(Model.Message);
+                }
+                else
+                {
+                   Model.Message = "Your account was succesfully created!";
+                   Model.Ban = 5;
+                   Console.WriteLine(Model.Message); 
+                }
+            }
+            else
+            {
+                Model.Message ="This payroll number is already signed up";
+                Console.WriteLine(Model.Message);
+            }
+        Model.AllGroups = Functions.ListGroups();
+    }
+
+
+    public int AddProfessor(string Username, string Firstname, string LastnameP, string LastnameM, string Password, string Nip)
+    {
+        // add to the database the register
+        int affected = 0;
+        using (bd_storage db = new())
+        {
+            Professor p = new()
+            {
+                ProfessorId = Functions.EncryptPass(Username),
+                Name = Firstname,
+                LastNameP = LastnameP,
+                LastNameM = LastnameM,
+                Password = Functions.EncryptPass(Password),
+                Nip = Functions.EncryptPass(Nip)
+            };
+
+            EntityEntry<Professor> entity = db.Professors.Add(p);
+            WriteLine($"State: {entity.State} ProfessorId: {p.ProfessorId}");
+            // SAVE THE CHANGES ON DB
+            affected = db.SaveChanges();
+        }
+        return affected;
+    }
+    
+    public int AddCoordinator(string Username, string Firstname, string LastnameP, string LastnameM, string Password)
+    {
+        // add to the database the register
+        int affected = 0;
+        using (bd_storage db = new())
+        {
+            Coordinator c = new()
+            {
+                CoordinatorId = Functions.EncryptPass(Username),
+                Name = Firstname,
+                LastNameP = LastnameP,
+                LastNameM = LastnameM,
+                Password = Functions.EncryptPass(Password)
+            };
+
+            EntityEntry<Coordinator> entity = db.Coordinators.Add(c);
+            WriteLine($"State: {entity.State} CoordinatorId: {c.CoordinatorId}");
+            // SAVE THE CHANGES ON DB
+            affected = db.SaveChanges();
+        }
+        return affected;
+    }
+
+    public int AddStorer(string Username, string Firstname, string LastnameP, string LastnameM, string Password)
+    {
+        // add to the database the register
+        int affected = 0;
+        using (bd_storage db = new())
+        {
+            Storer c = new()
+            {
+                StorerId = Functions.EncryptPass(Username),
+                Name = Firstname,
+                LastNameP = LastnameP,
+                LastNameM = LastnameM,
+                Password = Functions.EncryptPass(Password)
+            };
+
+            EntityEntry<Storer> entity = db.Storers.Add(c);
+            WriteLine($"State: {entity.State} StorerId: {c.StorerId}");
+            // SAVE THE CHANGES ON DB
+            affected = db.SaveChanges(); 
+        }
+        return affected;
+    }
+
+    public int AddStudents(string username, string firstname, string lastnameP, string lastnameM, int groupid, string password)
+    {
+        int affected = 0;
+        using (bd_storage db = new())
+        {
+            Student s = new()
+            {
+                StudentId = username,
+                Name = firstname,
+                LastNameP = lastnameP,
+                LastNameM = lastnameM,
+                GroupId = groupid,
+                Password = Functions.EncryptPass(password)
+            };
+
+            EntityEntry<Student> entity = db.Students.Add(s);
+            WriteLine($"State: {entity.State} StudentId: {s.StudentId}");
+            // SAVE THE CHANGES ON DB
+            affected = db.SaveChanges();
+        }
+        return affected;
+    }
+
+}
+
+@if(Model.Message != "")
+{
+    <h3>@Model.Message</h3>
+}
+@if(Model.Ban == 1)
+{ // student register
+    <form method="post" asp-page-handler="AddStudent" asp-route-id="">
+        <div class="mb-3">
+            <label class="form-label">Provide your Register: </label>
+            <input type="text" class="form-control" id="Register" name="Register" pattern="[0-9]{8}" title="Must have 8 digits"  required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Provide your first and second name: </label>
+            <input type="text" class="form-control" id="NameText" name="Name" maxlength="30" required>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Provide Your Paternal Last Name: </label>
+            <input type="text" class="form-control" id="LastNameP" name="LastNameP" maxlength="30" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Provide Your Maternal Last Name: </label>
+            <input type="text" class="form-control" id="LastNameM" name="LastNameM" maxlength="30" required>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Choose your group:</label>
+            <select class="form-select" id="dropdown" name="Group">
+                @if(Model.AllGroups is not null)
+                {
+                    @foreach(var a in Model.AllGroups)
+                    { 
+                        <option value=@a.GroupId>@a.Name</option>
+                    }
+                }
+                else
+                {
+                    <option value = 0>No groups Found</option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Create your password: </label>
+            <input type="text" class="form-control" id="Password" name="Password" minlength="8" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" name="action" value="confirm">Create my User</button>
+        
+    </form>                            
+}
+
+else if(Model.Ban == 2)
+{ // register prof
+        <form method="post" asp-page-handler="AddProfessor" asp-route-id="">
+        <div class="mb-3">
+            <label class="form-label">Provide your Payroll: </label>
+            <input type="text" class="form-control" id="Payroll" name="Payroll"  pattern="[0-9]{10}" title="Must have 10 digits" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Provide your first and second name: </label>
+            <input type="text" class="form-control" id="NameText" name="Name" maxlength="30" required>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Provide Your Paternal Last Name: </label>
+            <input type="text" class="form-control" id="LastNameP" name="LastNameP" maxlength="30" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Provide Your Maternal Last Name: </label>
+            <input type="text" class="form-control" id="LastNameM" name="LastNameM" maxlength="30" required>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">create your confirmation NIP to approve Student's requests: </label>
+            <input type="text" class="form-control" id="Nip" name="Nip"  pattern="[0-9]{4}" title="Must have 4 digits" maxlength="4" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Create your password: </label>
+            <input type="text" class="form-control" id="Password" name="Password" minlength="8" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" name="action" value="confirm">Create my User</button>
+        
+    </form>
+
+}
+else if(Model.Ban == 3 || Model.Ban == 4)
+{ // register storer and coordi
+    string Tag = "";
+    @if(Model.Ban == 3)
+    {
+        Tag = "AddStorer";
+    }
+    else
+    {
+        Tag = "AddCoordinator";
+    }
+    <form method="post" asp-page-handler=@Tag asp-route-id="">
+        <div class="mb-3">
+            <label class="form-label">Provide your Payroll: </label>
+            <input type="text" class="form-control" id="Payroll" name="Payroll" minlength="10" maxlength="10"  pattern="[0-9]{10}" title="Must have 10 digits"  required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Provide your first and second name: </label>
+            <input type="text" class="form-control" id="NameText" name="Name" maxlength="30" required>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Provide Your Paternal Last Name: </label>
+            <input type="text" class="form-control" id="LastNameP" name="LastNameP" maxlength="30" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Provide Your Maternal Last Name: </label>
+            <input type="text" class="form-control" id="LastNameM" name="LastNameM" maxlength="30" required>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Create your password: </label>
+            <input type="text" class="form-control" id="Password" name="Password" minlength="8" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" name="action" value="confirm">Create my User</button>
+        
+    </form>
 }
