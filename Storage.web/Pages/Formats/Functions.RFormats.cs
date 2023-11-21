@@ -251,7 +251,7 @@ partial class Functions
         }
     }
 
-    public static (List<string>? EquipmentsId, List<byte?>? StatusEquipments) ListEquipmentsAvailable (DateTime RequestedDate, DateTime InitTime, DateTime EndTime, bool IsStudent)
+    public static (List<Equipment>? EquipmentsList, List<byte?>? StatusEquipments) ListEquipmentsAvailable (DateTime RequestedDate, short InitTimeId, short EndTimeId)
     {
         using (bd_storage db = new())
         {
@@ -259,29 +259,41 @@ partial class Functions
             {
                 throw new NullReferenceException("The table does not exist");
             }
-            var EquipmentIdsInUseStud = db.RequestDetails
-            .Where(rd => rd.RequestedDate.Date == RequestedDate && rd.DispatchTime < EndTime && rd.ReturnTime > InitTime)
-            .Select(rd => rd.EquipmentId)
-            .ToList();
-
-            var EquipmentIdsInUseProf = db.PetitionDetails
-            .Where(rd => rd.RequestedDate.Date == RequestedDate && rd.DispatchTime < EndTime && rd.ReturnTime > InitTime)
-            .Select(rd => rd.EquipmentId)
-            .ToList();
-
-            IQueryable<Equipment>? Equipments = db.Equipments
-            .Include(s => s.Status)
-            .Where(e => !(EquipmentIdsInUseStud.Contains(e.EquipmentId) ||
-                    EquipmentIdsInUseProf.Contains(e.EquipmentId) ||
-                    e.StatusId == 3 || e.StatusId == 4 || e.StatusId == 5));
-            if (!Equipments.Any() || Equipments.Count() < 1 || Equipments is null)
+            else 
             {
-                WriteLine("Not equipments were found");
-                return (null, null);
-            }
-            else
-            {
-                
+                IQueryable<Schedule> InitTimesQuery = db.Schedules.Where(s => s.ScheduleId==InitTimeId);
+                DateTime InitTime = InitTimesQuery.First().InitTime;
+                IQueryable<Schedule> EndTimesQuery = db.Schedules.Where(s => s.ScheduleId==EndTimeId);
+                DateTime EndTime = InitTimesQuery.First().InitTime;
+                List<Equipment>? equipmentsList = new();
+                List<byte?>? equipmentsStatusList = new();
+                var EquipmentIdsInUseStud = db.RequestDetails
+                .Where(rd => rd.RequestedDate.Date == RequestedDate && rd.DispatchTime < EndTime && rd.ReturnTime > InitTime)
+                .Select(rd => rd.EquipmentId).ToList();
+
+                var EquipmentIdsInUseProf = db.PetitionDetails
+                .Where(rd => rd.RequestedDate.Date == RequestedDate && rd.DispatchTime < EndTime && rd.ReturnTime > InitTime)
+                .Select(rd => rd.EquipmentId).ToList();
+
+                IQueryable<Equipment>? EquipmentsNotUse = db.Equipments
+                .Include(s => s.Status)
+                .Where(e => !(EquipmentIdsInUseStud.Contains(e.EquipmentId) ||
+                        EquipmentIdsInUseProf.Contains(e.EquipmentId) ||
+                        e.StatusId == 3 || e.StatusId == 4 || e.StatusId == 5));
+                if (!EquipmentsNotUse.Any() || EquipmentsNotUse.Count() < 1 || EquipmentsNotUse is null)
+                {
+                    WriteLine("Not equipments were found");
+                    return (null, null);
+                }
+                else
+                {
+                    foreach(var e in EquipmentsNotUse)
+                    {
+                        equipmentsStatusList.Add(e.StatusId);
+                        equipmentsList.Add(e);
+                    }
+                    return (equipmentsList, equipmentsStatusList);
+                }
             }
         }
     }

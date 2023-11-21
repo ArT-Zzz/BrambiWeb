@@ -29,10 +29,11 @@
     bool ShowSpecificInformation { get; set; }
     bool ValidateHours {get; set;}
     bool ShowEquipments {get; set;}
+    bool ShowEquipmentsByArea {get; set;}
     string? Username {get; set;}
     int SelectedEquipmentCount {get; set;}
 
-    public void OnGet(string username, int selectedOptionClass, string selectedOptionSub, string selectedOptionProf, string requestedDate, short selectedOptionInitTime, short selectedOptionEndTime, short selectedOptionArea)
+    public void OnGet(string username, int selectedOptionClass, string selectedOptionSub, string selectedOptionProf, string requestedDate, short selectedOptionInitTime, short selectedOptionEndTime, short selectedOptionArea, int selectedEquipmentCount)
     {
         Console.WriteLine($"Username received in AddRequest: {username}");
         Model.StorerId = Functions.AddStorer();
@@ -66,10 +67,17 @@
                 } else{
                     ShowSpecificInformation = false;
                 } 
-                if(selectedOptionArea > 0)
+                if(selectedEquipmentCount > 0)
                 {
                     ShowEquipments = true;
-
+                    if(selectedOptionArea > 0)
+                    {
+                        ShowEquipmentsByArea = true;
+                    }
+                    else
+                    {
+                        ShowEquipmentsByArea = false;
+                    }
                 }
                 else {
                     ShowEquipments = false;
@@ -82,6 +90,7 @@
             Model.AllSchedulesInit = Functions.ListSchedules(0, 9);
             Model.AllSchedulesEnd = Functions.ListSchedules(selectedOptionInitTime, (short)difference);
             Model.AllAreas = Functions.ListAreas();
+            var resultEquipments = Functions.ListEquipmentsAvailable(DateTime.Parse(requestedDate), selectedOptionInitTime, selectedOptionEndTime);
         }
 
     }
