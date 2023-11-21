@@ -118,61 +118,6 @@ partial class Functions
         }
     }
     
-    public static int AddClassroom(int ClassroomId)
-    {
-        using (bd_storage db = new())
-        {
-            IQueryable<Classroom> classroomsId = db.Classrooms.Where(c => c.ClassroomId == ClassroomId);
-                int classroom = -1;
-            // Si no existe le pide que ingrese otra vez el valor
-            if (classroomsId is null || !classroomsId.Any())
-            {
-                Console.WriteLine("Not a valid key. Try again");
-            }
-            else
-            {
-                classroom = classroomsId.First().ClassroomId;
-            }
-            return classroom;
-        }
-    }
-
-    public static string AddSubjects(string SubjectId)
-    {
-        using (bd_storage db = new())
-        {
-            IQueryable<Subject> subjectsId = db.Subjects.Where(s => s.SubjectId == SubjectId);
-            string subject= "";
-            // Si no existe le pide que ingrese otra vez el valor
-            if (subjectsId is null || !subjectsId.Any())
-            {
-                Console.WriteLine("Not a valid key. Try again");
-                subject = "";
-            }else{
-                subject = subjectsId.First().SubjectId;
-            }
-            return subject;
-        }
-    }
-
-    public static string AddProfessors(string ProfessorId)
-    {
-        using (bd_storage db = new())
-        {
-            IQueryable<Professor> ProfessorsQuery = db.Professors.Where(p => p.ProfessorId == ProfessorId);
-            string? professor= "";
-            // Si no existe le pide que ingrese otra vez el valor
-            if (ProfessorsQuery is null || !ProfessorsQuery.Any())
-            {
-                Console.WriteLine("Not a valid key. Try again");
-                professor = "";
-            }else{
-                professor = ProfessorsQuery.First().ProfessorId;
-            }
-            return professor;
-        }
-    }
-
     public static string AddStorer()
     {
         using (bd_storage db = new())
@@ -251,7 +196,7 @@ partial class Functions
         }
     }
 
-    public static (List<Equipment>? EquipmentsList, List<byte?>? StatusEquipments) ListEquipmentsAvailable (DateTime RequestedDate, short InitTimeId, short EndTimeId)
+    public static (List<Equipment>? EquipmentsList, List<byte?>? StatusEquipments, DateTime InitTime, DateTime EndTime) ListEquipmentsAvailable (DateTime RequestedDate, short InitTimeId, short EndTimeId)
     {
         using (bd_storage db = new())
         {
@@ -283,7 +228,7 @@ partial class Functions
                 if (!EquipmentsNotUse.Any() || EquipmentsNotUse.Count() < 1 || EquipmentsNotUse is null)
                 {
                     WriteLine("Not equipments were found");
-                    return (null, null);
+                    return (null, null, DateTime.Now, DateTime.Now);
                 }
                 else
                 {
@@ -292,10 +237,104 @@ partial class Functions
                         equipmentsStatusList.Add(e.StatusId);
                         equipmentsList.Add(e);
                     }
-                    return (equipmentsList, equipmentsStatusList);
+                    return (equipmentsList, equipmentsStatusList, InitTime, EndTime);
                 }
             }
         }
+    }
+
+    public static (List<string>? EquipmentsId, List<byte?>? StatusEquipments) AddEquipmentsAndStatus(List<string>? equipmentsId)
+    {
+        using(bd_storage db = new())
+        {
+            List<string>? EquipmentsId= new();
+            List<byte?>? StatusEquipments = new();
+            if(equipmentsId is not null)
+            {
+                foreach(var s in equipmentsId)
+                {
+                    IQueryable<Equipment> SelectedEquipment = db.Equipments.Where(e=> e.EquipmentId==s);
+                    StatusEquipments.Add(SelectedEquipment.First().StatusId);
+                    EquipmentsId.Add(SelectedEquipment.First().EquipmentId);
+                }
+            }
+            return (EquipmentsId, StatusEquipments);
+        }
+    }
+
+    public static int LastRequestDetailId()
+    {
+        using (bd_storage db = new())
+        {
+            int lastRequestId = 0;
+            if(db.RequestDetails is null){ 
+                throw new InvalidOperationException("The table request is not found");
+            } 
+            else 
+            {
+                lastRequestId = db.RequestDetails.Max(c => (int?)c.RequestDetailsId) ?? 0;
+                if(lastRequestId == 0)
+                {
+                    IQueryable<Request> requests = db.Requests;
+                    lastRequestId= requests.Count()+2;
+                }else
+                {
+                    lastRequestId += 1;
+                }
+            }
+            return lastRequestId;
+        }
+    }
+
+    public static (List<int> Affected, List<int> RequestDetailsId) AddRequestDetails(int RequestId, List<string>? EquipmentsId, int ProfessorNip, DateTime InitTime, DateTime EndTime, DateTime RequestedDate, DateTime CurrentDate, List<byte?>? StatusEquipments){
+        // Variable para establecer el índice de las listas de los nombres de los equipos y los status de estos
+        int i=0;
+        // Lista que almacena los requestDetails Id de los registros nuevos agregados en la tabla
+        List<int>? RequestDetailsId = new List<int>();
+        // Lista que almacena cuantas filas fueron afectadas en la tabla de Request Details al momento de re
+        List<int>? Affecteds = new List<int>();
+        // Verifica que la lista de equipmentId y statusId sean del mismo tamaño y no tengan valores nulos para poder usarlos
+        if (EquipmentsId == null || StatusEquipments == null || EquipmentsId.Count != StatusEquipments.Count)
+        {
+            // Manejar el caso donde las listas no son válidas
+            // Si no son validas muestra el mensaje y retorna los valores
+            WriteLine("The equipment selected was not correctly added. Try again.");
+            //DeleteRequest(RequestId);
+            return (Affecteds, RequestDetailsId);
+        } else {
+            using (bd_storage db = new()){
+                // Si la tabla no existe se lanza una excepcion
+                if(db.RequestDetails is null){ 
+                    throw new InvalidOperationException ("The table Request Details does not exist. Verify it");
+                }
+                int requestDetailId = LastRequestDetailId();
+                // Por cada equipo registrado en la tabla se genera una fila de datos en Request Details, donde se llenan los campos 
+                //con los datos recibidos por los parametros
+                foreach(var e in EquipmentsId){
+                    RequestDetail rD = new() {
+                        RequestDetailsId = requestDetailId,
+                        RequestId = RequestId,
+                        EquipmentId = EquipmentsId[i],
+                        StatusId = StatusEquipments[i],
+                        ProfessorNip = ProfessorNip,
+                        DispatchTime = InitTime,
+                        ReturnTime = EndTime,
+                        RequestedDate = RequestedDate,
+                        CurrentDate = CurrentDate
+                    };
+                    // Se añaden los datos a la tabla
+                    EntityEntry<RequestDetail> entity = db.RequestDetails.Add(rD);
+                    // Se guardan los datos en la bd y el valor de las filas affectadas se guarda en la lista de affecteds
+                    Affecteds.Add(db.SaveChanges());
+                    // Se guardan los ID generados en la lista de ID's
+                    RequestDetailsId.Add(rD.RequestDetailsId);
+                    // Aumenta el indice de las listas
+                    i++;
+                    requestDetailId++;
+                }
+            }
+        }
+        return (Affecteds, RequestDetailsId);
     }
 
 

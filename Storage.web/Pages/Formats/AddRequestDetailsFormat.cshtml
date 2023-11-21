@@ -1,0 +1,311 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using System.Globalization;
+@using System.Security.Cryptography;
+@using System.Text;
+@{
+    ViewData["Title"] = "Add Requests Details";
+}
+<h1>@ViewData["Title"]</h1>
+
+@functions
+{
+    List<Equipment>? AllEquipmentsAvailable {get; set;}
+    List<string>? EquipmentsIdSelected {get; set;}
+    string? StorerId { get; set; }
+    bool IsDuplicated { get; set; }
+    string? Username {get; set;}
+    int SelectedEquipmentCount {get; set;}
+    List<string> SelectedEquipmentIds { get; set; } = new List<string>();
+
+    public void OnGet(string username, string requestedDate, short selectedOptionInitTime, short selectedOptionEndTime, int selectedEquipmentCount, string selectedEquipment1, string selectedEquipment2, string selectedEquipment3, string selectedEquipment4, int requestId)
+    {
+        Console.WriteLine($"Username received in AddRequest: {username}");
+        Model.StorerId = Functions.AddStorer();
+        Model.Username=username;
+        if(Model.StorerId != ""){
+            Model.SelectedEquipmentCount = selectedEquipmentCount; 
+            if(Model.SelectedEquipmentCount > 0)
+            {
+                WriteLine(Model.SelectedEquipmentCount);
+                var resultEquipments = Functions.ListEquipmentsAvailable(DateTime.Parse(requestedDate), selectedOptionInitTime, selectedOptionEndTime);
+                Model.AllEquipmentsAvailable = resultEquipments.EquipmentsList;
+                WriteLine(selectedEquipment1);
+                if(Model.SelectedEquipmentCount>=1 && selectedEquipment1 is not null)
+                {
+                    WriteLine("Enters here 1");
+                    Model.EquipmentsIdSelected.Add(selectedEquipment1);
+                }
+                WriteLine(selectedEquipment2);
+                if(selectedEquipmentCount>=2 && Model.EquipmentsIdSelected is not null && selectedEquipment2 is not null)
+                {
+                    Model.EquipmentsIdSelected.Add(selectedEquipment2);
+                    WriteLine("Enters here 2");
+                }
+                WriteLine(selectedEquipment3);
+                if(selectedEquipmentCount>=3 && Model.EquipmentsIdSelected is not null && selectedEquipment3 is not null)
+                {
+                    Model.EquipmentsIdSelected.Add(selectedEquipment3);
+                    WriteLine("Enters here 3");
+                } 
+                WriteLine(selectedEquipment4);
+                if(selectedEquipmentCount==4 && Model.EquipmentsIdSelected is not null && selectedEquipment4 is not null)
+                {
+                    Model.EquipmentsIdSelected.Add(selectedEquipment4);
+                    WriteLine("Enters here 4");
+                }
+                if(Model.SelectedEquipmentCount==2)
+                {
+                    if(selectedEquipment1 != selectedEquipment2)
+                    {
+                        Model.IsDuplicated=false;
+                    }
+                    else
+                    {
+                        Model.IsDuplicated= true;
+                    }
+                }
+                else if(Model.SelectedEquipmentCount==3)
+                {
+                    if(selectedEquipment1 != selectedEquipment2 && selectedEquipment1 != selectedEquipment3 && selectedEquipment2 != selectedEquipment3)
+                    {
+                        Model.IsDuplicated=false;
+                    }
+                    else
+                    {
+                        Model.IsDuplicated= true;
+                    }
+                }
+                else if(Model.SelectedEquipmentCount==4)
+                {
+                    if(selectedEquipment1 != selectedEquipment2 && selectedEquipment1 != selectedEquipment3 && selectedEquipment2 != selectedEquipment3 && selectedEquipment1!=selectedEquipment4 && selectedEquipment2!=selectedEquipment4 && selectedEquipment3!= selectedEquipment4)
+                    {
+                        Model.IsDuplicated=false;
+                    }
+                    else
+                    {
+                        Model.IsDuplicated= true;
+                    }
+                }
+                if(EquipmentsIdSelected is not null && EquipmentsIdSelected.Count()> 0)
+                {
+                    foreach (var s in EquipmentsIdSelected)
+                    {
+                        WriteLine($"The equipments selected {s}");   
+                    }
+                    var resultEquipmentsVerified = Functions.AddEquipmentsAndStatus(EquipmentsIdSelected);
+                    var requestDetails = Functions.AddRequestDetails(requestId, resultEquipmentsVerified.EquipmentsId, 0, resultEquipments.InitTime, resultEquipments.EndTime, DateTime.Parse(requestedDate), DateTime.Now, resultEquipments.StatusEquipments);
+                    if(requestDetails.Affected.Count() > 0)
+                    {
+                        WriteLine("the request was added");
+                    } else
+                    {
+                        WriteLine("the request was not added");   
+                    }
+                }
+                else{
+                    WriteLine("Nothing");
+                }
+            }
+        }
+
+    }
+
+    
+}
+    
+<form method="get" action="/Formats/AddRequestDetailsFormat">
+    @if(Model.StorerId!=""){
+        <input type="hidden" name="username" value="@Model.Username">
+        @if(Model.SelectedEquipmentCount == 1)
+        {
+            <div class="mb-3">
+                    <label class="form-label" for="selectedEquipment">Select the equipment :</label>
+                    <select class="form-select" id="dropdown" name="selectedEquipment1" required>
+                        @if(Model.AllEquipmentsAvailable is not null)
+                        {
+                            foreach(var a in Model.AllEquipmentsAvailable)
+                            { 
+                                <option value="@a.EquipmentId">@a.Name</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="0">No equipments found</option>
+                        }
+                    </select>
+                </div>
+            <button type="submit" class="btn btn-primary" name="action" value="confirm">Submit</button>
+        }
+        else if(Model.SelectedEquipmentCount == 2)
+        {
+            <div class="mb-3">
+                <label class="form-label" for="selectedEquipment">Select the equipment :</label>
+                <select class="form-select" id="dropdown" name="selectedEquipment1" required>
+                    @if(Model.AllEquipmentsAvailable is not null)
+                    {
+                        foreach(var a in Model.AllEquipmentsAvailable)
+                        { 
+                            <option value="@a.EquipmentId">@a.Name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="0">No equipments found</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="selectedEquipment">Select the equipment :</label>
+                <select class="form-select" id="dropdown" name="selectedEquipment2" required>
+                    @if(Model.AllEquipmentsAvailable is not null)
+                    {
+                        foreach(var a in Model.AllEquipmentsAvailable)
+                        { 
+                            <option value="@a.EquipmentId">@a.Name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="0">No equipments found</option>
+                    }
+                </select>
+            </div>
+            @if(Model.IsDuplicated==true)
+            {
+                <p style="color: red">The equipments are duplicated, change them to continue</p>
+            } 
+            <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
+        }
+        else if(Model.SelectedEquipmentCount == 3)
+        {
+            <div class="mb-3">
+                <label class="form-label" for="selectedEquipment">Select the equipment 1:</label>
+                <select class="form-select" id="dropdown" name="selectedEquipment1" required>
+                    @if(Model.AllEquipmentsAvailable is not null)
+                    {
+                        foreach(var a in Model.AllEquipmentsAvailable)
+                        { 
+                            <option value="@a.EquipmentId">@a.Name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="0">No equipments found</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="selectedEquipment">Select the equipment 2:</label>
+                <select class="form-select" id="dropdown" name="selectedEquipment2" required>
+                    @if(Model.AllEquipmentsAvailable is not null)
+                    {
+                        foreach(var a in Model.AllEquipmentsAvailable)
+                        { 
+                            <option value="@a.EquipmentId">@a.Name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="0">No equipments found</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="selectedEquipment">Select the equipment 3:</label>
+                <select class="form-select" id="dropdown" name="selectedEquipment3" required>
+                    @if(Model.AllEquipmentsAvailable is not null)
+                    {
+                        foreach(var a in Model.AllEquipmentsAvailable)
+                        { 
+                            <option value="@a.EquipmentId">@a.Name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="0">No equipments found</option>
+                    }
+                </select>
+            </div>
+            @if(Model.IsDuplicated==true)
+            {
+                <p style="color: red">The equipments are duplicated, change them to continue</p>
+            } 
+            <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
+        }
+        else if (Model.SelectedEquipmentCount==4)
+        {
+            <div class="mb-3">
+                <label class="form-label" for="selectedEquipment">Select the equipment 1:</label>
+                <select class="form-select" id="dropdown" name="selectedEquipment1" required>
+                    @if(Model.AllEquipmentsAvailable is not null)
+                    {
+                        foreach(var a in Model.AllEquipmentsAvailable)
+                        { 
+                            <option value="@a.EquipmentId">@a.Name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="0">No equipments found</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="selectedEquipment">Select the equipment 2:</label>
+                <select class="form-select" id="dropdown" name="selectedEquipment2" required>
+                    @if(Model.AllEquipmentsAvailable is not null)
+                    {
+                        foreach(var a in Model.AllEquipmentsAvailable)
+                        { 
+                            <option value="@a.EquipmentId">@a.Name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="0">No equipments found</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="selectedEquipment">Select the equipment 3:</label>
+                <select class="form-select" id="dropdown" name="selectedEquipment3" required>
+                    @if(Model.AllEquipmentsAvailable is not null)
+                    {
+                        foreach(var a in Model.AllEquipmentsAvailable)
+                        { 
+                            <option value="@a.EquipmentId">@a.Name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="0">No equipments found</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="selectedEquipment">Select the equipment 4:</label>
+                <select class="form-select" id="dropdown" name="selectedEquipment4" required>
+                    @if(Model.AllEquipmentsAvailable is not null)
+                    {
+                        foreach(var a in Model.AllEquipmentsAvailable)
+                        { 
+                            <option value="@a.EquipmentId">@a.Name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="0">No equipments found</option>
+                    }
+                </select>
+            </div>
+            @if(Model.IsDuplicated==true)
+            {
+                <p style="color: red">The equipments are duplicated, change them to continue</p>
+            } 
+            <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
+        }
+    }
+</form>
+
