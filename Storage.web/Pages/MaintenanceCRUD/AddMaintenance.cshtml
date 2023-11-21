@@ -6,75 +6,90 @@
 @using System.Security.Cryptography;
 @using System.Text;
 @{
-    ViewData["Title"] = "Add Equipments";
+    ViewData["Title"] = "Add Maintenance Register";
     //await Html.RenderPartialAsync("Functions.cshtml");
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to add equipments.</p>
+<p>Use this page to add a new register of maintenance of one or more equipments.</p>
 
 @functions
-{ // declaration of all the Models that will be used in the html code
-    List<Equipment>? AllEquipments {get; set;}
-    List<Area>? AllAreas{get; set;}  
-    List<Coordinator>? AllCoordinators {get; set;}
-    List<Status>? AllStatus {get; set;}
+{   // declaration of all the Models that will be used in the html code
+    List<MaintenanceType>? AllMaintenanceTypes {get; set;}
     string Message ="";
+    string? UserName {get; set;}
+    string? MaxDate {get; set;}
+    string? MinDate {get; set;}
     
     public void OnGet(string EquipmentIdText, string NameText, short AreaText, string DescriptionText, byte StatusText, int YearText, string CoordinatorText, string ControlNumberText)
     {
-        if(AreaText != 0 && StatusText != 0 && CoordinatorText!="0")
+        Model.Message = "";
+        Model.UserName = TempData["Username"]?.ToString();
+        Console.WriteLine($"Username :  {Model.UserName}"); // receives the temporal data sent from ViewMaintenanceNotMade, username
+        
+        Model.AllMaintenanceTypes = Functions.ListMaintenanceTypes();
+        Model.MaxDate = DateTime.Now.Date.AddYears(5).ToString("yyyy-MM-dd");
+        Model.MinDate = DateTime.Now.Date.AddYears(-1).ToString("yyyy-MM-dd");
+        @TempData.Remove("Username");
+    }
+
+    // post for the second form, when this one is clicked, than it will go to another page that will show the new Maintenance register Added
+    public IActionResult OnPostFinish(byte MaintenanceTypeText, string? InstructionsText, DateTime ProgrammedDateText)
+    {
+        if(MaintenanceTypeText != 0)
         {
-            var response = Functions.VerifyEquipmentIdControlNumber(EquipmentIdText, ControlNumberText);
-            if(response.ControlNumAffected == 0 && response.EquipAffected == 0)
+            if(Model.UserName is not null)
             {
-                var result = AddEquipment(EquipmentIdText, NameText, AreaText,  DescriptionText, YearText, StatusText, ControlNumberText, CoordinatorText);
-                if(result.Affected == 1)
+                var result = AddMaintenance(MaintenanceTypeText, InstructionsText, ProgrammedDateText, Model.UserName);
+                if(result.Affected > 0)
                 {
-                    Model.Message = $"The equipment {EquipmentIdText} was successfully added! ";
-                    Console.WriteLine($"The equipment {EquipmentIdText} was successfully added! ");
-                }
-                else
-                {
-                    Console.WriteLine("The equipment could not be added");
-                    Model.Message = "The equipment could not be added";
+                    // created succesfully
+                    TempData["MaintenanceRegisterId"] = result.MaintenanceId.ToString();
+                    RedirectToPage("/MaintenanceCRUD/AddMaintain");
                 }
             }
-            if(response.ControlNumAffected == 1){Model.Message ="That Control Number is already in use";}
-            if(response.EquipAffected == 1){Model.Message = "That Equipment ID is already in use";}
+            else
+            {
+                Model.Message = "Your username is not being saved correctly, sorry";
+            }
         }
-        else if(Model.Message == ""){}
         else
         {
-            Model.Message = "The Equipment could not be added, one or more Camps are missing with verified information.";
-            Console.WriteLine("The Equipment could not be added, one or more Camps are missing with verified information.");
+            Model.Message = "There are no Maintenance Types registered at this moment, we cannot create your Maintenance Register";
         }
-        Model.AllEquipments = Functions.ViewAllEquipments();
-        Model.AllAreas = Functions.ListAreas();
-        Model.AllCoordinators = Functions.ListCoordinators();
-        Model.AllStatus = Functions.ListStatus();
+        return Page();
     }
+
     
-    static (int Affected, string EquipmentId) AddEquipment(string equipmentid, string name, short areaid, string description, int year, byte statusid, string controlnumber, string coordinatorid )
+    static (int Affected, int MaintenanceId) AddMaintenance(byte MaintenanceTypeId, string? Instructions, DateTime ProgrammedDate, string? StorerId)
     {
         using(bd_storage db = new()) // creates connects connection with the database
         {
-            if(db.Equipments is null){ return(0,"0");} // checks if the table exists inside the database
-            Equipment e = new()  // creates a new object of Equipment type with all the previosuly entered values
+             IQueryable<MaintenanceRegister> maintenanceRegister = db.MaintenanceRegisters
+                .OrderByDescending(d=>d.MaintenanceId);
+            int BiggestId;
+            if(maintenanceRegister is null || !maintenanceRegister.Any())
             {
-                EquipmentId = equipmentid, 
-                Name = name,
-                AreaId = areaid, 
-                Description = description, 
-                Year = year, 
-                StatusId = statusid, 
-                ControlNumber = controlnumber,
-                CoordinatorId = coordinatorid //is already encrypted Coordinator ID
+                BiggestId = 0;
+            }
+            else
+            {
+                BiggestId = maintenanceRegister.First().MaintenanceId;
+            }
+
+            if(db.MaintenanceRegisters is null){ return(0,0);} // checks if the table exists inside the database
+            MaintenanceRegister e = new()  // creates a new object of Equipment type with all the previosuly entered values
+            {
+                MaintenanceId = (BiggestId + 1),
+                MaintenanceTypeId = MaintenanceTypeId, 
+                MaintenanceInstructions = Instructions,
+                ProgrammedDate = ProgrammedDate, 
+                StorerId = StorerId
             };
 
-            EntityEntry<Equipment> entity = db.Equipments.Add(e); // adds the object that was just created to Equipments table inside the database
+            EntityEntry<MaintenanceRegister> entity = db.MaintenanceRegisters.Add(e); // adds the object that was just created to Equipments table inside the database
             int affected = db.SaveChanges(); // saves chenages that were made inside the database and stores the number of rows that were affected
-            return (affected, e.EquipmentId); // returns number of rows that were affected and the new Equipment ID
+            return (affected, e.MaintenanceId); // returns number of rows that were affected and the new Equipment ID
         }
     }
  // next line is the start of the html, and the forms where all the information is indicated 
@@ -82,91 +97,58 @@
 
 @if(Model.Message != "")
 {
-    <h2>@Model.Message</h2>
+    <h3>@Model.Message</h3>
 }
-else
-{
-<form method="get" action="/EquipmentsCRUD/AddEquipments">
-    <div class="mb-3">
-        <label class="form-label">Provide the new Equipment ID: </label>
-        <input type="text" class="form-control" id="EquipmentIdText" name="EquipmentIdText" maxlength="15" required>
-    </div>
+    <p> This part of the register is generic, this means it will apply to all the equipments you add to this maintenance register </p>
 
-    <div class="mb-3">
-        <label class="form-label">Provide the new Equipment Name: </label>
-        <input type="text" class="form-control" id="NameText" name="NameText" maxlength="40" required>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Provide the new Equipment Year of Fabrication: </label>
-        <input type="number" class="form-control" id="YearText" name="YearText" maxlength="4" min="1900" max="2100" required>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Provide the new Equipment Area:</label>
-        <select class="form-select" id="dropdown" name="AreaText">
-            @if(Model.AllAreas is not null)
-            {
-                @foreach(var a in Model.AllAreas)
-                { 
-                    <option value="@a.AreaId">@a.Name</option>
-                }
-            }
-            else
-            {
-                <option value = 0>No areas Found</option>
-            }
-        </select>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Provide the new Equipment Description:</label>
-        <input type="textarea" class="form-control" id="Description" name="DescriptionText" maxlength="255" required>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Provide the new Equipment Status: </label>
-        <select class="form-select" id="dropdown" name="StatusText">
-            @if(Model.AllStatus is not null)
-            {
-                foreach(var s in Model.AllStatus)
+    <form method="post" asp-page-handler="Finish">
+        <div class="mb-3">
+            <label class="form-label">Choose a equipment</label>
+            <select class="form-select" id="dropdown" name="MaintenanceTypeText">
+                @if(Model.AllMaintenanceTypes is not null)
                 {
-                    if(s.StatusId < 5 && s.StatusId !=2)
-                    {
-                        <option value ="@s.StatusId">@s.Value</option>
+                    @foreach(var a in Model.AllMaintenanceTypes)
+                    { 
+                        <option value=@a.MaintenanceTypeId>@a.Name</option>
                     }
                 }
-            }
-            else
-            {
-                <option value = 0>No Status Found</option>
-            }
-        </select>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Provide the Equipment Control Number</label>
-        <input type="text" class="form-control" id="ControlNumber" name="ControlNumberText" maxlength="20" required>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Provide the Coordinator in charge of the Equipment: </label>
-        <select class="form-select" id="dropdown" name="CoordinatorText">
-            @if(Model.AllCoordinators is not null)
-            {
-                @foreach(var c in Model.AllCoordinators)
+                else
                 {
-                    <option value ="@c.CoordinatorId">@c.Name @c.LastNameP @c.LastNameM</option>
+                    <option value = 0>No Maintenance Types Found</option>
                 }
-            }
-            else
-            {
-                <option value = "0">No Coordinators found</option>
-            }
-        </select>
-    </div>
+            </select>
+        </div>
 
-    <button type="submit" class="btn btn-primary" name="action" value="confirm">Add Equipment</button>
+        <div class="mb-3">
+            <label for="fecha">Provide the Programmed Date of the Maintenance</label>
+            <input type="date" class="form-control" id="fecha" name="ProgrammedDateText" pattern="\d{4}-\d{2}-\d{2}" maxlength="10" min="@Model.MinDate" max="@Model.MaxDate" placeholder="YYYY-MM-DD" required>
+        </div>
 
-</form>
-}
+        <div class="mb-3">
+            <label class="form-label">Provide the Instructions for the Maintenance:</label>
+            <input type="textarea" class="form-control" id="Description" name="InstructionsText" maxlength="255" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Complete Maintenance Register</button>
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

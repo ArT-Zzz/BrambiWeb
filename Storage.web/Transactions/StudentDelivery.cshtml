@@ -1,0 +1,78 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@functions{
+
+    int RequestID {get; set;}
+    string? StudentID {get; set;}
+    List<RequestDetail>? RequestInfoSpecific {get; set;}
+    bool Ban {get; set;}
+    public void OnGet(int RequestID, string? StudentID)
+    {
+        Model.RequestID = RequestID;
+        Model.StudentID = StudentID;
+        Model.RequestInfoSpecific = Functions.RequestInfoSpecific(RequestID);
+    }
+
+    public void OnPost(string? Confirm)
+    {
+        if(Confirm == "Yes")
+        {
+
+        }
+        else if(Confirm == "No")
+        {
+
+        }
+    }
+}
+@{
+        // Amazon Prime: fbi, the other zoey,  some girls, criminal minds, bones, mi primer amor eterno
+    ViewData["Title"] = $"Deliver Equipments of Request '{Model.RequestID}' to the Student of ID : {Model.StudentID}";
+}
+<h1>@ViewData["Title"]</h1>
+<p>This page will be used to register the deliver of equipments of the RequestID @Model.RequestID to the student @Model.StudentID.</p>
+
+
+<h6>This is are the Equipments you are delivering to the student:</h6>
+@if(Model.RequestInfoSpecific is not null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Equipment ID</th>
+                <th>Equipment Name</th>
+                <th>Equipment Status</th>
+            </tr>
+        </thead>
+    </table>
+    foreach(var rd in Model.RequestInfoSpecific) // show every request 
+    {
+         if(rd.Equipment?.StatusId == 1)
+         {
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>@rd.EquipmentId</th>
+                        <th>@rd.Equipment?.Name</th>
+                        <th>@rd.Equipment?.Status?.Value</th>
+                    </tr>
+                </tbody>
+            </table>
+         }
+         else
+         {
+            <h4>I'm sorry to inform you that the equipment @rd.EquipmentId you were going to use is not available anymore"</h4>
+            <h6>Would you like to choose another one instead? </h6>
+            
+            <form method="post" asp-page-handler="Confirm">
+                <button type="submit" class="btn btn-primary" name="Confirm" value="Yes">Yes</button>
+            </form>
+            <form method="post" asp-page-handler="Confirm">
+                <button type="submit" class="btn btn-primary" name="Confirm" value="No">No</button>
+            </form>
+         }
+    }
+}
+

@@ -1,0 +1,169 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using System.Globalization;
+@using System.Security.Cryptography;
+@using System.Text;
+@{
+    ViewData["Title"] = "Add Maintenance rRegister";
+    //await Html.RenderPartialAsync("Functions.cshtml");
+    // haz esto naco
+    
+//second form to end // show here, when the button is clicked, send to the postFinish, in there check that the MaintenanceTypeText
+    // != 0, if it is different, than add maintenanceRegister, hacer un chequeo de que Query Last MaintenanceRegisterId + 1, 
+    //despues agregar MaintenanceType, ProgrammedDate, Instrucctions, storer that is already sent (Username), db.SaveChanges y regresar eso en la funcion
+    // if affected = db.SaveChanges() es > 0 than TempData["MaintenanceRegisterId"] that was created, and Redirect.ToPage("/MaintenanceCRUD/AddMaintain")
+    //In AddMaintain agarrar TempData["MaintenanceRegisterId"] show the first form, that will get the equipmentId and status, this in a PostAddEquipment(string? EquipmentIdText, byte StatusIdText)
+    // than in the post, every time that it gets there we have to create the maintain and update the equipment status (tengo una funcion para el update)
+    // ahi mero en este post hacer un Model.AllEquipments = Funcion que query Todos los equipos que no esten en el maintain donde maintenanceRegisterId == TempData[MaintenanceRegisterId]
+    // al final poner un botón mamalon de finished que simplemente RedirectToPage(AddMaintenance.cshtml)
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to add a new register of maintenance of one or more equipments.</p>
+
+@functions
+{
+    public string? MaintenanceRegisterID {get; set; }
+    List<Equipment>? MaintanableEquipments {get; set;}
+    List<Status>? AllStatus {get; set;}
+    string Message = "";
+    public void OnGet()    
+    {
+        Model.MaintenanceRegisterID = TempData["MaintenanceRegisterId"] as string;
+        Model.MaintanableEquipments = Functions.ViewAllMaintanableEquipments();
+        Model.AllStatus = Functions.ListStatus();
+        Console.WriteLine($"{MaintenanceRegisterID}");
+        return; // the return Page() means that it will return to this same page, reload the same page
+    }   
+
+    public void OnPostAddEquipment(string EquipmentText, string StatusText)
+    {
+        MaintenanceRegisterID = TempData["MaintenanceRegisterId"] as string;
+        Console.WriteLine($"Maintenance Register : {MaintenanceRegisterID}");
+        using(bd_storage db = new())
+        {
+            IQueryable<Maintain> maintains = db.Maintain
+                .Where(m => m.MaintenanceId == Convert.ToInt32(MaintenanceRegisterID)); // looks for every maintain that has the maintenance id connected it
+            
+            bool repeated = false;
+            if(maintains is not null && maintains.Any())
+            {
+                foreach(var m in maintains) // checks with each of the maintains of that maintenance register if the equipment id wasn-t addded yet
+                {
+                    if(EquipmentText == m.EquipmentId)
+                    {
+                        Model.Message = "That ID was already added to the maintenance";
+                        Console.WriteLine("That ID was already added to the maintenance");
+                        repeated = true;
+                        return;
+                    }
+                }
+            }
+
+            if(repeated == false)
+            {
+                AddMaintain(EquipmentText, MaintenanceRegisterID);
+                UpdateStatus(EquipmentText, StatusText);
+            }
+            return;
+        }        
+    }
+
+    public IActionResult OnPostFinish()
+    {
+        return RedirectToPage("/MaintenanceCRUD/AddMaintenance");
+    }
+
+    public int AddMaintain(string EquipmentID, string MaintenanceID)
+    {
+        int affected = 0;
+        int BiggestId = 0;
+        using(bd_storage db = new())
+        {
+             IQueryable<Maintain> maintainIds = db.Maintain
+                .OrderByDescending(d=>d.MaintenanceId);
+            if(maintainIds is null || !maintainIds.Any())
+            {
+                BiggestId = 0;
+            }
+            else
+            {
+                BiggestId = maintainIds.First().MaintainId;
+            }
+            Maintain m = new()
+            {
+                MaintainId = BiggestId + 1,
+                MaintenanceId = Convert.ToInt32(MaintenanceID),
+                EquipmentId = EquipmentID
+            };
+            EntityEntry<Maintain> entity = db.Maintain.Add(m); // adds the object that was just created to Equipments table inside the database
+            affected = db.SaveChanges();
+            return affected;
+        }       
+    }
+
+    public int UpdateStatus(string EquipmentID, string StatusID)
+    {
+        int affected = 0;
+        using(bd_storage db = new())
+        {
+            IQueryable<Equipment> EditedEquipment = db.Equipments
+                .Where(e => e.EquipmentId == EquipmentID);
+            if(EditedEquipment is not null && EditedEquipment.Any())
+            {
+                EditedEquipment.First().StatusId = Convert.ToByte(StatusID);
+                affected = db.SaveChanges();
+            }
+            return affected;
+        }  
+    }
+}
+
+<p>Add as many equipments as you want and the status you want to keep while the maintenance doesn't start, add the information and click at Add Equipment to add an equipment to the maintenance </p>
+
+<form method="post" asp-page-handler="AddEquipment">
+    <div class="mb-3">
+        <label class="form-label">Choose a equipment</label>
+        <select class="form-select" id="dropdown" name="EquipmentText">
+            @if(Model.MaintanableEquipments is not null)
+            {
+                @foreach(var a in Model.MaintanableEquipments)
+                { 
+                    <option value="@a.EquipmentId">@a.EquipmentId</option>
+                }
+            }
+            else
+            {
+                <option value = "0">No equipments Found</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Choose the status of this equipment </label>
+        <select class="form-select" id="dropdown" name="StatusText">
+            @if(Model.AllStatus is not null)
+            {
+                foreach(var s in Model.AllStatus)
+                {
+                    if(s.StatusId == 1 || s.StatusId == 5)
+                    {
+                        <option value =@s.StatusId>@s.Value</option>
+                    }
+                }
+            }
+            else
+            {
+                <option value = 0>No Status Found</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Equipment</button>
+</form>
+
+
+<form method="post" asp-page-handler="Finish">
+    <button type="submit" class="btn btn-primary">Finish Report</button>
+</form>

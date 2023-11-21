@@ -1,0 +1,115 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@{
+        // Amazon Prime: fbi, the other zoey,  some girls, criminal minds, bones, mi primer amor eterno
+    ViewData["Title"] = "Deliver Equipments of a Request to a Student";
+}
+<h1>@ViewData["Title"]</h1>
+<p>This page will be used to register the deliver of equipments of a certain request to a certain user. Start by searching for the Student's ID, to see his history</p>
+@functions
+{
+    string? Message {get; set;}
+    List<RequestDetail>? TodaysRequest {get; set;}
+    Student? StudentExistence {get; set;}
+    bool Ban {get; set;}
+    public void OnGet(string? StudentID)
+    {
+        Model.Ban = false;
+        Model.Message = "";
+        Model.TodaysRequest = Functions.TodayRequestsForStudents(null);
+        if(Model.TodaysRequest is not null)
+        {
+            Model.Ban = true;
+            if(StudentID is not null )
+            {
+                Model.StudentExistence = Functions.VerifyStudentIdExistence(StudentID);
+                if(Model.StudentExistence is null)
+                {
+                    Model.Message = $"The student of ID '{StudentID}' is not registered.";
+                    Console.WriteLine(Model.Message);
+                }
+                else
+                {
+                    Model.Ban = true;
+                    Model.TodaysRequest = Functions.TodayRequestsForStudents(StudentID);
+
+                }
+            }
+        }
+        else
+        {
+            Model.Ban = false;
+            Model.Message = "There are no requests from any student for today!";
+            Console.WriteLine(Model.Message);
+        }
+    }
+}
+
+    <h4>Search Student ID: </h4>
+    @if (Model.Message!= "")
+    {
+        <div class="error-message">
+            @Model.Message
+        </div>
+    }
+    <form method="get" action="/Transactions/DeliveryEquipmentsStudent">
+        <input type="text" class="form-control" id="StudentID" name="StudentID" maxlength="8" required>
+        <br>
+        <button type="submit" class="btn btn-primary" name="action" value="confirm">Search</button>
+    </form>
+    <br>
+
+
+@if(Model.TodaysRequest is not null)
+{
+    // show student history
+    var groupedRequests = Model.TodaysRequest.GroupBy(r => r.RequestId);
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Dispatch Time</th>
+                    <th>Return Time</th>
+                    <th> Request Date </th>
+                    <th>Day of Made Request</th>
+                    <th>Student Info</th>
+                    <th>Status</th>
+                    <th>Approved By Teacher</th>
+                    <th>Equipments</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var group in groupedRequests)
+                { // to show every single one of the requests found
+                    var firstRequest = group.First(); // the First is so it is just one group, and we will have access to the attributes of it (REquestId, DispatchTime...) 
+                    <tr>
+                        <td>@firstRequest.RequestId</td>
+                        <td>@firstRequest.DispatchTime.TimeOfDay</td>
+                        <td>@firstRequest.ReturnTime.TimeOfDay</td>
+                        <td>@firstRequest.RequestedDate.Day / @firstRequest.RequestedDate.Month / @firstRequest.RequestedDate.Year</td>
+                        <td>@firstRequest.CurrentDate.Day / @firstRequest.CurrentDate.Month / @firstRequest.CurrentDate.Year</td>
+                        <td>@firstRequest.Request?.Student?.Name @firstRequest.Request?.Student?.LastNameP</td>
+                        <td>@firstRequest.Status?.Value</td>
+                        @if(firstRequest.ProfessorNip == 1){<td>Accepted</td>}
+                        <td>
+                            <ul>
+                                @foreach (var r in group)
+                                { // so all the equipments of the request will be seen in the same celd of the same request of course
+                                    <li>@r.Equipment?.Name</li>
+                                }
+                            </ul>
+                        </td>
+                        <td>
+                            <form method="get" action="/Transactions/StudentDelivery">
+                                <input type="hidden" name="RequestID" value=@firstRequest.RequestId>
+                                <input type="hidden" name="StudentID" value=@firstRequest.Request?.StudentId>
+                                <button type="submit" class="btn btn-primary" name="action" value="confirm">Deliver Request</button>
+                            </form>
+                        </td>
+                    </tr>
+                }      
+            </tbody>
+        </table>
+}

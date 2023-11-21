@@ -11,8 +11,11 @@
     int Offset = 0; // start count of pending maintenance registers
     int TotalMaintenances = 0; // total maintenance registers
     int Pages = 1;
+    string? UserName; 
     public void OnGet(string action) // the action is to see if the Next or Previous button was pushed
-    {
+    {     
+        Model.UserName = TempData["Username"]?.ToString();
+        Console.WriteLine($"Username :  {Model.UserName}");
         var result = ViewMaintenanceNotMade(Offset); // gets the 20 maintenance registers afetr the offset
         Model.AllPendingMaintenances = result.pendingMaintenanceRegisters; // sends to html maintenance registers batch
         Model.Offset = result.Offset; // sends to html the offset
@@ -26,7 +29,8 @@
         {
             Model.Offset += 20; // each batch shows the next 20 maintenance registers
             Model.Pages +=1; // advances page
-        }        
+        } 
+        @TempData.Remove("Username");
     }
 
     public static (List<Maintain>? pendingMaintenanceRegisters,int Offset, int Total) ViewMaintenanceNotMade(int Offset)
@@ -97,7 +101,7 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/AddMaintenance">Add Maintenance Report</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/AddMaintenance" asp-route-username="@Model.UserName">Add Maintenance Report</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/FinishPendingMaintenance">Finish Pending Maintenance</a>
