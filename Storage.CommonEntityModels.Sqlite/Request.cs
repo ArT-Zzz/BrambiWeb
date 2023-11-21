@@ -10,6 +10,7 @@ namespace AutoGens;
 public partial class Request
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("requestId")]
     [Required]
     public int RequestId { get; set; }

@@ -16,6 +16,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\aacar\Documents\PA1\BrambiWeb\Storage.web
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Listados/EquipmentsD&LStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = TGlzdGFkb3NcRXF1aXBtZW50c0QmTFN0dWRlbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Listados/EquipmentsLateForReturningStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = TGlzdGFkb3NcRXF1aXBtZW50c0xhdGVGb3JSZXR1cm5pbmdTdHVkZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/AddEquipments.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcQWRkRXF1aXBtZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
