@@ -14,6 +14,8 @@
     List<Student>? AllStudents  {get; set;}
     List<Coordinator>? AllCoordinators {get; set;}
     bool EquipmentExist {get; set;}
+    string? MaxDate {get; set;}
+    string? MinDate {get; set;}
     
     public void OnGet(DateTime DateDebtText, string DebtText, string CoordinatorText, string StudentText, DateTime DateText, string DescriptionText, byte StatusText, string EquipmentIdText)
     { 
@@ -69,6 +71,8 @@
         }
         Model.AllStudents = Functions.ListStudents();
         Model.AllCoordinators = Functions.ListCoordinators();
+        Model.MaxDate = DateTime.Now.Date.AddYears(3).ToString("yyyy-MM-dd");
+        Model.MinDate = DateTime.Now.Date.AddYears(-2).ToString("yyyy-MM-dd");
     }
 
     public static (int Affected, int DyLequipmentId) CreateReportDamagedLost(byte StatusId, string EquipmentId, string Description, DateTime DateOfEvent, string StudentId, string? CoordinatorId, string ReturnDescrip, DateTime ReturnDate)
@@ -151,7 +155,7 @@ else
 
     <div class="mb-3">
     <label for="fecha">When did it happened?</label>
-    <input type="date" class="form-control" id="fecha" name="DateText" pattern="\d{4}-\d{2}-\d{2}" maxlength="10" placeholder="YYYY-MM-DD" required>
+    <input type="date" class="form-control" id="fecha" name="DateText" pattern="\d{4}-\d{2}-\d{2}" maxlength="10" min="@Model.MinDate" max="@DateTime.Now.Date.ToString("yyyy-MM-dd")" placeholder="YYYY-MM-DD" required>
     </div>
 
     <div class="mb-3">
@@ -198,7 +202,7 @@ else
 
     <div class="mb-3">
     <label for="fecha">When is the maximum date the student has to replace his/her debt?</label>
-    <input type="date" class="form-control" id="fecha" name="DateDebtText" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD" required>
+    <input type="date" class="form-control" id="fecha" name="DateDebtText" pattern="\d{4}-\d{2}-\d{2}" min="@Model.MinDate" max="@Model.MaxDate" placeholder="YYYY-MM-DD" required>
     </div>
     
     <button type="submit" class="btn btn-primary" name="action" value="confirm">Create Report</button>
