@@ -44,16 +44,19 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudents">View All Students</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewStudents">View All Students</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/SearchStudentHistory">Search For a Student's History</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/SearchStudentHistory">Search For a Student's History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/StudentsWithLateReturn">Student's with Late Returning</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/StudentsWithLateReturn">Student's with Late Returning</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudentsRequests">View Students Requests</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewStudentsRequests">View Students Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewTomorrowRequests">View Tomorrow Requests</a>
                     </li>
                 </ul>
             </div>
@@ -100,7 +103,7 @@
                             <td>@c.Group?.Name</td>
                             <td>
                                 
-                                <form method="get" action="/ViewActionsAboutStudents/SearchStudentHistory">
+                                <form method="get" action="/Users/StorerActions/SearchStudentHistory">
                                     <input type="hidden" name="StudentIdText" value="@c.StudentId">
                                     <button type="submit" class="btn btn-primary" name="action" value="confirm">View Request History</button>
                                 </form>

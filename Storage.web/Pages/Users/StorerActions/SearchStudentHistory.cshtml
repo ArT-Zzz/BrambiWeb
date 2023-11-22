@@ -10,16 +10,19 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudents">View All Students</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewStudents">View All Students</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/SearchStudentHistory">Search For a Student's History</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/SearchStudentHistory">Search For a Student's History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/StudentsWithLateReturn">Student's with Late Returning</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/StudentsWithLateReturn">Student's with Late Returning</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudentsRequests">View Students Requests</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewStudentsRequests">View Students Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewTomorrowRequests">View Tomorrow Requests</a>
                     </li>
                 </ul>
             </div>
@@ -106,7 +109,7 @@
             </div>
         /*in the next line i will be sending the student id provided by the storer to the method OnGet(), by a forms*/
         }
-    <form method="get" action="/ViewActionsAboutStudents/SearchStudentHistory">
+    <form method="get" action="/Users/StorerActions/SearchStudentHistory">
         <input type="text" class="form-control" id="StudentIdText" name="StudentIdText" maxlength="8" required>
         <br>
         <button type="submit" class="btn btn-primary" name="action" value="confirm">Search For Student</button>
@@ -125,6 +128,7 @@ else
     if(Model.StudentRequests is null)
     { // there are no requests for this student
         <h4>No history found for this Student</h4>
+        
     }
     else
     { // found history of requests for this student
@@ -138,6 +142,7 @@ else
                     <th>Return Time</th>
                     <th>Request Date</th>
                     <th>Day of Made Request</th>
+                    <th>Request Status</th>
                     <th>Equipments</th>
                 </tr>
             </thead>
@@ -151,6 +156,7 @@ else
                         <td>@firstRequest.ReturnTime.TimeOfDay</td>
                         <td>@firstRequest.RequestedDate.Day / @firstRequest.RequestedDate.Month / @firstRequest.RequestedDate.Year</td>
                         <td>@firstRequest.CurrentDate.Day / @firstRequest.CurrentDate.Month / @firstRequest.CurrentDate.Year</td>
+                        <td>@firstRequest.Status?.Value</td>
      
                         <td>
                             <ul>
