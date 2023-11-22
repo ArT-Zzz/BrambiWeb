@@ -1,0 +1,37 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@{
+    ViewData["Title"] = "View My Students Requests";
+    //await Html.RenderPartialAsync("Functions.cshtml");
+}
+<h1>@ViewData["Title"]</h1>
+
+@functions
+{
+    byte Status {get; set;}
+    int RequestId {get; set;}
+    string? Username {get; set;}
+    string? Nip {get; set;}
+    string? Message {get; set;}
+    public void OnGet(string? action, int RequestId, string Username, string Nip)
+    {
+        Model.Username = Username;
+        if(Model.Username is not null)
+        {
+            if(Nip is not null)
+            {
+                    if(action == "approve")
+                    {
+                        Model.Status = 1;
+                    }
+                    else if(action == "deny")
+                    {
+                        Model.Status = 2;
+                    } 
+            }
+        }
+    }
+
+}

@@ -133,8 +133,8 @@
                             int lastIdPetition = Functions.LastPetitionId();
                             var resultEquipmentsVerified = Functions.AddEquipmentsAndStatus(Model.EquipmentsIdSelected);
                             var petition = AddPetition(selectedOptionClass, Model.Username, Model.StorerId, selectedOptionSub, lastIdPetition);
-                            var requestDetails = AddPetitionDetails(petition.PetitionId, resultEquipmentsVerified.EquipmentsId, 0, resultEquipments.InitTime, resultEquipments.EndTime, DateTime.Parse(requestedDate), DateTime.Now, resultEquipmentsVerified.StatusEquipments);
-                            if(requestDetails.Affected.Count() > 0)
+                            var petitionDetails = AddPetitionDetails(petition.PetitionId, resultEquipmentsVerified.EquipmentsId, resultEquipments.InitTime, resultEquipments.EndTime, DateTime.Parse(requestedDate), DateTime.Now, resultEquipmentsVerified.StatusEquipments);
+                            if(petitionDetails.Affected.Count() > 0)
                             {
                                 WriteLine("the request was added");
                                 return RedirectToPage("/Users/StudentsPrincipal/"); 

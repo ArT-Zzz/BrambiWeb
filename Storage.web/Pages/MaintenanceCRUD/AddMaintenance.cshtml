@@ -43,6 +43,7 @@
                 if(result.Affected > 0)
                 {
                     // created succesfully
+                    Console.WriteLine($"Afectadoo : {result.Affected}");
                     TempData["MaintenanceRegisterId"] = result.MaintenanceId.ToString();
                     RedirectToPage("/MaintenanceCRUD/AddMaintain");
                 }
@@ -67,6 +68,7 @@
              IQueryable<MaintenanceRegister> maintenanceRegister = db.MaintenanceRegisters
                 .OrderByDescending(d=>d.MaintenanceId);
             int BiggestId;
+            int affected = -1;
             if(maintenanceRegister is null || !maintenanceRegister.Any())
             {
                 BiggestId = 0;
@@ -87,7 +89,7 @@
             };
 
             EntityEntry<MaintenanceRegister> entity = db.MaintenanceRegisters.Add(e); // adds the object that was just created to Equipments table inside the database
-            int affected = db.SaveChanges(); // saves chenages that were made inside the database and stores the number of rows that were affected
+            affected = db.SaveChanges(); // saves chenages that were made inside the database and stores the number of rows that were affected
             return (affected, e.MaintenanceId); // returns number of rows that were affected and the new Equipment ID
         }
     }
@@ -129,7 +131,7 @@
             <input type="textarea" class="form-control" id="Description" name="InstructionsText" maxlength="255" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Complete Maintenance Register</button>
+        <button type="submit" class="btn btn-primary">Add Equipments</button>
     </form>
 
 

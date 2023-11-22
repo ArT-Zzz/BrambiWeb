@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Net;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Intrinsics.Arm;
-using ConsoleTables;
 
 partial class Functions
 {
@@ -240,65 +239,165 @@ partial class Functions
         }
     }
 
-    public static string? ListEquipmentsRequests()
+    public static List<RequestDetail>? LateReturningStudent(string Username)
+    {
+        bool aux = false;
+        using (bd_storage db = new())
+        {
+            var currentDate = DateTime.Now;
+
+            IQueryable<RequestDetail>? requestDetails = db.RequestDetails
+            .Where( s => s.Request.StudentId == Username)
+            .Include(r => r.Request.Student.Group)
+            .Include(r => r.Equipment)
+            .Where(s => s.StatusId == 2 && s.ProfessorNip == 1 && s.RequestedDate < currentDate);
+
+            if (!requestDetails.Any())
+            {
+                WriteLine("You dont have overdue equipment.");
+                return null;
+            }
+            else
+            {
+
+                foreach (RequestDetail use in requestDetails)
+                {
+                    if (use.ReturnTime < currentDate)
+                    {   
+                        WriteLine();
+                        WriteLine($"Equipment Name: {use.Equipment?.Name} ");
+                        WriteLine($" Equipment ID: {use.Equipment?.EquipmentId} ");
+                        WriteLine($"Return Time: {use.ReturnTime.TimeOfDay}");
+                        WriteLine($"Date: {use.RequestedDate.Day}/{use.RequestedDate.Month}/{use.RequestedDate.Year}");
+                        WriteLine();
+                    }
+                }
+                return requestDetails.ToList();
+            }
+        }
+    }
+
+    
+    public static List<RequestDetail>? TomorrowsEquipmentRequests(string? StudentId)
+    {
+        using (bd_storage db = new())
+        {
+            DateTime today = DateTime.Now;
+
+            DateTime tomorrow;
+
+            if (today.DayOfWeek == DayOfWeek.Friday)
+            {
+                tomorrow = DateTime.Now.Date.AddDays(3);
+            }
+            else
+            {
+                tomorrow = DateTime.Now.Date.AddDays(1);
+            }
+
+            
+            IQueryable<RequestDetail> requestDetails;
+            if(StudentId is null)
+            {
+                requestDetails= db.RequestDetails
+                .Include( e => e.Equipment)
+                .Include( s => s.Status)
+                .Where( r => r.ProfessorNip == 1)
+                .Where(r => r.DispatchTime.Date == tomorrow);
+            }
+            else
+            {
+                requestDetails= db.RequestDetails
+                .Include( e => e.Equipment)
+                .Include( s => s.Status)
+                .Where( r => r.ProfessorNip == 1)
+                .Where(r => r.DispatchTime.Date == tomorrow)
+                .Where(r=>r.Request.StudentId.StartsWith(StudentId));
+            }
+            
+            if ((requestDetails is null) || !requestDetails.Any())
+            {
+                WriteLine("There are no request found");
+                return null;
+            }
+            else
+            {
+
+                var groupedRequests = requestDetails.GroupBy(r => r.RequestId);
+
+                int i = 0;
+
+                foreach (var group in groupedRequests)
+                {
+                    i++;
+                    string count = i + "";
+                    string nip = "";
+                    var firstRequest = group.First();
+                    if(firstRequest.ProfessorNip == 1)
+                    {
+                        nip = "aceptado";
+                    }
+                    else if (firstRequest.ProfessorNip == 0 )
+                    {
+                        nip = "Pendiente";
+                    }
+
+                    WriteLine();
+                    WriteLine($"RequestId: {firstRequest.RequestId}");
+                    WriteLine($"StatusId: {firstRequest.Status?.Value}");
+                    WriteLine($"ProfessorNip: {nip}");
+                    WriteLine($"Dispatch Time: {firstRequest.DispatchTime.TimeOfDay}");
+                    WriteLine($"Return Time: {firstRequest.ReturnTime.TimeOfDay}");
+                    WriteLine($"RequestedDate: {firstRequest.RequestedDate.Day}/{firstRequest.RequestedDate.Month}/{firstRequest.RequestedDate.Year}");
+
+                    foreach (var r in group)
+                    {
+                        // Adding an empty string as the first column to match the table structure
+                        WriteLine($"Equipment Name: {r.Equipment?.Name}");
+                    }
+                    WriteLine();
+                }
+                return requestDetails.ToList();
+            }
+        }
+    }
+
+    public static List<RequestDetail>? WatchRequestsToApprove(string User)
+    {
+        using (bd_storage db = new bd_storage())
+        {
+            
+                IQueryable<RequestDetail> requests = db.RequestDetails
+                .Include(r => r.Request).ThenInclude(s=>s.Student).ThenInclude(g=>g.Group).Include(e=>e.Equipment).Where(d => d.ProfessorNip == 0)
+                .Where(d =>d.Request.ProfessorId == EncryptPass(User)).OrderBy(r => r.RequestId);
+                
+            if (requests == null || !requests.Any())
+            {
+                WriteLine("There are no permissions");
+                WriteLine();
+                return null;
+            }
+            Clear();
+            return requests.ToList();
+        }
+    }
+
+    public static List<RequestDetail>? ListEquipmentsRequests(string UserName)
     {
         using (bd_storage db = new())
         {
             // Se obtienen las solicitudes de detalles de la base de datos
-            IQueryable<RequestDetail>? requestDetails = db.RequestDetails
-                .Include(e => e.Equipment)
-                .Include(s => s.Status)
-                .Include(e => e.Request.Student)
-                .Where(r => r.ProfessorNip == 1)
-                .OrderByDescending(f => f.RequestedDate);
-
-            // Se verifica si hay solicitudes y se agrupan por RequestId
-            var groupedRequests = requestDetails.GroupBy(r => r.RequestId);
-
-            int i = 0;
-
-            // Se itera a través de cada grupo de solicitudes
-            foreach (var group in groupedRequests)
+           IQueryable<RequestDetail> requests = db.RequestDetails
+                .Include(r => r.Request).ThenInclude(s=>s.Student)
+                .ThenInclude(g=>g.Group).Include(e=>e.Equipment)
+                .Where(d =>d.Request.StudentId == UserName).OrderBy(r => r.RequestId);
+            if(requests is not null)
             {
-                i++;
-                string count = i + "";
-                string nip = "";
-                var firstRequest = group.First();
-
-                // Se determina el estado del profesor (aceptado o pendiente)
-                if (firstRequest.ProfessorNip == 1)
-                {
-                    nip = "aceptado";
-                }
-                else if (firstRequest.ProfessorNip == 0)
-                {
-                    nip = "Pendiente";
-                }
-
-                // Se crea una tabla para mostrar la información de la solicitud
-                var table = new ConsoleTable("NO. Request", count);
-
-                table.AddRow("RequestId", firstRequest.RequestId);
-                table.AddRow("Student", $"{firstRequest.Request?.Student?.Name} {firstRequest.Request?.Student?.LastNameP} {firstRequest.Request?.Student?.LastNameM}");
-                table.AddRow("StatusId", $"{firstRequest.Status?.Value}");
-                table.AddRow("ProfessorNip", nip);
-                table.AddRow("DispatchTime", $"{firstRequest.DispatchTime.TimeOfDay}");
-                table.AddRow("Return Time", $"{firstRequest.ReturnTime.TimeOfDay}");
-                table.AddRow("RequestedDate", $"{firstRequest.RequestedDate.Day}/{firstRequest.RequestedDate.Month}/{firstRequest.RequestedDate.Year}");
-                table.AddRow("", "");
-
-                // Se itera a través de cada detalle de solicitud en el grupo y se agrega a la tabla
-                foreach (var r in group)
-                {
-                    // Adding an empty string as the first column to match the table structure
-                    table.AddRow("Equipment Name", r.Equipment.Name);
-                }
-
-                // Se escribe la tabla en la consola
-                table.Write();
-                WriteLine();
+                return requests.ToList();
+            } else
+            {
+                return null;
             }
-            return "";
         }
     }
 

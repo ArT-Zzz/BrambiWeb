@@ -1,0 +1,132 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using AutoGens
+@{
+    ViewData["Title"] = "Students with Late Return of Equipment Requests "; // title that will be shown in the page
+// this page shows all the late return equipments from student's requests
+//navegation bar in the next part    
+}
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewStudents">View All Students</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/SearchStudentHistory">Search For a Student's History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/StudentsWithLateReturn">Student's with Late Returning</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewStudentsRequests">View Students Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewTomorrowRequests">View Tomorrow Requests</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</nav>
+
+@functions 
+{
+    string? Message {get; set;} // message that will be shown throughout the program
+    List<RequestDetail>? TomorrowsRequests {get; set;} // list of request details with requestDate of tomorrow
+    Student? StudentExistence {get; set;} // student object
+    public void OnGet(string? StudentId)
+    { //declarat 
+        Model.Message = "";
+        Model.TomorrowsRequests = Functions.TomorrowsEquipmentRequests(null);
+        if(Model.TomorrowsRequests is null)
+        {
+            Model.Message = "There are no requests for tomorrow from any student";
+        }
+        else
+        {
+            Model.Message = "This are the the requests for tomorrow:";
+            if(StudentId is not null)
+            {
+                Model.StudentExistence = Functions.VerifyStudentIdExistence(StudentId);
+                if(Model.StudentExistence is not null)
+                {
+                    Model.Message = $"This are the requests for tomorrow from the Student register provided:";
+                    Model.TomorrowsRequests = Functions.TomorrowsEquipmentRequests(StudentId);
+                }
+            }
+        }
+    }
+}
+
+@if(Model.TomorrowsRequests is not null)
+{
+    @if (Model.Message!= "")
+    {
+        <h5>@Model.Message</h5>
+    }
+    <h4>Search Student ID: </h4>
+    <form method="get" action="/Users/StorerActions/ViewTomorrowRequests">
+        <input type="text" class="form-control" id="StudentID" name="StudentID" maxlength="8" required>
+        <br>
+        <button type="submit" class="btn btn-primary" name="action" value="confirm">Search</button>
+    </form>
+    <br>
+    // show student history
+    var groupedRequests = Model.TomorrowsRequests.GroupBy(r => r.RequestId);
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student Info</th>
+                    <th>Dispatch Time</th>
+                    <th>Return Time</th>
+                    <th>Request Date </th>
+                    <th>Day of Made Request</th>
+                    <th>Status</th>
+                    <th>Approved By Teacher</th>
+                    <th>Equipments</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var group in groupedRequests)
+                { // to show every single one of the requests found
+                    var firstRequest = group.First(); // the First is so it is just one group, and we will have access to the attributes of it (REquestId, DispatchTime...) 
+                    <tr>
+                        <td>@firstRequest.RequestId</td>
+                        <td>@firstRequest.Request?.Student?.Name @firstRequest.Request?.Student?.LastNameP</td>
+                        <td>@firstRequest.DispatchTime.TimeOfDay</td>
+                        <td>@firstRequest.ReturnTime.TimeOfDay</td>
+                        <td>@firstRequest.RequestedDate.Day / @firstRequest.RequestedDate.Month / @firstRequest.RequestedDate.Year</td>
+                        <td>@firstRequest.CurrentDate.Day / @firstRequest.CurrentDate.Month / @firstRequest.CurrentDate.Year</td>
+                        <td>@firstRequest.Status?.Value</td>
+                        @if(firstRequest.ProfessorNip == 1){<td>Accepted</td>}
+                        <td>
+                            <ul>
+                                @foreach (var r in group)
+                                { // so all the equipments of the request will be seen in the same celd of the same request of course
+                                    <li>@r.EquipmentId - @r.Equipment?.Name </li>
+                                }
+                            </ul>
+                        </td>
+                        <td>
+                            <form method="get" action="/Users/StorerActions/ViewTomorrowRequests">
+                                <input type="hidden" name="RequestID" value=@firstRequest.RequestId>
+                                <input type="hidden" name="StudentID" value=@firstRequest.Request?.StudentId>
+                                <button type="submit" class="btn btn-primary" name="action" value="confirm">Deliver Request</button>
+                            </form>
+                        </td>
+                    </tr>
+                }      
+            </tbody>
+        </table>
+}
+else
+{
+    @if(Model.Message != "")
+    {
+        <h5>@Model.Message</h5>
+    }
+}
