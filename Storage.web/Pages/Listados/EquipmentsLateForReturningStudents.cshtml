@@ -14,12 +14,63 @@
 @functions
 {
     string? Username {get; set;}
+    DateTime currentDate {get; set;}
+    List<RequestDetail>? AllRequestDetails {get; set;}
+    string? Message {get; set;}
     public void OnGet(string username)
     {
+        //receiving the username of the student logged in from student principal
+        Model.currentDate = DateTime.Now;
+        Model.Message = "";
         Model.Username=username;
+        Console.WriteLine(Model.Username);
+        Model.AllRequestDetails = Functions.LateReturningStudent(Model.Username);
+        if(Model.AllRequestDetails is null)
+        {
+            Model.Message = "Congratulations you have no late equipments to return!";
+            Console.WriteLine(Model.Message);
+        }
+        else
+        {
+            Model.Message = "This are the equipments you have to return:";
+        }
+        
     }
 }
 
 <form method="post" action="/Listados/EquipmentsLateForReturningStudents.cshtml">
     <input type="hidden" name="username" value="@Model.Username">
 </form>
+@if(Model.Message != "")
+{
+    <h4>@Model.Message</h4>
+}
+
+@if(Model.AllRequestDetails is not null)
+{
+    <h7>Today's date : @Model.currentDate.Day / @Model.currentDate.Month / @Model.currentDate.Year</h7>
+    <table class="table" >
+        <thead>
+            <tr>
+                <th>Equipment ID</th>
+                <th>Equipment Name</th>
+                <th>Return Date</th>
+                <th>Return Time</th>                
+            </tr>
+        </thead>
+        <tbody>
+        @foreach(var r in Model.AllRequestDetails )
+        {
+            if(r.ReturnTime < Model.currentDate)
+            {
+                <tr>
+                    <td>@r.EquipmentId</td>
+                    <td>@r.Equipment?.Name</td>
+                    <td>@r.RequestedDate</td>
+                    <td>@r.ReturnTime</td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+}
