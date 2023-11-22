@@ -19,69 +19,45 @@
     string? ChoosenProfessor { get; set; }
     List<Schedule>? AllSchedulesInit {get; set;}
     List<Schedule>? AllSchedulesEnd {get; set;}
-    List<Area>? AllAreas {get; set;}
     List<Equipment>? AllEquipmentsAvailable {get; set;}
+    List<string>? EquipmentsIdSelected {get; set;}
     string? StorerId { get; set; }
     string? MinDate { get; set; }
     string? MaxDate { get; set; }
-    bool IsWeekendSelected { get; set; }
-    bool RequestRegistered { get; set; }
-    bool ShowSpecificInformation { get; set; }
-    bool ValidateHours {get; set;}
-    bool ShowEquipments {get; set;}
-    bool ShowEquipmentsByArea {get; set;}
     string? Username {get; set;}
+    public string? Message {get; set;}
     int SelectedEquipmentCount {get; set;}
 
-    public void OnGet(string username, int selectedOptionClass, string selectedOptionSub, string selectedOptionProf, string requestedDate, short selectedOptionInitTime, short selectedOptionEndTime, short selectedOptionArea, int selectedEquipmentCount)
+    public void OnGet(string username, int selectedOptionClass, string selectedOptionSub, string selectedOptionProf, string requestedDate, short selectedOptionInitTime, short selectedOptionEndTime, int selectedEquipmentCount)
     {
+        Model.Message = TempData["Message"] as string;
+
         Console.WriteLine($"Username received in AddRequest: {username}");
         Model.StorerId = Functions.AddStorer();
         Model.Username=username;
         int LastRequestId = Functions.LastRequestId();
         if(Model.StorerId != ""){
-            if(selectedOptionClass > 0 && selectedOptionProf != "" && selectedOptionSub !=""){
+            if(selectedOptionClass > 0 && selectedOptionProf != "0" && selectedOptionSub !="0"){
                 if(selectedOptionClass > 0)
                 {
-                    Model.ChoosenClassroom = Functions.AddClassroom(selectedOptionClass);
+                    Model.ChoosenClassroom = selectedOptionClass;
+                    WriteLine("Classroom selected");
                 }
                 if(selectedOptionSub !="0")
                 {
-                    Model.ChoosenSubject = Functions.AddSubjects(selectedOptionSub);
+                    Model.ChoosenSubject = selectedOptionSub;
+                    WriteLine("Subject selected");
                 }
                 if(selectedOptionProf !="0")
                 {
-                    Model.ChoosenProfessor = Functions.AddProfessors(selectedOptionProf);
+                    Model.ChoosenProfessor = selectedOptionProf;
+                    WriteLine("Professor selected");
                 }
-                DateTime CurrentDate = DateTime.Now;
-                // Añade un día a la fecha actual para establecer que solo se pueda seleccionar después de un día
-                DateTime DatePlus1 = CurrentDate.AddDays(1);
-                // Formatea la fecha en el formato YYYY-MM-DD
-                Model.MinDate = DatePlus1.ToString("yyyy-MM-dd");
-                DateTime DatePlus14 = CurrentDate.AddDays(14);
-                Model.MaxDate = DatePlus14.ToString("yyyy-MM-dd");
-                Model.IsWeekendSelected = false;
-                var request = Functions.AddRequest(Model.ChoosenClassroom, Model.ChoosenProfessor, username, Model.StorerId, Model.ChoosenSubject, LastRequestId);
-                if (request.Affected>0){
-                    ShowSpecificInformation = true;
-                } else{
-                    ShowSpecificInformation = false;
-                } 
-                if(selectedEquipmentCount > 0)
+                if(selectedEquipmentCount>0)
                 {
-                    ShowEquipments = true;
-                    if(selectedOptionArea > 0)
-                    {
-                        ShowEquipmentsByArea = true;
-                    }
-                    else
-                    {
-                        ShowEquipmentsByArea = false;
-                    }
+                    Model.SelectedEquipmentCount = selectedEquipmentCount;
                 }
-                else {
-                    ShowEquipments = false;
-                }
+                
             } 
             int difference = 10 - (int)selectedOptionInitTime;
             Model.AllClassrooms = Functions.ListClassrooms();
@@ -89,36 +65,19 @@
             Model.AllSubjects =  Functions.ListSubjects();
             Model.AllSchedulesInit = Functions.ListSchedules(0, 9);
             Model.AllSchedulesEnd = Functions.ListSchedules(selectedOptionInitTime, (short)difference);
-            Model.AllAreas = Functions.ListAreas();
-            var resultEquipments = Functions.ListEquipmentsAvailable(DateTime.Parse(requestedDate), selectedOptionInitTime, selectedOptionEndTime);
         }
 
-    }
-
-    public IActionResult OnPost(string requestedDate, short selectedOptionInitTime, short selectedOptionEndTime)
-    {
-        DateTime selectedDate = DateTime.Parse(requestedDate);
-
-        // Verificar si la fecha seleccionada es sábado o domingo
-        if (selectedDate.DayOfWeek == DayOfWeek.Saturday || selectedDate.DayOfWeek == DayOfWeek.Sunday)
-        {
-            // Puedes manejar el error o mostrar un mensaje al usuario
-            // en este caso, simplemente marcamos IsWeekendSelected como verdadero
-            Model.IsWeekendSelected = true;
-            
-        }
-        if(selectedOptionEndTime > selectedOptionInitTime )
-        {
-            Model.ValidateHours = true;
-        
-        }
-        return RedirectToPage();
-    }
+    } 
 }
-
-<form method="post" action="/Formats/AddRequestFormat">
+    
+<form method="get" action="/Formats/AddRequestDetailsFormat">
+    @if(Model.Message!="0")
+    {
+        <p style = "color: red">@Model.Message. Try again.</p>
+    }
     @if(Model.StorerId!=""){
         <input type="hidden" name="username" value="@Model.Username">
+        
         <fieldset>
             <legend>General Information</legend>
 
@@ -178,24 +137,13 @@
                     }
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary" name="action" value="confirm"> Continue </button>
-        </fieldset>
-        @if (Model.ShowSpecificInformation==true)
-        {
-            <fieldset>
-                <legend>Specific Information</legend>
-
-                <div class="mb-3">
-                    <label class="form-label" for="fecha">Select the date of the request:</label>
-                    <input class="form-control" type="date" id="requestedDate" name="requestedDate" min="@Model.MinDate" max="@Model.MaxDate" required>
-                </div>
-                @if (Model.IsWeekendSelected == true)
-                {
-                    <p style="color: red">You can not choose a Saturday or a Sunday</p>
-                }
+            <div class="mb-3">
+                <label class="form-label" for="fecha">Select the date of the request:</label>
+                <input class="form-select" type="date" id="requestedDate" name="requestedDate" min="@Model.MinDate" max="@Model.MaxDate" required>
+            </div>
                 <div class="mb-3">
                     <label class="form-label" for="dropdown">Select the start hour of the class:</label>
-                    <select class="form-select" id="dropdown" name="selectedOptionInitTime" required>
+                    <select id="dropdown" name="selectedOptionInitTime" required>
                     @if(Model.AllSchedulesInit is not null)
                     {
                         @foreach(var c in Model.AllSchedulesInit)
@@ -209,73 +157,29 @@
                     }
                     </select>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label" for="dropdown">Select the end hour of the class:</label>
-                    <select class="form-select" id="dropdown" name="selectedOptionEndTime" required>
-                    @if(Model.AllSchedulesEnd is not null)
-                    {
-                        @foreach(var c in Model.AllSchedulesEnd)
-                        { 
-                            <option value="@c.ScheduleId">@c.InitTime.TimeOfDay</option>
-                        }
-                    }
-                    else
-                    {
-                        <option value="0">No hours were found</option>
-                    }
-                    </select>
-                    @if (Model.ValidateHours == true)
-                    {
-                        <p style="color: red">The ending time cannot be before or at the same time than the starting time</p>
-                    }
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="selectedEquipmentCount">Select the number of equipments (1-4):</label>
-                    <input class="form-control" type="number" id="selectedEquipmentCount" name="selectedEquipmentCount" min="1" max="4" required>
-                </div>
-                
-            <button type="submit" class="btn btn-primary" name="action" value="confirm">Continue</button>
-            @if(ShowEquipments==true)
-            {
-                @for (int i = 0; i < Model.SelectedEquipmentCount; i++)
+            <div class="mb-3">
+                <label class="form-label" for="dropdown">Select the end hour of the class:</label>
+                <select id="dropdown" name="selectedOptionEndTime" required>
+                @if(Model.AllSchedulesEnd is not null)
                 {
-                    <div class="mb-3">
-                        <label class="form-label" for="selectedOptionArea">Select the area of the equipment (Equipment @(i+1)):</label>
-                        <select class="form-select" id="dropdown" name="selectedOptionArea" required>
-                            @if(Model.AllAreas is not null)
-                            {
-                                @foreach(var a in Model.AllAreas)
-                                { 
-                                    <option value="@a.AreaId">@a.Name</option>
-                                }
-                            }
-                            else
-                            {
-                                <option value=0>No areas found</option>
-                            }
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary" name="action" value="confirm">SearchEquipment</button>
-                    <div class="mb-3">
-                        <label class="form-label" for="selectedEquipment">Select the equipment (Equipment @(i+1)):</label>
-                        <select class="form-select" id="dropdown" name="selectedEquipment" required>
-                            @if(Model.AllEquipmentsAvailable is not null)
-                            {
-                                @foreach(var a in Model.AllEquipmentsAvailable)
-                                { 
-                                    <option value="@a.EquipmentId">@a.Name</option>
-                                }
-                            }
-                            else
-                            {
-                                <option value=0>No areas found</option>
-                            }
-                        </select>
-                    </div>
+                    @foreach(var c in Model.AllSchedulesEnd)
+                    { 
+                        <option value="@c.ScheduleId">@c.InitTime.TimeOfDay</option>
+                    }
                 }
-            }
-            </fieldset>
-        }
+                else
+                {
+                    <option value="0">No hours were found</option>
+                }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="selectedEquipmentCount">Select the number of equipments (1-4):</label>
+                <input class="form-control" type="number" id="selectedEquipmentCount" name="selectedEquipmentCount" min="1" max="4" required>
+            </div>
+            <button type="submit" class="btn btn-primary" name="action" value="confirm">Continue</button>
+        </fieldset>
+        
     }
 </form>
 
