@@ -22,6 +22,4 @@ public partial class Group
     [InverseProperty("Group")]
     public virtual ICollection<Student> Students { get; set; } = new List<Student>();
 
-    [InverseProperty("Group")]
-    public virtual ICollection<Teach> Teaches { get; set; } = new List<Teach>();
 }
