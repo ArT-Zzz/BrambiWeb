@@ -1,0 +1,463 @@
+@page
+@using AutoGens;
+@using Microsoft.EntityFrameworkCore;
+@using System.Globalization;
+@using Microsoft.EntityFrameworkCore.ChangeTracking;
+@using System.Net;
+@using System.Diagnostics.CodeAnalysis;
+@using System.Runtime.Intrinsics.Arm;
+@{
+    ViewData["Title"] = "Add Petition Details";
+}
+<h1>@ViewData["Title"]</h1>
+
+@functions
+{
+    List<Equipment>? AllEquipmentsAvailable {get; set;}
+    List<string>? EquipmentsIdSelected {get; set;} = new List<string>();
+    int? ChoosenClassroom { get; set; }
+    string? ChoosenSubject { get; set; }
+    string? StorerId { get; set; }
+    short? ChoosenInitTime {get; set;}
+    short? ChoosenEndTime {get; set;}
+    string? ChoosenRequestedDate{get; set;}
+    bool IsDuplicated { get; set; } = false;
+    bool ValidateAll {get; set;} 
+    string? Username {get; set;}
+    int SelectedEquipmentCount {get; set;}
+    int LastPetitionId {get; set;}
+    string? Message {get; set;}
+    
+    public IActionResult OnGet(string username, int selectedOptionClass, string selectedOptionSub, string requestedDate, short selectedOptionInitTime, short selectedOptionEndTime, int selectedEquipmentCount, int requestId, string selectedEquipment1, string selectedEquipment2, string selectedEquipment3, string selectedEquipment4)
+    {
+        Model.Username=username;
+        Model.ChoosenClassroom=selectedOptionClass;
+        Model.ChoosenSubject=selectedOptionSub;
+        Model.ChoosenRequestedDate=requestedDate;
+        Model.ChoosenInitTime=selectedOptionInitTime;
+        Model.ChoosenEndTime=selectedOptionEndTime;
+        Model.SelectedEquipmentCount=selectedEquipmentCount;
+
+        /*WriteLine($"username: {Model.Username}");
+        WriteLine($"classroom: {Model.ChoosenClassroom}");
+        WriteLine($"ChoosenSubject: {Model.ChoosenSubject}");
+        WriteLine($"ChoosenRequestedDate: {Model.ChoosenRequestedDate}");
+        WriteLine($"ChoosenInitTime: {Model.ChoosenInitTime}");
+        WriteLine($"ChoosenEndTime: {Model.ChoosenEndTime}");
+        WriteLine($"SelectedEquipmentCount: {Model.SelectedEquipmentCount}");*/
+        Model.Message=Validations(requestedDate, selectedOptionInitTime, selectedOptionEndTime);
+        if(Model.Message!="0")
+        {
+            Model.ValidateAll=false;
+            TempData["Message"] = Model.Message; // save the info of message sent and the equipment id
+            return RedirectToPage("/Formats/AddPetitionFormat"); 
+        }
+        if(Model.Message=="0")
+        {
+            Model.ValidateAll=true;
+            Model.StorerId = Functions.AddStorer();
+            if(Model.StorerId != "")
+            {
+                if(Model.SelectedEquipmentCount > 0)
+                {
+                    WriteLine(Model.SelectedEquipmentCount);
+                    var resultEquipments = Functions.ListEquipmentsAvailable(DateTime.Parse(requestedDate), selectedOptionInitTime, selectedOptionEndTime);
+                    Model.AllEquipmentsAvailable = resultEquipments.EquipmentsList;
+                    WriteLine(selectedEquipment1);
+                    if(Model.SelectedEquipmentCount==2)
+                    {
+                        if(selectedEquipment1 != selectedEquipment2)
+                        {
+                            Model.IsDuplicated=false;
+                        }
+                        else
+                        {
+                            Model.IsDuplicated= true;
+                        }
+                    }
+                    else if(Model.SelectedEquipmentCount==3)
+                    {
+                        if(selectedEquipment1 != selectedEquipment2 && selectedEquipment1 != selectedEquipment3 && selectedEquipment2 != selectedEquipment3)
+                        {
+                            Model.IsDuplicated=false;
+                        }
+                        else
+                        {
+                            Model.IsDuplicated= true;
+                        }
+                    }
+                    else if(Model.SelectedEquipmentCount==4)
+                    {
+                        if(selectedEquipment1 != selectedEquipment2 && selectedEquipment1 != selectedEquipment3 && selectedEquipment2 != selectedEquipment3 && selectedEquipment1!=selectedEquipment4 && selectedEquipment2!=selectedEquipment4 && selectedEquipment3!= selectedEquipment4)
+                        {
+                            Model.IsDuplicated=false;
+                        }
+                        else
+                        {
+                            Model.IsDuplicated= true;
+                        }
+                    }
+                    if(Model.SelectedEquipmentCount>=1 && selectedEquipment1 is not null)
+                    {
+                        WriteLine("Enters here 1");
+                        Model.EquipmentsIdSelected.Add(selectedEquipment1);
+                    }
+                    WriteLine(selectedEquipment2);
+                    if(selectedEquipmentCount>=2 && Model.EquipmentsIdSelected is not null && selectedEquipment2 is not null)
+                    {
+                        Model.EquipmentsIdSelected.Add(selectedEquipment2);
+                        WriteLine("Enters here 2");
+                    }
+                    WriteLine(selectedEquipment3);
+                    if(selectedEquipmentCount>=3 && Model.EquipmentsIdSelected is not null && selectedEquipment3 is not null)
+                    {
+                        Model.EquipmentsIdSelected.Add(selectedEquipment3);
+                        WriteLine("Enters here 3");
+                    } 
+                    WriteLine(selectedEquipment4);
+                    if(selectedEquipmentCount==4 && Model.EquipmentsIdSelected is not null && selectedEquipment4 is not null)
+                    {
+                        Model.EquipmentsIdSelected.Add(selectedEquipment4);
+                        WriteLine("Enters here 4");
+                    }
+                    
+                    if(Model.EquipmentsIdSelected is not null && EquipmentsIdSelected.Count()> 0)
+                    {
+                        foreach (var s in Model.EquipmentsIdSelected)
+                        {
+                            WriteLine($"The equipment selected is {s}");   
+                        }
+                        
+                        if(Model.IsDuplicated==false)
+                        {
+                            int lastIdPetition = Functions.LastPetitionId();
+                            var resultEquipmentsVerified = Functions.AddEquipmentsAndStatus(Model.EquipmentsIdSelected);
+                            var petition = AddPetition(selectedOptionClass, Model.Username, Model.StorerId, selectedOptionSub, lastIdPetition);
+                            var petitionDetails = AddPetitionDetails(petition.PetitionId, resultEquipmentsVerified.EquipmentsId, resultEquipments.InitTime, resultEquipments.EndTime, DateTime.Parse(requestedDate), DateTime.Now, resultEquipmentsVerified.StatusEquipments);
+                            if(petitionDetails.Affected.Count() > 0)
+                            {
+                                WriteLine("the request was added");
+                                return RedirectToPage("/Users/StudentsPrincipal/"); 
+                            } else
+                            {
+                                WriteLine("the request was not added"); 
+                               // Functions.
+                                return RedirectToPage("Formats/AddRequestFormat");
+                            }
+                        }
+                    }
+                    else{
+                        WriteLine("Nothing");
+                    }
+                }
+            }
+        }
+        return Page();
+    }
+
+    
+    public string Validations(string RequestDate, short selectedOptionInitTime, short selectedOptionEndTime)
+    {
+        string Message="0";
+        DateTime CurrentDate = DateTime.Now;
+        // Añade un día a la fecha actual para establecer que solo se pueda seleccionar después de un día
+        DateTime Tommorrow = CurrentDate.AddDays(1);
+        // Formatea la fecha en el formato YYYY-MM-DD
+        DateTime requestDate = DateTime.Parse(RequestDate);
+        if(requestDate.DayOfWeek==DayOfWeek.Saturday || requestDate.DayOfWeek==DayOfWeek.Sunday)
+        {
+            return "You cannot choose a Saturday or a Sunday";
+        }
+        if(selectedOptionInitTime>selectedOptionEndTime)
+        {
+            return "The ending time cannot be before the starting time";
+        }
+        if(selectedOptionEndTime - selectedOptionInitTime < 1)
+        {
+            return "The minimun of time must be 50 minuts";
+        }
+        return Message;
+    }
+
+    public static (int Affected, int PetitionId) AddPetition(int? ClassroomId, string? ProfessorId, string? StorerId, string? SubjectId, int LastPetitionId){
+        using(bd_storage db = new()){
+            // Verifica que exista la tabla
+            if(db.Petitions is null){ 
+                throw new InvalidOperationException("The table request is not found");
+            }
+            else{ // Si existe la tabla
+                // Crea el objeto y le asigna valores
+                Petition p  = new Petition()
+                {
+                    PetitionId = LastPetitionId,
+                    ClassroomId = ClassroomId,
+                    ProfessorId = ProfessorId,
+                    StorerId = StorerId,
+                    SubjectId = SubjectId,
+                };
+                // Agrega el objeto a la tabla
+                EntityEntry<Petition> Entity = db.Petitions.Add(p);
+                // Cambia los valores de la bd
+                int Affected = db.SaveChanges();
+                // Retorna los valores de filas aceptadas y el ID del nuevo request
+                return (Affected, p.PetitionId);
+            }
+        }
+    }
+
+    public static (List<int> Affected, List<int> PetitionDetailsId) AddPetitionDetails(int PetitionId, List<string>? EquipmentsId, DateTime InitTime, DateTime EndTime, DateTime RequestedDate, DateTime CurrentDate, List<byte?>? StatusEquipments){
+        // Variable para establecer el índice de las listas de los nombres de los equipos y los status de estos
+        int i=0;
+        // Lista que almacena los requestDetails Id de los registros nuevos agregados en la tabla
+        List<int>? PetitionDetailsId = new List<int>();
+        // Lista que almacena cuantas filas fueron afectadas en la tabla de Request Details al momento de re
+        List<int>? Affecteds = new List<int>();
+        // Verifica que la lista de equipmentId y statusId sean del mismo tamaño y no tengan valores nulos para poder usarlos
+        if (EquipmentsId == null || StatusEquipments == null || EquipmentsId.Count != StatusEquipments.Count)
+        {
+            // Manejar el caso donde las listas no son válidas
+            // Si no son validas muestra el mensaje y retorna los valores
+            WriteLine("The equipment selected was not correctly added. Try again.");
+            //DeleteRequest(RequestId);
+            return (Affecteds, PetitionDetailsId);
+        } else {
+            using (bd_storage db = new()){
+                // Si la tabla no existe se lanza una excepcion
+                if(db.PetitionDetails is null){ 
+                    throw new InvalidOperationException ("The table Request Details does not exist. Verify it");
+                }
+                int petitionDetailId = Functions.LastPetitionDetailsId();
+                // Por cada equipo registrado en la tabla se genera una fila de datos en Request Details, donde se llenan los campos 
+                //con los datos recibidos por los parametros
+                foreach(var e in EquipmentsId){
+                    PetitionDetail pD = new() {
+                        PetitionDetailsId = petitionDetailId,
+                        PetitionId = PetitionId,
+                        EquipmentId = EquipmentsId[i],
+                        StatusId = StatusEquipments[i],
+                        DispatchTime = InitTime,
+                        ReturnTime = EndTime,
+                        RequestedDate = RequestedDate,
+                        CurrentDate = CurrentDate
+                    };
+                    // Se añaden los datos a la tabla
+                    EntityEntry<PetitionDetail> entity = db.PetitionDetails.Add(pD);
+                    // Se guardan los datos en la bd y el valor de las filas affectadas se guarda en la lista de affecteds
+                    Affecteds.Add(db.SaveChanges());
+                    // Se guardan los ID generados en la lista de ID's
+                    PetitionDetailsId.Add(pD.PetitionDetailsId);
+                    // Aumenta el indice de las listas
+                    i++;
+                    petitionDetailId++;
+                }
+            }
+        }
+        return (Affecteds, PetitionDetailsId);
+    }
+}
+    
+<form method="get" action="/Formats/AddPetitionDetailsFormat">
+    @if(ValidateAll==true)
+    {
+        /**/
+            @if(Model.StorerId!=""){
+            <input type="hidden" name="username" value="@Model.Username">
+            <input type="hidden" name="selectedOptionClass" value="@Model.ChoosenClassroom">
+            <input type="hidden" name="selectedOptionSub" value="@Model.ChoosenSubject">
+            <input type="hidden" name="requestedDate" value="@Model.ChoosenRequestedDate">
+            <input type="hidden" name="selectedOptionInitTime" value="@Model.ChoosenInitTime">
+            <input type="hidden" name="selectedOptionEndTime" value="@Model.ChoosenEndTime">
+            <input type="hidden" name="selectedEquipmentCount" value="@Model.SelectedEquipmentCount">
+            @if(Model.SelectedEquipmentCount == 1)
+            {
+                <div class="mb-3">
+                        <label class="form-label" for="selectedEquipment">Select the equipment :</label>
+                        <select class="form-select" id="dropdown" name="selectedEquipment1" required>
+                            @if(Model.AllEquipmentsAvailable is not null)
+                            {
+                                foreach(var a in Model.AllEquipmentsAvailable)
+                                { 
+                                    <option value="@a.EquipmentId">@a.Name</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="0">No equipments found</option>
+                            }
+                        </select>
+                    </div>
+                <button type="submit" class="btn btn-primary" name="action" value="confirm">Submit</button>
+            }
+            else if(Model.SelectedEquipmentCount == 2)
+            {
+                <div class="mb-3">
+                    <label class="form-label" for="selectedEquipment">Select the equipment :</label>
+                    <select class="form-select" id="dropdown" name="selectedEquipment1" required>
+                        @if(Model.AllEquipmentsAvailable is not null)
+                        {
+                            foreach(var a in Model.AllEquipmentsAvailable)
+                            { 
+                                <option value="@a.EquipmentId">@a.Name</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="0">No equipments found</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="selectedEquipment">Select the equipment :</label>
+                    <select class="form-select" id="dropdown" name="selectedEquipment2" required>
+                        @if(Model.AllEquipmentsAvailable is not null)
+                        {
+                            foreach(var a in Model.AllEquipmentsAvailable)
+                            { 
+                                <option value="@a.EquipmentId">@a.Name</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="0">No equipments found</option>
+                        }
+                    </select>
+                </div>
+                @if(Model.IsDuplicated==true)
+                {
+                    <p style="color: red">The equipments are duplicated, change them to continue</p>
+                } 
+                <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
+            }
+            else if(Model.SelectedEquipmentCount == 3)
+            {
+                <div class="mb-3">
+                    <label class="form-label" for="selectedEquipment">Select the equipment 1:</label>
+                    <select class="form-select" id="dropdown" name="selectedEquipment1" required>
+                        @if(Model.AllEquipmentsAvailable is not null)
+                        {
+                            foreach(var a in Model.AllEquipmentsAvailable)
+                            { 
+                                <option value="@a.EquipmentId">@a.Name</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="0">No equipments found</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="selectedEquipment">Select the equipment 2:</label>
+                    <select class="form-select" id="dropdown" name="selectedEquipment2" required>
+                        @if(Model.AllEquipmentsAvailable is not null)
+                        {
+                            foreach(var a in Model.AllEquipmentsAvailable)
+                            { 
+                                <option value="@a.EquipmentId">@a.Name</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="0">No equipments found</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="selectedEquipment">Select the equipment 3:</label>
+                    <select class="form-select" id="dropdown" name="selectedEquipment3" required>
+                        @if(Model.AllEquipmentsAvailable is not null)
+                        {
+                            foreach(var a in Model.AllEquipmentsAvailable)
+                            { 
+                                <option value="@a.EquipmentId">@a.Name</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="0">No equipments found</option>
+                        }
+                    </select>
+                </div>
+                @if(Model.IsDuplicated==true)
+                {
+                    <p style="color: red">The equipments are duplicated, change them to continue</p>
+                } 
+                <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
+            }
+            else if (Model.SelectedEquipmentCount==4)
+            {
+                <div class="mb-3">
+                    <label class="form-label" for="selectedEquipment">Select the equipment 1:</label>
+                    <select class="form-select" id="dropdown" name="selectedEquipment1" required>
+                        @if(Model.AllEquipmentsAvailable is not null)
+                        {
+                            foreach(var a in Model.AllEquipmentsAvailable)
+                            { 
+                                <option value="@a.EquipmentId">@a.Name</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="0">No equipments found</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="selectedEquipment">Select the equipment 2:</label>
+                    <select class="form-select" id="dropdown" name="selectedEquipment2" required>
+                        @if(Model.AllEquipmentsAvailable is not null)
+                        {
+                            foreach(var a in Model.AllEquipmentsAvailable)
+                            { 
+                                <option value="@a.EquipmentId">@a.Name</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="0">No equipments found</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="selectedEquipment">Select the equipment 3:</label>
+                    <select class="form-select" id="dropdown" name="selectedEquipment3" required>
+                        @if(Model.AllEquipmentsAvailable is not null)
+                        {
+                            foreach(var a in Model.AllEquipmentsAvailable)
+                            { 
+                                <option value="@a.EquipmentId">@a.Name</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="0">No equipments found</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="selectedEquipment">Select the equipment 4:</label>
+                    <select class="form-select" id="dropdown" name="selectedEquipment4" required>
+                        @if(Model.AllEquipmentsAvailable is not null)
+                        {
+                            foreach(var a in Model.AllEquipmentsAvailable)
+                            { 
+                                <option value="@a.EquipmentId">@a.Name</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="0">No equipments found</option>
+                        }
+                    </select>
+                </div>
+                @if(Model.IsDuplicated==true)
+                {
+                    <p style="color: red">The equipments are duplicated, change them to continue</p>
+                } 
+                <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
+            }
+        }
+    }
+    
+</form>
+

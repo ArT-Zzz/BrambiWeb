@@ -1,0 +1,165 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using System.Globalization;
+@using System.Security.Cryptography;
+@using System.Text;
+@{
+    ViewData["Title"] = "Add Petition";
+}
+<h1>@ViewData["Title"]</h1>
+
+@functions
+{
+    List<Classroom>? AllClassrooms { get; set; }
+    int? ChoosenClassroom { get; set; }
+    List<Subject>? AllSubjects { get; set; }
+    string? ChoosenSubject { get; set; }
+    List<Schedule>? AllSchedulesInit {get; set;}
+    List<Schedule>? AllSchedulesEnd {get; set;}
+    List<Equipment>? AllEquipmentsAvailable {get; set;}
+    List<string>? EquipmentsIdSelected {get; set;}
+    string? StorerId { get; set; }
+    string? MinDate { get; set; }
+    string? MaxDate { get; set; }
+    string? Username {get; set;}
+    public string? Message {get; set;} = "0";
+    int SelectedEquipmentCount {get; set;}
+
+    public void OnGet(string username, int selectedOptionClass, string selectedOptionSub, string requestedDate, short selectedOptionInitTime, short selectedOptionEndTime, int selectedEquipmentCount)
+    {
+        Model.Message = TempData["Message"] as string;
+
+        Console.WriteLine($"Username received in AddRequest: {username}");
+        Model.StorerId = Functions.AddStorer();
+        Model.Username=username;
+        int LastRequestId = Functions.LastPetitionId();
+        DateTime CurrentDate = DateTime.Now;
+        // Añade un día a la fecha actual para establecer que solo se pueda seleccionar después de un día
+        DateTime Tommorrow = CurrentDate.AddDays(1);
+        Model.MinDate=Tommorrow.ToString("yyyy-MM-dd");
+        DateTime TwoWeeks = CurrentDate.AddDays(14);
+        Model.MaxDate= TwoWeeks.ToString("yyyy-MM-dd");
+        if(Model.StorerId != ""){
+            if(selectedOptionClass > 0 && selectedOptionSub !="0"){
+                if(selectedOptionClass > 0)
+                {
+                    Model.ChoosenClassroom = selectedOptionClass;
+                    WriteLine("Classroom selected");
+                }
+                if(selectedOptionSub !="0")
+                {
+                    Model.ChoosenSubject = selectedOptionSub;
+                    WriteLine("Subject selected");
+                }
+                if(selectedEquipmentCount>0)
+                {
+                    Model.SelectedEquipmentCount = selectedEquipmentCount;
+                }
+            } 
+            int difference = 10 - (int)selectedOptionInitTime;
+            Model.AllClassrooms = Functions.ListClassrooms();
+            Model.AllSubjects =  Functions.ListSubjects();
+            Model.AllSchedulesInit = Functions.ListSchedules(0, 9);
+            Model.AllSchedulesEnd = Functions.ListSchedules(selectedOptionInitTime, (short)difference);
+        }
+
+    } 
+}
+    
+<form method="get" action="/Formats/AddPetitionDetailsFormat">
+    @if(Model.Message!="0")
+    {
+        <p style = "color: red">@Model.Message. Try again.</p>
+    }
+    @if(Model.StorerId!=""){
+        <input type="hidden" name="username" value="@Model.Username">
+        
+        <fieldset>
+            <legend>General Information</legend>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the plantel:</label>
+                <select class="form-select" id="dropdown" name="plantel" required>
+                    <option value="colomos"> Colomos </option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="dropdown">Select a classroom:</label>
+                <select class="form-select" id="dropdown" name="selectedOptionClass" required>
+                    @if(Model.AllClassrooms is not null)
+                    {
+                        @foreach(var c in Model.AllClassrooms)
+                        { 
+                            <option value="@c.ClassroomId">@c.Name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value=0>No classrooms found</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="dropdown">Select a subject:</label>
+                <select class="form-select" id="dropdown" name="selectedOptionSub" required>
+                    @if(Model.AllSubjects is not null)
+                    {
+                        @foreach(var c in Model.AllSubjects)
+                        { 
+                            <option value="@c.SubjectId">@c.Name</option>
+                        }
+                    }
+                    else{
+                        <option value="0">No subjects found</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="fecha">Select the date of the request:</label>
+                <input class="form-select" type="date" id="requestedDate" name="requestedDate" min="@Model.MinDate" max="@Model.MaxDate" required>
+            </div>
+                <div class="mb-3">
+                    <label class="form-label" for="dropdown">Select the start hour of the class:</label>
+                    <select id="dropdown" name="selectedOptionInitTime" required>
+                    @if(Model.AllSchedulesInit is not null)
+                    {
+                        @foreach(var c in Model.AllSchedulesInit)
+                        { 
+                            <option value="@c.ScheduleId">@c.InitTime.TimeOfDay</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="0">No hours were found</option>
+                    }
+                    </select>
+                </div>
+            <div class="mb-3">
+                <label class="form-label" for="dropdown">Select the end hour of the class:</label>
+                <select id="dropdown" name="selectedOptionEndTime" required>
+                @if(Model.AllSchedulesEnd is not null)
+                {
+                    @foreach(var c in Model.AllSchedulesEnd)
+                    { 
+                        <option value="@c.ScheduleId">@c.InitTime.TimeOfDay</option>
+                    }
+                }
+                else
+                {
+                    <option value="0">No hours were found</option>
+                }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="selectedEquipmentCount">Select the number of equipments (1-4):</label>
+                <input class="form-control" type="number" id="selectedEquipmentCount" name="selectedEquipmentCount" min="1" max="4" required>
+            </div>
+            <button type="submit" class="btn btn-primary" name="action" value="confirm">Continue</button>
+        </fieldset>
+        
+    }
+</form>
+

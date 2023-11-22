@@ -142,6 +142,7 @@ C:\Users\aacar\Documents\PA1\BrambiWeb\Storage.web\obj\Debug\net7.0\Storage.web.
 C:\Users\aacar\Documents\PA1\BrambiWeb\Storage.web\obj\Debug\net7.0\Storage.web.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\aacar\Documents\PA1\BrambiWeb\Storage.web\obj\Debug\net7.0\Storage.web.RazorAssemblyInfo.cache
 C:\Users\aacar\Documents\PA1\BrambiWeb\Storage.web\obj\Debug\net7.0\Storage.web.RazorAssemblyInfo.cs
+<<<<<<< HEAD
 C:\Users\aacar\Documents\PA1\BrambiWeb\Storage.web\bin\Debug\net7.0\appsettings.Development.json
 C:\Users\aacar\Documents\PA1\BrambiWeb\Storage.web\bin\Debug\net7.0\appsettings.json
 C:\Users\aacar\Documents\PA1\BrambiWeb\Storage.web\bin\Debug\net7.0\Storage.web.staticwebassets.runtime.json
@@ -270,3 +271,5 @@ D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\obj\Debug
 D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\obj\Debug\net7.0\Storage.web.pdb
 D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\obj\Debug\net7.0\Storage.web.genruntimeconfig.cache
 D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.web\obj\Debug\net7.0\ref\Storage.web.dll
+=======
+>>>>>>> 34a561cc21abd9be7386f09b0a65cb59d8bcd2ca

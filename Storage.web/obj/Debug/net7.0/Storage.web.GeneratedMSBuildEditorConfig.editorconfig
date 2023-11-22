@@ -76,6 +76,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcVmlld09uZUVxdWlwbWVudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Formats/AddPetitionDetailsFormat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9ybWF0c1xBZGRQZXRpdGlvbkRldGFpbHNGb3JtYXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Formats/AddPetitionFormat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9ybWF0c1xBZGRQZXRpdGlvbkZvcm1hdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Formats/AddRequestDetailsFormat.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9ybWF0c1xBZGRSZXF1ZXN0RGV0YWlsc0Zvcm1hdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -102,6 +110,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Listados/ViewAllEquipmentsForStudents.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGlzdGFkb3NcVmlld0FsbEVxdWlwbWVudHNGb3JTdHVkZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Listados/ViewRequestStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGlzdGFkb3NcVmlld1JlcXVlc3RTdHVkZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/MaintenanceCRUD/AddMaintain.cshtml]
@@ -142,6 +154,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/Coordinator/CoordinatorPrincipal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQ29vcmRpbmF0b3JcQ29vcmRpbmF0b3JQcmluY2lwYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/ProfessorProncipal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcUHJvZmVzc29yUHJvbmNpcGFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/Professors/ProfessorActions/ApproveDenyRequest.cshtml]
