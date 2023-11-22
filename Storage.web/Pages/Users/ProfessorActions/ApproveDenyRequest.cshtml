@@ -22,14 +22,6 @@
         {
             if(Nip is not null)
             {
-                Model.Nip = Nip;
-                bool test = VerifyNipExistenceProf(Model.Nip, Model.Username);
-                if(test == true)
-                {
-                    Model.Message = "Incorrect Confirmation Nip";
-                }
-                else
-                { 
                     if(action == "approve")
                     {
                         Model.Status = 1;
@@ -38,30 +30,8 @@
                     {
                         Model.Status = 2;
                     } 
-                }
             }
         }
     }
 
-    public static bool VerifyNipExistenceProf(string Nip, string ProfessorId)
-    {
-        using(bd_storage db = new())
-        {
-            IQueryable<Professor> prof = db.Professors
-            .Where(r => r.Nip == Functions.EncryptPass(Nip))
-            .Where(r=>r.ProfessorId == Functions.EncryptPass(ProfessorId));
-            if(prof is null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-    }
 }
-
-<form method="get" action="/Users/ProfessorActions/ApproveDenyRequest">
-    <input type="text" name ="Nip" maxlength="4">
-</form>

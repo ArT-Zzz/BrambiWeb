@@ -15,7 +15,8 @@
     List<RequestDetail>? AllRequestsToApprove {get; set;}
     string? Username {get; set;}
     string? Message {get; set;}
-    public void OnGet(string? username)
+    string? Nip {get; set;}
+    public void OnGet(string? username) 
     {
         Model.Username = username;
         if(Model.Username is not null)
@@ -33,7 +34,7 @@
     }
 }
 
-@if(Model.AllRequestsToApprove is not null)
+@if(Model.AllRequestsToApprove is not null )
 {
     var groupedRequests = Model.AllRequestsToApprove.GroupBy(r => r.RequestId);
     <table class="table" >
