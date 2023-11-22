@@ -55,6 +55,8 @@
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
 
+    <a class="btn btn-warning" style="margin-top: 5px;" asp-page="/Password.Recovery">Forgot Password</a>
+
     @if (Request.Method == "POST" && !logged)
     {
         <div class="alert alert-danger mt-3" role="alert">
