@@ -3,16 +3,21 @@
 @using Microsoft.EntityFrameworkCore.ChangeTracking
 @using AutoGens
 @{
+    // Establecer el título de la página
     ViewData["Title"] = "Search Damage and Lost Equipments By Date";
 }
 
 <div class="container">
+    <!-- Título de la página -->
     <h1 class="display-4">Search Damage and Lost Equipments By Date</h1>
 
+     <!-- Formulario para buscar equipos dañados o perdidos por fecha -->
     <form method="post">
         <div class="form-group">
+            <!-- Selección de año, mes y día mediante listas desplegables -->
             <label for="dateToFind">Date of Event:</label>
             <div class="row">
+                <!-- Selección del año -->
                 <div class="col">
                     <select class="form-control" id="year" name="year" required>
                         <option value="">Year</option>
@@ -22,6 +27,7 @@
                         }
                     </select>
                 </div>
+                <!-- Selección del mes -->
                 <div class="col">
                     <select class="form-control" id="month" name="month" required>
                         <option value="">Month</option>
@@ -31,11 +37,13 @@
                         }
                     </select>
                 </div>
+                <!-- Selección del día -->
                 <div class="col">
                     <select class="form-control" id="day" name="day" required>
                         <option value="">Day</option>
                         @for (int i = 1; i <= 31; i++)
                         {
+                            <!-- Agregar un '0' a la izquierda a un numero que sea unidad-->
                             var dayValue = i.ToString().PadLeft(2, '0');
                             <option value="@dayValue">@dayValue</option>
                         }
@@ -43,10 +51,10 @@
                 </div>
             </div>
         </div>
-
+        <!-- Botón de búsqueda -->
         <button type="submit" class="btn btn-primary">Search Equipment</button>
     </form>
-
+    <!-- Sección de resultados de búsqueda -->
     @if (Request.Method == "POST")
     {
         <div class="mt-3">
@@ -59,6 +67,7 @@
 
             @if (searchResults.Any())
             {
+                <!-- Tabla de resultados si se encuentran equipos dañados o perdidos -->
                 <table class="table">
                     <thead>
                         <tr>
@@ -74,6 +83,7 @@
                     <tbody>
                         @foreach (var dal in searchResults)
                         {
+                            <!-- Filas de la tabla con la información de cada equipo -->
                             <tr>
                                 <td>@dal.DyLequipmentId</td>
                                 <td>@dal.Status?.Value</td>
@@ -89,6 +99,7 @@
             }
             else
             {
+                <!-- Mensaje si no se encuentran resultados -->
                 <p>No damaged or lost equipment found with the specified Date of Event.</p>
             }
         </div>
@@ -97,10 +108,15 @@
 
 @functions
 {
+    // Método para buscar equipos dañados o perdidos por la fecha ingresada en el formulario de la pagina web
+    // Retornando como resultado una lista con informacion de los equipos dañados o perdidos
     public List<DyLequipment> FindDandLequipmentByDate(string dateToFind)
     {
+        // Utilizar una nueva instancia del contexto de la base de datos
         using (bd_storage db = new())
         {
+            // Construir la consulta a la base de datos utilizando Entity Framework Core
+            //Consultar la tabla de DyLequipments para encontrar la coincidencia con la fecha ingresada en el formulario
             IQueryable<DyLequipment> dyLequipments = db.DyLequipments
                 .Include(dal => dal.Status)
                 .Include(dal => dal.Equipment)
@@ -108,8 +124,7 @@
                 .Include(dal => dal.Coordinator)
                 .Where(dal => dal.DateOfEvent.ToString().StartsWith(dateToFind));
 
-            db.ChangeTracker.LazyLoadingEnabled = false;
-
+            // Convertir los resultados de la consulta a una lista y devolverla
             return dyLequipments.ToList();
         }
     }
