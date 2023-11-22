@@ -8,6 +8,7 @@ using System.Runtime.Intrinsics.Arm;
 
 partial class Functions
 {
+    // Retorna una lista de equipos dañados o perdidos por un estudiante cuyo id se recibe para buscar los equipos
     public static List<DyLequipment>? FindDandLequipmentByStudentId(string? StudentIdToFind)
     {
         using (bd_storage db = new())
@@ -34,23 +35,25 @@ partial class Functions
             {
                 WriteLine($"| {dal.Equipment?.EquipmentId,-11} | {dal.Status?.Value,-8} | {dal.Equipment?.Name,-35} | {dal.objectReturn, -30} | {dal.DateOfReturn}");
             }
-            // Retorna una lista de los equipos
+            // Retorna una lista de los equipos encontrados
             return dyLequipments.ToList();
         }
     }
 
-    
+    // Verifica que exista la Id de un professor
     public static Professor? VerifyProfessorIdExistence(string ProfessorId)
     {
         using(bd_storage db = new())
         {
+            // Busca al profesor que tenga el id que recibe la funcion
             IQueryable<Professor> professors = db.Professors
             .Where(s=>s.ProfessorId == EncryptPass(ProfessorId));
+            // Si no encuentra una retorna un valor nulo
             if(professors is null || !professors.Any())
             {
                 //no matching professorId
                 return null;
-            }
+            }//Si encuentra uno retorna el objeto profesor que encontro
             else
             {
                 return professors.First();
@@ -58,17 +61,21 @@ partial class Functions
         }
     }
 
+    //Verifica que exista el nip de la cuenta del profesor
     public static bool VerifyProfessorNipExistence(string Nip)
     {
         using(bd_storage db = new())
         {
+            // Busca un profesor cuyo Nip sea como el ingresado
             IQueryable<Professor> professors = db.Professors
             .Where(s=>s.Nip == Nip);
+            // Si no se encuenta retorna que el nip no es existente
             if(professors is null || !professors.Any())
             {
                 //no matching nip
                 return false;
             }
+            // Si lo encuentra retorna que el nip es existente
             else
             {
                 return true;
@@ -76,25 +83,28 @@ partial class Functions
         }
     }
 
-       
+    // Verifica la existencia del almacenista conforme el id       
     public static AutoGens.Storer? VerifyStorerIdExistence(string StorerId)
     {
         using(bd_storage db = new())
         {
+            // Busca al almacenista que tenga el id que recibe en los parametros
             IQueryable<AutoGens.Storer> storers = db.Storers
             .Where(s=>s.StorerId == EncryptPass(StorerId));
             if(storers is null || !storers.Any())
             {
-                //no matching professorId
+                // Si no existe retorna un nulo
                 return null;
             }
             else
             {
+                // Regresa el almacenista que encuentra
                 return storers.First();
             }
         }
     }
-           
+
+    //Verifica que el coordinador exista de acuerdo a su Id 
     public static Coordinator? VerifyCoordinatorIdExistence(string CoordinatorId)
     {
         using(bd_storage db = new())
@@ -389,8 +399,8 @@ partial class Functions
         {
             // Se obtienen las solicitudes de detalles de la base de datos
            IQueryable<RequestDetail> requests = db.RequestDetails
-                .Include(r => r.Request).ThenInclude(s=>s.Student)
-                .ThenInclude(g=>g.Group).Include(e=>e.Equipment)
+                .Include(r => r.Request).ThenInclude(p=>p.Professor)
+                .Include(e=>e.Equipment)
                 .Where(d =>d.Request.StudentId == UserName).OrderBy(r => r.RequestId);
             if(requests is not null)
             {
