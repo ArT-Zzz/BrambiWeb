@@ -43,9 +43,10 @@
                 if(result.Affected > 0)
                 {
                     // created succesfully
-                    Console.WriteLine($"Afectadoo : {result.Affected}");
+                    Console.WriteLine($"Afectado : {result.Affected}");
                     TempData["MaintenanceRegisterId"] = result.MaintenanceId.ToString();
-                    RedirectToPage("/MaintenanceCRUD/AddMaintain");
+                    TempData["UserName"] = username;
+                    return RedirectToPage("/MaintenanceCRUD/AddMaintain"); 
                 }
             }
             else
@@ -67,7 +68,7 @@
         {
              IQueryable<MaintenanceRegister> maintenanceRegister = db.MaintenanceRegisters
                 .OrderByDescending(d=>d.MaintenanceId);
-            int BiggestId;
+            int BiggestId = 0;
             int affected = -1;
             if(maintenanceRegister is null || !maintenanceRegister.Any())
             {
@@ -84,8 +85,11 @@
                 MaintenanceId = (BiggestId + 1),
                 MaintenanceTypeId = MaintenanceTypeId, 
                 MaintenanceInstructions = Instructions,
-                ProgrammedDate = ProgrammedDate, 
-                StorerId = Functions.EncryptPass(StorerId)
+                ProgrammedDate = ProgrammedDate,
+                ExitDate = new(2001, 01, 01),
+                MaintenanceDescription = "0",                
+                StorerId = Functions.EncryptPass(StorerId),
+                MaintenanceMaterialsDescription = "0"
             };
 
             EntityEntry<MaintenanceRegister> entity = db.MaintenanceRegisters.Add(e); // adds the object that was just created to Equipments table inside the database
@@ -105,7 +109,7 @@
     <form method="post" asp-page-handler="Finish">
         <input type="hidden" name="username" value="@Model.UserName">
         <div class="mb-3">
-            <label class="form-label">Choose a equipment</label>
+            <label class="form-label">Maintenance Type</label>
             <select class="form-select" id="dropdown" name="MaintenanceTypeText">
                 @if(Model.AllMaintenanceTypes is not null)
                 {
@@ -131,7 +135,7 @@
             <input type="textarea" class="form-control" id="Description" name="InstructionsText" maxlength="255" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Add Equipments</button>
+        <button type="submit" class="btn btn-primary">Continue with the register</button>
     </form>
 
 
