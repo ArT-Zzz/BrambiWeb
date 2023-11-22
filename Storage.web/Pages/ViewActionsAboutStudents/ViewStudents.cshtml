@@ -3,8 +3,11 @@
 @using Microsoft.EntityFrameworkCore.ChangeTracking
 @using AutoGens
 @{
-    string username = TempData["Username"]?.ToString() ?? "1515151515";
+    // this page shows all the student general information, and also has a button in each one that can send them to the search student history of requests
+    ViewData["Title"] = "View All Students"; // title that will be shown in the page
+// next is the navigation bar for what the storer can see from the student
 }
+
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
@@ -16,30 +19,26 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                      <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerPrincipal" asp-route-username="@username">Home</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerPrincipal" asp-route-username="@Model.UserName">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Formats/CreateReportDamage&Lost" asp-route-username="@username">Report Damage&Lost</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Formats/CreateReportDamage&Lost" asp-route-username="@Model.UserName">Report Damage&Lost</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudents" asp-route-username="@username">Student's Info</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudents" asp-route-username="@Model.UserName">Student's Info</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments" asp-route-username="@username">Equipments</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments" asp-route-username="@Model.UserName">Equipments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/ViewMaintenanceNotMade" asp-route-username="@username">Maintenance Registers</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/ViewMaintenanceNotMade" asp-route-username="@Model.UserName">Maintenance Registers</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 </header>
-@{
-    // this page shows all the student general information, and also has a button in each one that can send them to the search student history of requests
-    ViewData["Title"] = "View All Students"; // title that will be shown in the page
-// next is the navigation bar for what the storer can see from the student
-}
+
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -67,8 +66,10 @@
 @functions
 {
     List<Student>? AllStudents {get; set;} // list that will get from the bd all the students
-    public void OnGet()
+    string? UserName;
+    public void OnGet(string username)
     {
+        if(username != null)  Model.UserName = username; 
         Model.AllStudents = Functions.ListStudents(); // model that gets all students
         // ListStudents returns a list of students found in the bd
     }
