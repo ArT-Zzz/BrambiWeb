@@ -231,6 +231,14 @@ partial class Functions
                     EquipmentsId.Add(SelectedEquipment.First().EquipmentId);
                 }
             }
+            /*foreach(var s in StatusEquipments)
+            {
+                WriteLine($"");
+            }
+            foreach(var e in EquipmentsId)
+            {
+
+            }*/
             return (EquipmentsId, StatusEquipments);
         }
     }

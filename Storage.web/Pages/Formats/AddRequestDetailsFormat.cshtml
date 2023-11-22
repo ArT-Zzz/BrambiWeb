@@ -27,7 +27,7 @@
     string? Username {get; set;}
     int SelectedEquipmentCount {get; set;}
     int LastRequestId {get; set;}
-    string Message {get; set;}
+    string? Message {get; set;}
     
     public IActionResult OnGet(string username, int selectedOptionClass, string selectedOptionSub, string selectedOptionProf, string requestedDate, short selectedOptionInitTime, short selectedOptionEndTime, int selectedEquipmentCount, int requestId, string selectedEquipment1, string selectedEquipment2, string selectedEquipment3, string selectedEquipment4)
     {
@@ -129,25 +129,28 @@
                         WriteLine("Enters here 4");
                     }
                     
-                    if(EquipmentsIdSelected is not null && EquipmentsIdSelected.Count()> 0)
+                    if(Model.EquipmentsIdSelected is not null && EquipmentsIdSelected.Count()> 0)
                     {
-                        foreach (var s in EquipmentsIdSelected)
+                        foreach (var s in Model.EquipmentsIdSelected)
                         {
-                            WriteLine($"The equipments selected {s}");   
+                            WriteLine($"The equipment selected is {s}");   
                         }
                         
                         if(Model.IsDuplicated==false)
                         {
                             int lastIdRequest = Functions.LastRequestId();
-                            var resultEquipmentsVerified = Functions.AddEquipmentsAndStatus(EquipmentsIdSelected);
+                            var resultEquipmentsVerified = Functions.AddEquipmentsAndStatus(Model.EquipmentsIdSelected);
                             var request = AddRequest(selectedOptionClass, selectedOptionProf, Model.Username, Model.StorerId, selectedOptionSub, lastIdRequest);
-                            var requestDetails = AddRequestDetails(request.RequestId, resultEquipmentsVerified.EquipmentsId, 0, resultEquipments.InitTime, resultEquipments.EndTime, DateTime.Parse(requestedDate), DateTime.Now, resultEquipments.StatusEquipments);
+                            var requestDetails = AddRequestDetails(request.RequestId, resultEquipmentsVerified.EquipmentsId, 0, resultEquipments.InitTime, resultEquipments.EndTime, DateTime.Parse(requestedDate), DateTime.Now, resultEquipmentsVerified.StatusEquipments);
                             if(requestDetails.Affected.Count() > 0)
                             {
                                 WriteLine("the request was added");
+                                return RedirectToPage("/Users/StudentsPrincipal/"); 
                             } else
                             {
-                                WriteLine("the request was not added");   
+                                WriteLine("the request was not added"); 
+                               // Functions.
+                                return RedirectToPage("Formats/AddRequestFormat");
                             }
                         }
                     }
