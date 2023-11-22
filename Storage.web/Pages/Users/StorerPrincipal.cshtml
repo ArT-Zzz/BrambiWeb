@@ -4,7 +4,7 @@
 @using AutoGens
 @{
     ViewData["Title"] = "Storer Menu";
-    string? username = TempData["Username"]?.ToString();
+    string username = TempData["Username"]?.ToString() ?? "1515151515";
 }
 
 <header>
@@ -18,19 +18,19 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerPrincipal">Home</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerPrincipal" asp-route-username="@username">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Formats/CreateReportDamage&Lost">Report Damage&Lost</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Formats/CreateReportDamage&Lost" asp-route-username="@username">Report Damage&Lost</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudents">Student's Info</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudents" asp-route-username="@username">Student's Info</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments">Equipments</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments" asp-route-username="@username">Equipments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/ViewMaintenanceNotMade">Maintenance Registers</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/ViewMaintenanceNotMade" asp-route-username="@username">Maintenance Registers</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Users/Students/SearchStudentHistory">Search History of a student in specific</a>

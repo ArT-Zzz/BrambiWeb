@@ -9,6 +9,7 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Storage.web
 build_property.RootNamespace = Storage.web
+<<<<<<< HEAD
 build_property.ProjectDir = C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storage.web\
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
@@ -173,5 +174,155 @@ build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Shared/_Layout.cshtml]
+=======
+build_property.ProjectDir = C:\Users\aacar\Documents\PA1\BrambiWeb\Storage.Web\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\aacar\Documents\PA1\BrambiWeb\Storage.Web
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/AddEquipments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcQWRkRXF1aXBtZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/EquipmentUpdate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcRXF1aXBtZW50VXBkYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/SearchEquipmentById.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcU2VhcmNoRXF1aXBtZW50QnlJZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/SearchEquipmentsByName.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcU2VhcmNoRXF1aXBtZW50c0J5TmFtZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/UpdateEquipments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcVXBkYXRlRXF1aXBtZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/ViewAllEquipments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcVmlld0FsbEVxdWlwbWVudHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/ViewMoreThanOneEquipments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcVmlld01vcmVUaGFuT25lRXF1aXBtZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/EquipmentsCRUD/ViewOneEquipment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBtZW50c0NSVURcVmlld09uZUVxdWlwbWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Formats/AddRequestDetailsFormat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9ybWF0c1xBZGRSZXF1ZXN0RGV0YWlsc0Zvcm1hdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Formats/AddRequestFormat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9ybWF0c1xBZGRSZXF1ZXN0Rm9ybWF0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Formats/CreateReportDamage&Lost.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9ybWF0c1xDcmVhdGVSZXBvcnREYW1hZ2UmTG9zdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Listados/EquipmentsD&LStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGlzdGFkb3NcRXF1aXBtZW50c0QmTFN0dWRlbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Listados/EquipmentsLateForReturningStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGlzdGFkb3NcRXF1aXBtZW50c0xhdGVGb3JSZXR1cm5pbmdTdHVkZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Listados/ViewAllEquipmentsForStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGlzdGFkb3NcVmlld0FsbEVxdWlwbWVudHNGb3JTdHVkZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/LogIn.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nSW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/MaintenanceCRUD/AddMaintain.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbnRlbmFuY2VDUlVEXEFkZE1haW50YWluLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/MaintenanceCRUD/AddMaintenance.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbnRlbmFuY2VDUlVEXEFkZE1haW50ZW5hbmNlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/MaintenanceCRUD/FinishPendingMaintenance..cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbnRlbmFuY2VDUlVEXEZpbmlzaFBlbmRpbmdNYWludGVuYW5jZS4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/MaintenanceCRUD/FullMaintenanceHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbnRlbmFuY2VDUlVEXEZ1bGxNYWludGVuYW5jZUhpc3RvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/MaintenanceCRUD/ViewMaintenanceNotMade.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbnRlbmFuY2VDUlVEXFZpZXdNYWludGVuYW5jZU5vdE1hZGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Password.Recovery.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGFzc3dvcmQuUmVjb3ZlcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/SignUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2lnblVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Transactions/DeliveryStudent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVHJhbnNhY3Rpb25zXERlbGl2ZXJ5U3R1ZGVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Transactions/ReturnEquipmentsStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVHJhbnNhY3Rpb25zXFJldHVybkVxdWlwbWVudHNTdHVkZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Transactions/StudentDelivery.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVHJhbnNhY3Rpb25zXFN0dWRlbnREZWxpdmVyeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Users/StorerPrincipal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyUHJpbmNpcGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Users/StudentsPrincipal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3R1ZGVudHNQcmluY2lwYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/ViewActionsAboutStudents/SearchStudentHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlld0FjdGlvbnNBYm91dFN0dWRlbnRzXFNlYXJjaFN0dWRlbnRIaXN0b3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/ViewActionsAboutStudents/StudentsWithLateReturn.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlld0FjdGlvbnNBYm91dFN0dWRlbnRzXFN0dWRlbnRzV2l0aExhdGVSZXR1cm4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/ViewActionsAboutStudents/ViewStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlld0FjdGlvbnNBYm91dFN0dWRlbnRzXFZpZXdTdHVkZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/ViewActionsAboutStudents/ViewStudentsRequests.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlld0FjdGlvbnNBYm91dFN0dWRlbnRzXFZpZXdTdHVkZW50c1JlcXVlc3RzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aacar/Documents/PA1/BrambiWeb/Storage.web/Pages/Shared/_Layout.cshtml]
+>>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-clgn3f7z30

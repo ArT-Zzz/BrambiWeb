@@ -1177,11 +1177,16 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\Samantha\\.nuget\\packages\\": {}
+=======
+    "C:\\Users\\aacar\\.nuget\\packages\\": {}
+>>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\Storage.web.csproj",
       "projectName": "Storage.web",
       "projectPath": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\Storage.web.csproj",
@@ -1190,6 +1195,16 @@
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Samantha\\AppData\\Roaming\\NuGet\\NuGet.Config"
+=======
+      "projectUniqueName": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\Storage.web.csproj",
+      "projectName": "Storage.web",
+      "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\Storage.web.csproj",
+      "packagesPath": "C:\\Users\\aacar\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\aacar\\AppData\\Roaming\\NuGet\\NuGet.Config"
+>>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -1201,11 +1216,19 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
+<<<<<<< HEAD
             "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj": {
               "projectPath": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj"
             },
             "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj": {
               "projectPath": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj"
+=======
+            "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj": {
+              "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Common.DataContext.Sqlite\\Storage.Common.DataContext.Sqlite.csproj"
+            },
+            "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj": {
+              "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj"
+>>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
             }
           }
         }
