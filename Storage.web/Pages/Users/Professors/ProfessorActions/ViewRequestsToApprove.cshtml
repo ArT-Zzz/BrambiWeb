@@ -22,6 +22,12 @@
         Model.Username = username;
         Model.Nip = Nip;
         Model.Ban = false;
+    }
+    public void OnPostNipTry(string? Nip, string? UserName)
+    {
+        Model.Username = UserName;
+        Model.Nip = Nip;
+        Model.Ban = false;
         if(Model.Username is not null)
         {
             if(Model.Nip is not null)
@@ -53,12 +59,19 @@
 
 @if(Model.Ban == false)
 {
-    <form method="get" action="/Users/ProfessorActions/ViewRequestsToApprove">
+    <form method="post" asp-page-handler="NipTry">
         <div class="mb-3">
             <label class="form-label">Provide your Professor NIP : </label>
             <input type="text" class="form-control" id="Nip" name="Nip" maxlength="4" required>
+            <input type="hidden" name="UserName" value="@Model.Username">
+            <button type="submit" class="btn btn-primary" name="btn_Nip" value="confirm">Verify</button>
         </div>
     </form>
+}
+
+@if(Model.Message != "")
+{
+    <h5>@Model.Message</h5>
 }
 
 @if(Model.AllRequestsToApprove is not null )
@@ -98,12 +111,15 @@
                     <td>@r.RequestedDate.Day / @r.RequestedDate.Month / @r.RequestedDate.Year</td>
                     <td>@r.DispatchTime.TimeOfDay</td>
                     <td>@r.ReturnTime.TimeOfDay</td>
-                    <form method="get" action="/Users/ProfessorActions/ApproveDenyRequest">
+                    <td>
+                    <form method="get" action="/Users/Professors/ProfessorActions/ApproveDenyRequest">
                         <input type="hidden" name="RequestId" value=@r.RequestId>
-                        <input type="hidden" name="RequestId" value=@Model.Username>
+                        <input type="hidden" name="UserName" value=@Model.Username>
+                        <input type="hidden" name="Nip" value=@Model.Nip>
                         <button type="submit" class="btn btn-primary" name="action" value="approve">Approve</button>
                         <button type="submit" class="btn btn-primary" name="action" value="deny">Deny</button>
                     </form>
+                    </td>
                 </tr>
             }
         </tbody>

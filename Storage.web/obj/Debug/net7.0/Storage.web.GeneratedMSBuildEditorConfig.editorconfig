@@ -144,40 +144,40 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQ29vcmRpbmF0b3JcQ29vcmRpbmF0b3JQcmluY2lwYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/ProfessorActions/ApproveDenyRequest.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcUHJvZmVzc29yQWN0aW9uc1xBcHByb3ZlRGVueVJlcXVlc3QuY3NodG1s
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/Professors/ProfessorActions/ApproveDenyRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcUHJvZmVzc29yc1xQcm9mZXNzb3JBY3Rpb25zXEFwcHJvdmVEZW55UmVxdWVzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/ProfessorActions/ViewRequestsToApprove.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcUHJvZmVzc29yQWN0aW9uc1xWaWV3UmVxdWVzdHNUb0FwcHJvdmUuY3NodG1s
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/Professors/ProfessorActions/ViewRequestsToApprove.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcUHJvZmVzc29yc1xQcm9mZXNzb3JBY3Rpb25zXFZpZXdSZXF1ZXN0c1RvQXBwcm92ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/ProfessorPrincipal.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcUHJvZmVzc29yUHJpbmNpcGFsLmNzaHRtbA==
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/Professors/ProfessorPrincipal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcUHJvZmVzc29yc1xQcm9mZXNzb3JQcmluY2lwYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/StorerActions/SearchStudentHistory.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyQWN0aW9uc1xTZWFyY2hTdHVkZW50SGlzdG9yeS5jc2h0bWw=
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/Storer/StorerActions/SearchStudentHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyXFN0b3JlckFjdGlvbnNcU2VhcmNoU3R1ZGVudEhpc3RvcnkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/StorerActions/StudentsWithLateReturn.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyQWN0aW9uc1xTdHVkZW50c1dpdGhMYXRlUmV0dXJuLmNzaHRtbA==
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/Storer/StorerActions/StudentsWithLateReturn.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyXFN0b3JlckFjdGlvbnNcU3R1ZGVudHNXaXRoTGF0ZVJldHVybi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/StorerActions/ViewStudents.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyQWN0aW9uc1xWaWV3U3R1ZGVudHMuY3NodG1s
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/Storer/StorerActions/ViewStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyXFN0b3JlckFjdGlvbnNcVmlld1N0dWRlbnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/StorerActions/ViewStudentsRequests.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyQWN0aW9uc1xWaWV3U3R1ZGVudHNSZXF1ZXN0cy5jc2h0bWw=
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/Storer/StorerActions/ViewStudentsRequests.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyXFN0b3JlckFjdGlvbnNcVmlld1N0dWRlbnRzUmVxdWVzdHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/StorerActions/ViewTomorrowRequests.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyQWN0aW9uc1xWaWV3VG9tb3Jyb3dSZXF1ZXN0cy5jc2h0bWw=
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/Storer/StorerActions/ViewTomorrowRequests.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyXFN0b3JlckFjdGlvbnNcVmlld1RvbW9ycm93UmVxdWVzdHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/StorerPrincipal.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyUHJpbmNpcGFsLmNzaHRtbA==
+[D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/Storer/StorerPrincipal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyXFN0b3JlclByaW5jaXBhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Valeria/Documents/.ceti/7mo/prograAvanzada/3P/BrambiWeb/Storage.web/Pages/Users/Students/StudentsPrincipal.cshtml]

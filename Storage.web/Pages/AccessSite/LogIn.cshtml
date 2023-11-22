@@ -17,17 +17,17 @@
             if (rol == "students")
             {
                 TempData["Username"] = username;
-                Response.Redirect("/Users/StudentsPrincipal");
+                Response.Redirect("/Users/Students/StudentsPrincipal");
             }
             else if (rol == "professors")
             {
                 TempData["Username"] = username;
-                Response.Redirect("/Professor");
+                Response.Redirect("/Users/Professors/ProfessorPrincipal");
             }
             else if( rol == "storers")
             {
                 TempData["Username"] = username;
-                Response.Redirect("/Users/StorerPrincipal");
+                Response.Redirect("/Users/Storer/StorerPrincipal");
             }
             else if( rol == "coordinators")
             {

@@ -1,0 +1,130 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@{
+    ViewData["Title"] = "View My Students Requests";
+    //await Html.RenderPartialAsync("Functions.cshtml");
+}
+<h1>@ViewData["Title"]</h1>
+
+@functions
+{
+    int RequestId {get; set;}
+    string? Username {get; set;}
+    string? Nip {get; set;}
+    string? Message {get; set;}
+    List<RequestDetail>? AllRequestsToApprove {get; set;}
+    public void OnGet(string? action, int RequestId, string UserName, string Nip)
+    {
+        Model.Username = UserName;
+        Model.RequestId = RequestId;
+        Model.Nip = Nip;
+        Model.Message = "";
+        if(Model.Username is not null)
+        {
+            
+            Console.WriteLine(Model.Username);
+            Console.WriteLine(Model.Nip);
+            
+            int affected = 0;
+            if(action == "approve")
+            {
+                affected = UpdateRequestDetailsByRequestId(Model.RequestId, 1); // status approved    
+                Model.Message = "Your request was approved";            
+            }
+            else if(action == "deny")
+            {
+                affected = UpdateRequestDetailsByRequestId(Model.RequestId, 2); // status denied
+                Model.Message ="Your request was denied";
+            }
+            if(affected > 0)
+            {
+                Console.WriteLine("Professor Nip changed");
+            }
+            Console.WriteLine(affected);
+            Model.AllRequestsToApprove = Functions.WatchRequestsToApprove(Model.Username);
+            if(Model.AllRequestsToApprove is null)
+            {
+                Model.Message ="There are no requests left to approve or deny";
+            }
+        }
+        
+    }
+
+    public static int UpdateRequestDetailsByRequestId(int RequestId, byte Nip)
+    {
+        using(bd_storage db = new())
+        {
+            IQueryable<RequestDetail> requestDetails = db.RequestDetails
+                .Where(r=>r.RequestId == RequestId);
+                int affected = 0;
+                if(requestDetails is not null && requestDetails.Any())
+                    {
+                        affected = requestDetails.ExecuteUpdate(u => u.SetProperty(
+                        p => p.ProfessorNip, // Property Selctor
+                        p => Nip // Value to edit
+                    ));
+                }
+                return affected;
+        }
+    }
+
+
+}
+
+@if(Model.Message != "")
+{
+    <h5>@Model.Message</h5>
+}
+
+@if(Model.AllRequestsToApprove is not null )
+{
+    var groupedRequests = Model.AllRequestsToApprove.GroupBy(r => r.RequestId);
+    <table class="table" >
+        <thead>
+            <tr>
+                <th>Request ID</th>
+                <th>StudentId</th>
+                <th>Student Name</th>
+                <th>Group</th>
+                <th>Equipment(s)</th>
+                <th>Requested Date</th>
+                <th>Dispatch Time</th>
+                <th>Return Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var group in groupedRequests)
+            {
+                var r = group.First();
+                <tr>
+                    <td>@r.RequestId</td>
+                    <td>@r.Request?.StudentId</td>
+                    <td>@r.Request?.Student?.Name @r.Request?.Student?.LastNameP @r.Request?.Student?.LastNameM</td>
+                    <td>@r.Request?.Student?.Group?.Name</td>
+                    <td>
+                        <ul>
+                            @foreach (var ro in group)
+                            { // so all the equipments of the request will be seen in the same celd of the same request of course
+                                <li>@ro.Equipment?.Name</li>
+                            }
+                        </ul>
+                    </td>
+                    
+                    <td>@r.RequestedDate.Day / @r.RequestedDate.Month / @r.RequestedDate.Year</td>
+                    <td>@r.DispatchTime.TimeOfDay</td>
+                    <td>@r.ReturnTime.TimeOfDay</td>
+                    <td>
+                    <form method="get" action="/Users/Professors/ProfessorActions/ApproveDenyRequest">
+                        <input type="hidden" name="RequestId" value=@r.RequestId>
+                        <input type="hidden" name="UserName" value=@Model.Username>
+                        <button type="submit" class="btn btn-primary" name="action" value="approve">Approve</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="deny">Deny</button>
+                    </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
