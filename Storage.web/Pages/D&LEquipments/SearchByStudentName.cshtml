@@ -1,0 +1,87 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using AutoGens
+@{
+    ViewData["Title"] = "Search Damage and Lost Equipments Student Name";
+}
+
+<div class="container">
+    <h1 class="display-4">Search Damage and Lost Equipments By Student Name</h1>
+
+    <form method="post">
+        <div class="form-group">
+            <label for="studentNameToFind">Student Name:</label>
+            <input type="text" id="studentNameToFind" name="studentNameToFind" class="form-control" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Search Equipment</button>
+    </form>
+
+    @if (Request.Method == "POST")
+    {
+        <div class="mt-3">
+            <h3>Search Results:</h3>
+            @{
+                // Invocar la lógica de búsqueda de equipos dañados o perdidos por nombre de estudiante y almacenar los resultados en una variable
+                var studentNameToFind = Request.Form["studentNameToFind"];
+                var searchResults = FindDandLequipmentByStudentName(studentNameToFind);
+            }
+
+            @if (searchResults.Any())
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Equipment ID</th>
+                            <th>Status</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Student</th>
+                            <th>Coordinator</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var dal in searchResults)
+                        {
+                            <tr>
+                                <td>@dal.DyLequipmentId</td>
+                                <td>@dal.Status?.Value</td>
+                                <td>@dal.Equipment?.Name</td>
+                                <td>@dal.Description</td>
+                                <td>@dal.DateOfEvent</td>
+                                <td>@dal.Student?.Name</td>
+                                <td>@dal.Coordinator?.Name</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No damaged or lost equipment found with the specified Student Name.</p>
+            }
+        </div>
+    }
+</div>
+
+@functions
+{
+    public List<DyLequipment> FindDandLequipmentByStudentName(string studentNameToFind)
+    {
+        using (bd_storage db = new())
+        {
+            IQueryable<DyLequipment> dyLequipments = db.DyLequipments
+                .Include(dal => dal.Status)
+                .Include(dal => dal.Equipment)
+                .Include(dal => dal.Student)
+                .Include(dal => dal.Coordinator)
+                .Where(dal => dal.Student.Name.StartsWith(studentNameToFind));
+
+            db.ChangeTracker.LazyLoadingEnabled = false;
+
+            return dyLequipments.ToList();
+        }
+    }
+}

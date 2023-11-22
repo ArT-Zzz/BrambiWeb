@@ -43,7 +43,7 @@ partial class Functions
             else 
             {
                 LastPetitionId = db.Petitions.Max(c => (int?)c.PetitionId) ?? 0;
-                if(lastRequestId == 0)
+                if(LastPetitionId == 0)
                 {
                     IQueryable<Petition> petitions = db.Petitions;
                     LastPetitionId= petitions.Count()+2;

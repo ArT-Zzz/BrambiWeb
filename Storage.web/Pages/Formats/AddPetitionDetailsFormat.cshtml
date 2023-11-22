@@ -25,16 +25,11 @@
     bool ValidateAll {get; set;} 
     string? Username {get; set;}
     int SelectedEquipmentCount {get; set;}
-    int LastRequestId {get; set;}
+    int LastPetitionId {get; set;}
     string? Message {get; set;}
     
     public IActionResult OnGet(string username, int selectedOptionClass, string selectedOptionSub, string requestedDate, short selectedOptionInitTime, short selectedOptionEndTime, int selectedEquipmentCount, int requestId, string selectedEquipment1, string selectedEquipment2, string selectedEquipment3, string selectedEquipment4)
     {
-        //recibe todo aqui--------------
-        //llama a funcion validaciones-------------
-        //que regrese un mensaje la funcion--------------------
-        //pones un tempData -------------------------------
-        //lo recibes en AddRequestFormat-------------------------------
         Model.Username=username;
         Model.ChoosenClassroom=selectedOptionClass;
         Model.ChoosenSubject=selectedOptionSub;
@@ -55,7 +50,7 @@
         {
             Model.ValidateAll=false;
             TempData["Message"] = Model.Message; // save the info of message sent and the equipment id
-            return RedirectToPage("/Formats/AddRequestFormat"); 
+            return RedirectToPage("/Formats/AddPetitionFormat"); 
         }
         if(Model.Message=="0")
         {
@@ -137,7 +132,7 @@
                         {
                             int lastIdPetition = Functions.LastPetitionId();
                             var resultEquipmentsVerified = Functions.AddEquipmentsAndStatus(Model.EquipmentsIdSelected);
-                            var petition = AddPetition(selectedOptionClass, Model.Username, Model.StorerId, selectedOptionSub, lastIdRequest);
+                            var petition = AddPetition(selectedOptionClass, Model.Username, Model.StorerId, selectedOptionSub, lastIdPetition);
                             var requestDetails = AddPetitionDetails(petition.PetitionId, resultEquipmentsVerified.EquipmentsId, 0, resultEquipments.InitTime, resultEquipments.EndTime, DateTime.Parse(requestedDate), DateTime.Now, resultEquipmentsVerified.StatusEquipments);
                             if(requestDetails.Affected.Count() > 0)
                             {
@@ -184,7 +179,7 @@
         return Message;
     }
 
-    public static (int Affected, int PetitionId) AddPetition(int? ClassroomId, string? Professor, string? StorerId, string? SubjectId, int LastRequestId){
+    public static (int Affected, int PetitionId) AddPetition(int? ClassroomId, string? ProfessorId, string? StorerId, string? SubjectId, int LastPetitionId){
         using(bd_storage db = new()){
             // Verifica que exista la tabla
             if(db.Petitions is null){ 
@@ -205,7 +200,7 @@
                 // Cambia los valores de la bd
                 int Affected = db.SaveChanges();
                 // Retorna los valores de filas aceptadas y el ID del nuevo request
-                return (Affected, r.PetitionId);
+                return (Affected, p.PetitionId);
             }
         }
     }
