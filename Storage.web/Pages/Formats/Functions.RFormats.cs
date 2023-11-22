@@ -256,8 +256,8 @@ partial class Functions
                 lastRequestId = db.RequestDetails.Max(c => (int?)c.RequestDetailsId) ?? 0;
                 if(lastRequestId == 0)
                 {
-                    IQueryable<Request> requests = db.Requests;
-                    lastRequestId= requests.Count()+2;
+                    IQueryable<RequestDetail> requests = db.RequestDetails;
+                    lastRequestId= requests.Count()+1;
                 }else
                 {
                     lastRequestId += 1;
