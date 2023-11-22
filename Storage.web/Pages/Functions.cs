@@ -318,4 +318,22 @@ public static partial class Functions
             }
         }
     }
+
+    public static bool VerifyNipExistenceProf(string Nip, string ProfessorId)
+    {
+        using(bd_storage db = new())
+        {
+            IQueryable<Professor> prof = db.Professors
+            .Where(r => r.Nip == Functions.EncryptPass(Nip))
+            .Where(r=>r.ProfessorId == Functions.EncryptPass(ProfessorId));
+            if(prof is null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+    }
 }

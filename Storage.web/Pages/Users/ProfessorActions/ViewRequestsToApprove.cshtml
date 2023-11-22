@@ -16,22 +16,49 @@
     string? Username {get; set;}
     string? Message {get; set;}
     string? Nip {get; set;}
-    public void OnGet(string? username) 
+    bool Ban {get; set;}
+    public void OnGet(string? username, string? Nip) 
     {
         Model.Username = username;
+        Model.Nip = Nip;
+        Model.Ban = false;
         if(Model.Username is not null)
         {
-            Model.AllRequestsToApprove = Functions.WatchRequestsToApprove(Model.Username);
-        }
-        if(Model.AllRequestsToApprove is null)
-        {
-            Model.Message = "There are no requests to approve or deny.";
-        }
-        else
-        {
-            Model.Message = "This are the requests you have to approve or deny:";
+            if(Model.Nip is not null)
+            {
+                bool test = Functions.VerifyNipExistenceProf(Model.Nip, Model.Username);
+                if(test == true)
+                {
+                    Model.Message = "Correct NIP, your NIP has been verified.";
+                    Console.WriteLine(Model.Message);
+                    Model.Ban = true;
+                    Model.AllRequestsToApprove = Functions.WatchRequestsToApprove(Model.Username);
+                    if(Model.AllRequestsToApprove is null)
+                    {
+                        Model.Message = "There are no requests to approve or deny.";
+                    }
+                    else
+                    {
+                        Model.Message = "This are the requests you have to approve or deny:";
+                    }
+                }
+                else
+                {
+                    Model.Message = "This is a incorrect Nip, try again to see the requests you have to approve or deny";
+                }
+            }
         }
     }
+}
+
+@if(Model.Ban == false)
+{
+    <form method="get" action="/Users/ProfessorActions/ViewRequestsToApprove">
+        <div class="mb-3">
+            <label class="form-label">Provide your Professor NIP : </label>
+            <input type="text" class="form-control" id="Nip" name="Nip" maxlength="4" required>
+        </div>
+    </form>
 }
 
 @if(Model.AllRequestsToApprove is not null )

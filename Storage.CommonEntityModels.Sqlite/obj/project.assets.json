@@ -1265,35 +1265,13 @@
     ]
   },
   "packageFolders": {
-<<<<<<< HEAD
     "C:\\Users\\Valeria\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
-=======
-<<<<<<< HEAD
-    "C:\\Users\\Samantha\\.nuget\\packages\\": {}
-=======
-    "C:\\Users\\aacar\\.nuget\\packages\\": {}
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
       "projectUniqueName": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj",
-=======
-<<<<<<< HEAD
-      "projectUniqueName": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj",
-      "projectName": "Storage.CommonEntityModels.Sqlite",
-      "projectPath": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj",
-      "packagesPath": "C:\\Users\\Samantha\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\obj\\",
-      "projectStyle": "PackageReference",
-      "configFilePaths": [
-        "C:\\Users\\Samantha\\AppData\\Roaming\\NuGet\\NuGet.Config"
-=======
-      "projectUniqueName": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj",
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "projectName": "Storage.CommonEntityModels.Sqlite",
       "projectPath": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\Storage.CommonEntityModels.Sqlite.csproj",
       "packagesPath": "C:\\Users\\Valeria\\.nuget\\packages\\",
@@ -1303,14 +1281,9 @@
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-<<<<<<< HEAD
         "C:\\Users\\Valeria\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-=======
-        "C:\\Users\\aacar\\AppData\\Roaming\\NuGet\\NuGet.Config"
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -1365,5 +1338,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problema al leer el archivo de caché D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.CommonEntityModels.Sqlite\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
