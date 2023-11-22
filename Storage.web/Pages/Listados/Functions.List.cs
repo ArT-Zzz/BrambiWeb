@@ -260,7 +260,7 @@ partial class Functions
             
                 IQueryable<RequestDetail> requests = db.RequestDetails
                 .Include(r => r.Request).ThenInclude(s=>s.Student).ThenInclude(g=>g.Group).Include(e=>e.Equipment).Where(d => d.ProfessorNip == 0)
-                .Where(d =>d.Request.ProfessorId == EncryptPass(User));
+                .Where(d =>d.Request.ProfessorId == EncryptPass(User)).OrderBy(r => r.RequestId);
                 
             if (requests == null || !requests.Any())
             {

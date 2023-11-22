@@ -1,0 +1,83 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@{
+    ViewData["Title"] = "View My Students Requests";
+    //await Html.RenderPartialAsync("Functions.cshtml");
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to see the requests of your students that haven't been approved or denied yet. By clicking the button the corresponding button you will approve or deny a request</p>
+
+@functions
+{
+    List<RequestDetail>? AllRequestsToApprove {get; set;}
+    string? Username {get; set;}
+    string? Message {get; set;}
+    public void OnGet(string? username)
+    {
+        Model.Username = username;
+        if(Model.Username is not null)
+        {
+            Model.AllRequestsToApprove = Functions.WatchRequestsToApprove(Model.Username);
+        }
+        if(Model.AllRequestsToApprove is null)
+        {
+            Model.Message = "There are no requests to approve or deny.";
+        }
+        else
+        {
+            Model.Message = "This are the requests you have to approve or deny:";
+        }
+    }
+}
+
+@if(Model.AllRequestsToApprove is not null)
+{
+    var groupedRequests = Model.AllRequestsToApprove.GroupBy(r => r.RequestId);
+    <table class="table" >
+        <thead>
+            <tr>
+                <th>Request ID</th>
+                <th>StudentId</th>
+                <th>Student Name</th>
+                <th>Group</th>
+                <th>Equipment(s)</th>
+                <th>Requested Date</th>
+                <th>Dispatch Time</th>
+                <th>Return Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var group in groupedRequests)
+            {
+                var r = group.First();
+                <tr>
+                    <td>@r.RequestId</td>
+                    <td>@r.Request?.StudentId</td>
+                    <td>@r.Request?.Student?.Name @r.Request?.Student?.LastNameP @r.Request?.Student?.LastNameM</td>
+                    <td>@r.Request?.Student?.Group?.Name</td>
+                    <td>
+                        <ul>
+                            @foreach (var ro in group)
+                            { // so all the equipments of the request will be seen in the same celd of the same request of course
+                                <li>@ro.Equipment?.Name</li>
+                            }
+                        </ul>
+                    </td>
+                    
+                    <td>@r.RequestedDate.Day / @r.RequestedDate.Month / @r.RequestedDate.Year</td>
+                    <td>@r.DispatchTime.TimeOfDay</td>
+                    <td>@r.ReturnTime.TimeOfDay</td>
+                    <form method="get" action="/Users/ProfessorActions/ApproveDenyRequest">
+                        <input type="hidden" name="RequestId" value=@r.RequestId>
+                        <input type="hidden" name="RequestId" value=@Model.Username>
+                        <button type="submit" class="btn btn-primary" name="action" value="approve">Approve</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="deny">Deny</button>
+                    </form>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
