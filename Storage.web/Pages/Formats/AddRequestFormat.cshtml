@@ -36,6 +36,12 @@
         Model.StorerId = Functions.AddStorer();
         Model.Username=username;
         int LastRequestId = Functions.LastRequestId();
+        DateTime CurrentDate = DateTime.Now;
+        // Añade un día a la fecha actual para establecer que solo se pueda seleccionar después de un día
+        DateTime Tommorrow = CurrentDate.AddDays(1);
+        Model.MinDate=Tommorrow.ToString("yyyy-MM-dd");
+        DateTime TwoWeeks = CurrentDate.AddDays(14);
+        Model.MaxDate= TwoWeeks.ToString("yyyy-MM-dd");
         if(Model.StorerId != ""){
             if(selectedOptionClass > 0 && selectedOptionProf != "0" && selectedOptionSub !="0"){
                 if(selectedOptionClass > 0)
@@ -53,11 +59,11 @@
                     Model.ChoosenProfessor = selectedOptionProf;
                     WriteLine("Professor selected");
                 }
+                
                 if(selectedEquipmentCount>0)
                 {
                     Model.SelectedEquipmentCount = selectedEquipmentCount;
                 }
-                
             } 
             int difference = 10 - (int)selectedOptionInitTime;
             Model.AllClassrooms = Functions.ListClassrooms();
