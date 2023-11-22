@@ -4,16 +4,13 @@
 @using AutoGens
 @{
     ViewData["Title"] = "Storer Menu";
-    string? username = TempData["Username"]?.ToString();
+    string username = TempData["Username"]?.ToString() ?? "1515151515";
 }
 
-<div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-           <a class="navbar-brand" asp-area="" asp-page="/Index">Brambi.Storage</a>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-page="/Index">Storage.web</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -21,16 +18,16 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerPrincipal">Home</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerPrincipal" asp-route-username="@username">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Formats/CreateReportDamage&Lost">Report Damage&Lost</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Formats/CreateReportDamage&Lost" asp-route-username="@username">Report Damage&Lost</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudents">Student's Info</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/ViewStudents" asp-route-username="@username">Student's Info</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments">Equipments</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments" asp-route-username="@username">Equipments</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/ViewMaintenanceNotMade" asp-route-username="@username">Maintenance Registers</a>
@@ -39,6 +36,6 @@
             </div>
         </div>
     </nav>
-    @TempData.Remove("Username");
-    <!-- Contenido adicional -->
-</div>
+</header>
+
+<h1>Welcome Storer! Please choose any of the options above</h1>

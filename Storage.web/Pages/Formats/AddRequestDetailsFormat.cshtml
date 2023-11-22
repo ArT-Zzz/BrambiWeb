@@ -143,12 +143,12 @@
                             var request = AddRequest(selectedOptionClass, selectedOptionProf, Model.Username, Model.StorerId, selectedOptionSub, lastIdRequest);
                             var requestDetails = AddRequestDetails(request.RequestId, resultEquipmentsVerified.EquipmentsId, 0, resultEquipments.InitTime, resultEquipments.EndTime, DateTime.Parse(requestedDate), DateTime.Now, resultEquipments.StatusEquipments);
                             if(requestDetails.Affected.Count() > 0)
-                        {
-                            WriteLine("the request was added");
-                        } else
-                        {
-                            WriteLine("the request was not added");   
-                        }
+                            {
+                                WriteLine("the request was added");
+                            } else
+                            {
+                                WriteLine("the request was not added");   
+                            }
                         }
                     }
                     else{

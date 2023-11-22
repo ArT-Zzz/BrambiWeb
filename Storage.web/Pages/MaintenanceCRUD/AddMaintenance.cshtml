@@ -21,26 +21,25 @@
     string? MaxDate {get; set;}
     string? MinDate {get; set;}
     
-    public void OnGet(string EquipmentIdText, string NameText, short AreaText, string DescriptionText, byte StatusText, int YearText, string CoordinatorText, string ControlNumberText)
+    public void OnGet(string username, string EquipmentIdText, string NameText, short AreaText, string DescriptionText, byte StatusText, int YearText, string CoordinatorText, string ControlNumberText)
     {
         Model.Message = "";
-        Model.UserName = TempData["Username"]?.ToString();
+        Model.UserName = username;
         Console.WriteLine($"Username :  {Model.UserName}"); // receives the temporal data sent from ViewMaintenanceNotMade, username
         
         Model.AllMaintenanceTypes = Functions.ListMaintenanceTypes();
         Model.MaxDate = DateTime.Now.Date.AddYears(5).ToString("yyyy-MM-dd");
         Model.MinDate = DateTime.Now.Date.AddYears(-1).ToString("yyyy-MM-dd");
-        @TempData.Remove("Username");
     }
 
     // post for the second form, when this one is clicked, than it will go to another page that will show the new Maintenance register Added
-    public IActionResult OnPostFinish(byte MaintenanceTypeText, string? InstructionsText, DateTime ProgrammedDateText)
+    public IActionResult OnPostFinish(string? username, byte MaintenanceTypeText, string? InstructionsText, DateTime ProgrammedDateText)
     {
         if(MaintenanceTypeText != 0)
         {
-            if(Model.UserName is not null)
+            if(username is not null)
             {
-                var result = AddMaintenance(MaintenanceTypeText, InstructionsText, ProgrammedDateText, Model.UserName);
+                var result = AddMaintenance(MaintenanceTypeText, InstructionsText, ProgrammedDateText, username);
                 if(result.Affected > 0)
                 {
                     // created succesfully
@@ -84,7 +83,7 @@
                 MaintenanceTypeId = MaintenanceTypeId, 
                 MaintenanceInstructions = Instructions,
                 ProgrammedDate = ProgrammedDate, 
-                StorerId = StorerId
+                StorerId = Functions.EncryptPass(StorerId)
             };
 
             EntityEntry<MaintenanceRegister> entity = db.MaintenanceRegisters.Add(e); // adds the object that was just created to Equipments table inside the database
@@ -102,6 +101,7 @@
     <p> This part of the register is generic, this means it will apply to all the equipments you add to this maintenance register </p>
 
     <form method="post" asp-page-handler="Finish">
+        <input type="hidden" name="username" value="@Model.UserName">
         <div class="mb-3">
             <label class="form-label">Choose a equipment</label>
             <select class="form-select" id="dropdown" name="MaintenanceTypeText">
