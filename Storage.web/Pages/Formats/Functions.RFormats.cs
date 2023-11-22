@@ -60,20 +60,29 @@ partial class Functions
         }
     }
 
+    //Busca equipos disponibles en las horas y día de la solicitud, obteninedo las horas de la tabla schedules
     public static (List<Equipment>? EquipmentsList, List<byte?>? StatusEquipments, DateTime InitTime, DateTime EndTime) ListEquipmentsAvailable (DateTime RequestedDate, short InitTimeId, short EndTimeId)
     {
+        //Abrimos conexion a la bd
         using (bd_storage db = new())
         {
+            // Si la tabla es nula avienta una excepcion
             if(db.Equipments is null)
             {
                 throw new NullReferenceException("The table does not exist");
             }
+            // Si existe la tabla 
             else 
             {
+                // Busca el id de la tabla schedule con la hora inicial seleccionada por el usuario
                 IQueryable<Schedule> InitTimesQuery = db.Schedules.Where(s => s.ScheduleId==InitTimeId);
-                DateTime InitTime = InitTimesQuery.First().InitTime;
+                // Guarda el valor de la fecha de la solicitud y la hora de inicio de la clase
+                DateTime InitTime = RequestedDate.Date + (InitTimesQuery?.First().InitTime ?? DateTime.MinValue).TimeOfDay;
+                // Busca el id de la tabla schedule con la hora inicial seleccionada por el usuario
                 IQueryable<Schedule> EndTimesQuery = db.Schedules.Where(s => s.ScheduleId==EndTimeId);
-                DateTime EndTime = InitTimesQuery.First().InitTime;
+                // Guarda el valor de la fecha de la solicitud y la hora de finalizacion de la clase
+                DateTime EndTime = RequestedDate.Date + (EndTimesQuery?.First().InitTime ?? DateTime.MinValue).TimeOfDay;
+                // Crea las listas para poder agregar los equipos disponibles
                 List<Equipment>? equipmentsList = new();
                 List<byte?>? equipmentsStatusList = new();
                 var EquipmentIdsInUseStud = db.RequestDetails

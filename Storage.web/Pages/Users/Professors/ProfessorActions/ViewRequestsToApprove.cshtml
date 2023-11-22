@@ -73,7 +73,7 @@
                     <td>@r.ReturnTime.TimeOfDay</td>
                     <form method="get" action="/Users/ProfessorActions/ApproveDenyRequest">
                         <input type="hidden" name="RequestId" value=@r.RequestId>
-                        <input type="hidden" name="RequestId" value=@Model.Username>
+                        <input type="hidden" name="username" value=@Model.Username>
                         <button type="submit" class="btn btn-primary" name="action" value="approve">Approve</button>
                         <button type="submit" class="btn btn-primary" name="action" value="deny">Deny</button>
                     </form>

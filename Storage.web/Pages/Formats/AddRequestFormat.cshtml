@@ -77,7 +77,7 @@
 }
     
 <form method="get" action="/Formats/AddRequestDetailsFormat">
-    @if(Model.Message!="0")
+    @if(Model.Message=="You cannot choose a Saturday or a Sunday" || Model.Message=="The ending time cannot be before the starting time" || Model.Message=="The minimun of time must be 50 minuts")
     {
         <p style = "color: red">@Model.Message. Try again.</p>
     }

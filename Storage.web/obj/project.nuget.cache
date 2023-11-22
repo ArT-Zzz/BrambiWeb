@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vWJZky5vCFCEeDdwqZ/XOmCZYUslrD8Gv1knEFbrhxzYDoaQ2m/QgoYIagvmwUUKWvvi2xmLJjM1LQr8dr5QMQ==",
+  "dgSpecHash": "Xmi0nKvnpqkz4ALtXP+jFYXJlQGHFCNp5zPnHAPkBEsw8GF+KxKtGoQ19S6SeAPcEPiSDSqfQgE+4wQ786bpZQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\Storage.web.csproj",
+  "projectFilePath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\Storage.web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\aacar\\.nuget\\packages\\microsoft.data.sqlite.core\\7.0.12\\microsoft.data.sqlite.core.7.0.12.nupkg.sha512",
     "C:\\Users\\aacar\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.13\\microsoft.entityframeworkcore.7.0.13.nupkg.sha512",
@@ -29,12 +29,5 @@
     "C:\\Users\\aacar\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
     "C:\\Users\\aacar\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problema al leer el archivo de caché C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }

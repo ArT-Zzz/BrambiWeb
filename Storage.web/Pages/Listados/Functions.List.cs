@@ -12,7 +12,7 @@ partial class Functions
     {
         using (bd_storage db = new())
         {
-            //busca equipos registrados como dañados o perdidos
+            //busca equipos registrados como dañados o perdidos con el id del estudiante proporcionado en los parametros de la funcion
             IQueryable<DyLequipment> dyLequipments = db.DyLequipments
                 .Include(dal => dal.Status)
                 .Include(dal => dal.Equipment)
@@ -20,13 +20,13 @@ partial class Functions
                 .Include(dal => dal.Coordinator)
                 .Where(dal => dal.Student.StudentId==StudentIdToFind)
                 .Where(dal=>dal.Equipment.StatusId == 4 || dal.Equipment.StatusId == 3 ); 
-
+            // Si no contiene nada la query muestra el mensaje
             if (!dyLequipments.Any())
             {
                 WriteLine("No damaged or lost equipment found with Student Id: " + StudentIdToFind);
                 return null;
             }
-
+            // Imprime con formato los equipos dañados o perdidos por el estudiante
             WriteLine("| {0,-11} | {1,-8} | {2,-35} | {3,-30} | {4}",
                 "EquipmentId", "Status", "Name", "To Return", "Date of Return");
 
@@ -34,6 +34,7 @@ partial class Functions
             {
                 WriteLine($"| {dal.Equipment?.EquipmentId,-11} | {dal.Status?.Value,-8} | {dal.Equipment?.Name,-35} | {dal.objectReturn, -30} | {dal.DateOfReturn}");
             }
+            // Retorna una lista de los equipos
             return dyLequipments.ToList();
         }
     }

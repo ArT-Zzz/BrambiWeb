@@ -22,20 +22,17 @@
     short? ChoosenInitTime {get; set;}
     short? ChoosenEndTime {get; set;}
     string? ChoosenRequestedDate{get; set;}
-    bool IsDuplicated { get; set; } = false;
     bool ValidateAll {get; set;} 
     string? Username {get; set;}
     int SelectedEquipmentCount {get; set;}
     int LastRequestId {get; set;}
     string? Message {get; set;}
+    string? MessageDuplicated {get; set;}
     
+    // Función que recibe valores del formulario para crear un registro en las tamblas Request y Request Details
     public IActionResult OnGet(string username, int selectedOptionClass, string selectedOptionSub, string selectedOptionProf, string requestedDate, short selectedOptionInitTime, short selectedOptionEndTime, int selectedEquipmentCount, int requestId, string selectedEquipment1, string selectedEquipment2, string selectedEquipment3, string selectedEquipment4)
     {
-        //recibe todo aqui--------------
-        //llama a funcion validaciones-------------
-        //que regrese un mensaje la funcion--------------------
-        //pones un tempData -------------------------------
-        //lo recibes en AddRequestFormat-------------------------------
+        // Declaracion de variables al Model para poder obtener los valores enviados de AddRequest
         Model.Username=username;
         Model.ChoosenClassroom=selectedOptionClass;
         Model.ChoosenProfessor=selectedOptionProf;
@@ -47,62 +44,80 @@
 
         WriteLine($"username: {Model.Username}");
         WriteLine($"classroom: {Model.ChoosenClassroom}");
-        WriteLine($"ChoosenProfessor: {Model.ChoosenProfessor}");
         WriteLine($"ChoosenSubject: {Model.ChoosenSubject}");
         WriteLine($"ChoosenRequestedDate: {Model.ChoosenRequestedDate}");
         WriteLine($"ChoosenInitTime: {Model.ChoosenInitTime}");
         WriteLine($"ChoosenEndTime: {Model.ChoosenEndTime}");
         WriteLine($"SelectedEquipmentCount: {Model.SelectedEquipmentCount}");
+        // Función para validar que los dias y las horas sean correctas
         Model.Message=Validations(requestedDate, selectedOptionInitTime, selectedOptionEndTime);
+        // Si el mensaje que retorna es diferente de "0" quiere decir que hay un dato mal
         if(Model.Message!="0")
         {
+            // Pone un valor bool en falso para evitar que pueda ingresar otro dato
             Model.ValidateAll=false;
-            TempData["Message"] = Model.Message; // save the info of message sent and the equipment id
+            // Guarda el mensaje en un TempData
+            TempData["Message"] = Model.Message;
+            // Manda el mensaje a través del TempData a la página anterior donde pide esos datos de nuevo
             return RedirectToPage("/Formats/AddRequestFormat"); 
         }
+        // Si el valor que retorna es "0" quiere decir que todo esta dentro de los parametros
         if(Model.Message=="0")
         {
+            // Pone el valor bool en true para que se muestre el formulario
             Model.ValidateAll=true;
+            // Llama funcion para verificar que exista un almacenista 
             Model.StorerId = Functions.AddStorer();
+            // Si no existe regresa un " ", por lo que si es diferente a " " hay un almacenista y puede pedir material
             if(Model.StorerId != "")
             {
+                // Verifica que el usuario no haya seleccionado 0 o un valor menor
                 if(Model.SelectedEquipmentCount > 0)
                 {
-                    WriteLine(Model.SelectedEquipmentCount);
+                    // Imprime la cantidad de equipos que va a seleccionar
+                    WriteLine($"The equipments to select are:{Model.SelectedEquipmentCount}");
+                    // Lista los equipos disponibles para fecha y hora de la clase
                     var resultEquipments = Functions.ListEquipmentsAvailable(DateTime.Parse(requestedDate), selectedOptionInitTime, selectedOptionEndTime);
+                    // Guarda el valor 
                     Model.AllEquipmentsAvailable = resultEquipments.EquipmentsList;
                     WriteLine(selectedEquipment1);
                     if(Model.SelectedEquipmentCount==2)
                     {
                         if(selectedEquipment1 != selectedEquipment2)
                         {
-                            Model.IsDuplicated=false;
+                            WriteLine("The equipments were added succesfull");
+                            Model.MessageDuplicated=" ";
                         }
                         else
                         {
-                            Model.IsDuplicated= true;
+                            WriteLine("The equipments were duplicated. Try again.");
+                            Model.MessageDuplicated="The equipments are duplicated, change them to continue";
                         }
                     }
                     else if(Model.SelectedEquipmentCount==3)
                     {
                         if(selectedEquipment1 != selectedEquipment2 && selectedEquipment1 != selectedEquipment3 && selectedEquipment2 != selectedEquipment3)
                         {
-                            Model.IsDuplicated=false;
+                            WriteLine("The equipments were added succesfull");
+                            Model.MessageDuplicated=" ";
                         }
                         else
                         {
-                            Model.IsDuplicated= true;
+                            WriteLine("The equipments were duplicated. Try again.");
+                            Model.MessageDuplicated="The equipments are duplicated, change them to continue";
                         }
                     }
                     else if(Model.SelectedEquipmentCount==4)
                     {
                         if(selectedEquipment1 != selectedEquipment2 && selectedEquipment1 != selectedEquipment3 && selectedEquipment2 != selectedEquipment3 && selectedEquipment1!=selectedEquipment4 && selectedEquipment2!=selectedEquipment4 && selectedEquipment3!= selectedEquipment4)
                         {
-                            Model.IsDuplicated=false;
+                            WriteLine("The equipments were added succesfull");
+                            Model.MessageDuplicated=" ";
                         }
                         else
                         {
-                            Model.IsDuplicated= true;
+                             WriteLine("The equipments were duplicated. Try again.");
+                            Model.MessageDuplicated="The equipments are duplicated, change them to continue";
                         }
                     }
                     if(Model.SelectedEquipmentCount>=1 && selectedEquipment1 is not null)
@@ -136,7 +151,7 @@
                             WriteLine($"The equipment selected is {s}");   
                         }
                         
-                        if(Model.IsDuplicated==false)
+                        if(Model.MessageDuplicated==" ")
                         {
                             int lastIdRequest = Functions.LastRequestId();
                             var resultEquipmentsVerified = Functions.AddEquipmentsAndStatus(Model.EquipmentsIdSelected);
@@ -145,7 +160,7 @@
                             if(requestDetails.Affected.Count() > 0)
                             {
                                 WriteLine("the request was added");
-                                return RedirectToPage("/Users/StudentsPrincipal/"); 
+                                return RedirectToPage("/Users/Students/StudentsPrincipal"); 
                             } else
                             {
                                 WriteLine("the request was not added"); 
@@ -333,9 +348,9 @@
                         }
                     </select>
                 </div>
-                @if(Model.IsDuplicated==true)
+                @if(Model.MessageDuplicated == "The equipments are duplicated, change them to continue")
                 {
-                    <p style="color: red">The equipments are duplicated, change them to continue</p>
+                    <p style="color: red">@Model.MessageDuplicated</p>
                 } 
                 <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
             }
@@ -389,9 +404,9 @@
                         }
                     </select>
                 </div>
-                @if(Model.IsDuplicated==true)
+                @if(Model.MessageDuplicated == "The equipments are duplicated, change them to continue")
                 {
-                    <p style="color: red">The equipments are duplicated, change them to continue</p>
+                    <p style="color: red">@Model.MessageDuplicated</p>
                 } 
                 <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
             }
@@ -461,9 +476,9 @@
                         }
                     </select>
                 </div>
-                @if(Model.IsDuplicated==true)
+                @if(Model.MessageDuplicated=="The equipments are duplicated, change them to continue")
                 {
-                    <p style="color: red">The equipments are duplicated, change them to continue</p>
+                    <p style="color: red">@Model.MessageDuplicated</p>
                 } 
                 <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
             }

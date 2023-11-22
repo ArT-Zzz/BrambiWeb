@@ -55,8 +55,6 @@ public partial class bd_storage : DbContext
 
     public virtual DbSet<Subject> Subjects { get; set; }
 
-    public virtual DbSet<Teach> Teaches { get; set; }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder){
         if(!optionsBuilder.IsConfigured)
         {
@@ -176,10 +174,6 @@ public partial class bd_storage : DbContext
             entity.Property(e => e.SubjectId).ValueGeneratedNever();
         });
 
-        modelBuilder.Entity<Teach>(entity =>
-        {
-            entity.Property(e => e.TeachId).ValueGeneratedNever();
-        });
 
         OnModelCreatingPartial(modelBuilder);
     }
