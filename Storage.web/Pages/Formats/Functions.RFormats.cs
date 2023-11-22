@@ -169,33 +169,6 @@ partial class Functions
         }
     }
 
-    public static (int Affected, int RequestId) AddRequest(int? ClassroomId, string? ProfessorId, string? StudentId, string? StorerId, string? SubjectId, int LastRequestId){
-        using(bd_storage db = new()){
-            // Verifica que exista la tabla
-            if(db.Requests is null){ 
-                throw new InvalidOperationException("The table request is not found");
-            }
-            else{ // Si existe la tabla
-                // Crea el objeto y le asigna valores
-                Request r  = new Request()
-                {
-                    RequestId = LastRequestId,
-                    ClassroomId = ClassroomId,
-                    ProfessorId = ProfessorId,
-                    StudentId = StudentId,
-                    StorerId = StorerId,
-                    SubjectId = SubjectId,
-                };
-                // Agrega el objeto a la tabla
-                EntityEntry<Request> Entity = db.Requests.Add(r);
-                // Cambia los valores de la bd
-                int Affected = db.SaveChanges();
-                // Retorna los valores de filas aceptadas y el ID del nuevo request
-                return (Affected, r.RequestId);
-            }
-        }
-    }
-
     public static (List<Equipment>? EquipmentsList, List<byte?>? StatusEquipments, DateTime InitTime, DateTime EndTime) ListEquipmentsAvailable (DateTime RequestedDate, short InitTimeId, short EndTimeId)
     {
         using (bd_storage db = new())
@@ -285,58 +258,6 @@ partial class Functions
             return lastRequestId;
         }
     }
-
-    public static (List<int> Affected, List<int> RequestDetailsId) AddRequestDetails(int RequestId, List<string>? EquipmentsId, int ProfessorNip, DateTime InitTime, DateTime EndTime, DateTime RequestedDate, DateTime CurrentDate, List<byte?>? StatusEquipments){
-        // Variable para establecer el índice de las listas de los nombres de los equipos y los status de estos
-        int i=0;
-        // Lista que almacena los requestDetails Id de los registros nuevos agregados en la tabla
-        List<int>? RequestDetailsId = new List<int>();
-        // Lista que almacena cuantas filas fueron afectadas en la tabla de Request Details al momento de re
-        List<int>? Affecteds = new List<int>();
-        // Verifica que la lista de equipmentId y statusId sean del mismo tamaño y no tengan valores nulos para poder usarlos
-        if (EquipmentsId == null || StatusEquipments == null || EquipmentsId.Count != StatusEquipments.Count)
-        {
-            // Manejar el caso donde las listas no son válidas
-            // Si no son validas muestra el mensaje y retorna los valores
-            WriteLine("The equipment selected was not correctly added. Try again.");
-            //DeleteRequest(RequestId);
-            return (Affecteds, RequestDetailsId);
-        } else {
-            using (bd_storage db = new()){
-                // Si la tabla no existe se lanza una excepcion
-                if(db.RequestDetails is null){ 
-                    throw new InvalidOperationException ("The table Request Details does not exist. Verify it");
-                }
-                int requestDetailId = LastRequestDetailId();
-                // Por cada equipo registrado en la tabla se genera una fila de datos en Request Details, donde se llenan los campos 
-                //con los datos recibidos por los parametros
-                foreach(var e in EquipmentsId){
-                    RequestDetail rD = new() {
-                        RequestDetailsId = requestDetailId,
-                        RequestId = RequestId,
-                        EquipmentId = EquipmentsId[i],
-                        StatusId = StatusEquipments[i],
-                        ProfessorNip = ProfessorNip,
-                        DispatchTime = InitTime,
-                        ReturnTime = EndTime,
-                        RequestedDate = RequestedDate,
-                        CurrentDate = CurrentDate
-                    };
-                    // Se añaden los datos a la tabla
-                    EntityEntry<RequestDetail> entity = db.RequestDetails.Add(rD);
-                    // Se guardan los datos en la bd y el valor de las filas affectadas se guarda en la lista de affecteds
-                    Affecteds.Add(db.SaveChanges());
-                    // Se guardan los ID generados en la lista de ID's
-                    RequestDetailsId.Add(rD.RequestDetailsId);
-                    // Aumenta el indice de las listas
-                    i++;
-                    requestDetailId++;
-                }
-            }
-        }
-        return (Affecteds, RequestDetailsId);
-    }
-
 
     public static List<RequestDetail>? TodayRequestsForStudents(string? StudentID)
     {

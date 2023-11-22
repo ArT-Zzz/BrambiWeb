@@ -1182,11 +1182,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\Storage.web.csproj",
+      "projectUniqueName": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\Storage.web.csproj",
       "projectName": "Storage.web",
-      "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\Storage.web.csproj",
+      "projectPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\Storage.web.csproj",
       "packagesPath": "C:\\Users\\aacar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\obj\\",
+      "outputPath": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\aacar\\AppData\\Roaming\\NuGet\\NuGet.Config"

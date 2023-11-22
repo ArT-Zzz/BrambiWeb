@@ -1,0 +1,74 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using System.Globalization;
+@using System.Security.Cryptography;
+@using System.Text;
+@{
+    ViewData["Title"] = "Equipments that you have damaged or lost";
+    //await Html.RenderPartialAsync("Functions.cshtml");
+}
+<h1>@ViewData["Title"]</h1>
+@functions
+{
+    string? Username {get; set;}
+    List<DyLequipment>? MyLostAndDamageEquipments {get; set;}
+    string? Message {get; set;}
+    public void OnGet(string username)
+    {
+        Model.Message = "";
+        Model.Username=username;
+        Model.MyLostAndDamageEquipments = Functions.FindDandLequipmentByStudentId(Model.Username);
+        if(Model.MyLostAndDamageEquipments is null)
+        {
+            // no dylequipments
+            Model.Message = "You have no lost or damage equipments to return";
+            Console.WriteLine(Model.Message);
+        }
+        else
+        {
+            // found equipments
+            Model.Message = "This are the debts you have to return because you lost or damaged an equipment";
+            Console.WriteLine(Model.Message);
+        }
+    }
+}
+
+<form method="post" action="/Listados/EquipmentsD&LStudents">
+    <input type="hidden" name="username" value="@Model.Username">
+</form>
+@if(Model.Message != "")
+{
+    <h5>@Model.Message</h5>
+}
+@if(Model.MyLostAndDamageEquipments is not null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>What do you have to return</th>
+                <th>Maximum Return Date</th>
+                <th>Lost/Damaged EquipmentID</th>
+                <th>Lost/Damaged Equipment</th>
+                <th>Status</th>
+                <th>Date of Accident</th>
+                <th>Accident Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var d in Model.MyLostAndDamageEquipments)
+            {
+                <tr>
+                    <td>@d.objectReturn</td>
+                    <td>@d.DateOfReturn</td>
+                    <td>@d.EquipmentId</td>
+                    <td>@d.Equipment?.Name</td>
+                    <td>@d.Status?.Value</td>
+                    <td>@d.DateOfEvent</td>
+                    <td>@d.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
