@@ -22,12 +22,12 @@
             else if (rol == "professors")
             {
                 TempData["Username"] = username;
-                Response.Redirect("/Professors");
+                Response.Redirect("/Users/Professors/ProfessorPrincipal");
             }
             else if( rol == "storers")
             {
                 TempData["Username"] = username;
-                Response.Redirect("/Users/StorerPrincipal");
+                Response.Redirect("/Users/Storer/StorerPrincipal");
             }
             else if( rol == "coordinators")
             {
