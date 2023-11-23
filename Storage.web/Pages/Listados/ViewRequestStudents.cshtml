@@ -1,0 +1,86 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using System.Globalization;
+@using System.Security.Cryptography;
+@using System.Text;
+@{
+    ViewData["Title"] = "View my Requests";
+}
+<h1>@ViewData["Title"]</h1>
+@functions{
+    List<RequestDetail>? AllMyRequests {get; set;}
+    string? Username {get; set;}
+    string? Message {get; set;}
+    public void OnGet(string? username) 
+    {
+        //Recibe el username del inicio de sesion
+        Model.Username = username;
+        // Si el username tiene algun valor
+        if(Model.Username is not null)
+        {
+            // Llama a la funcion donde se buscan todas las solicitudes que yo he realizado
+            Model.AllMyRequests = Functions.ListEquipmentsRequests(Model.Username);
+            if(Model.AllMyRequests is null)
+            {
+                Model.Message = "There are not request from" + Model.Username;
+            }
+            else
+            {
+                Model.Message = "This are your request:";
+            }
+        }
+    }
+}
+
+@if(Model.AllMyRequests is not null )
+{
+    var groupedRequests = Model.AllMyRequests.GroupBy(r => r.RequestId);
+    <table class="table" >
+        <thead>
+            <tr>
+                <th>Request ID</th>
+                <th>Professor Name</th>
+                <th>Equipment(s)</th>
+                <th>Requested Date</th>
+                <th>Dispatch Time</th>
+                <th>Return Time</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var group in groupedRequests)
+            {
+                var r = group.First();
+                <tr>
+                    <td>@r.RequestId</td>
+                    <td>@r.Request?.Professor?.Name @r.Request?.Professor?.LastNameP @r.Request?.Professor?.LastNameM</td>
+                    <td>
+                        <ul>
+                            @foreach (var ro in group)
+                            { // so all the equipments of the request will be seen in the same celd of the same request of course
+                                <li>@ro.Equipment?.Name</li>
+                            }
+                        </ul>
+                    </td>
+                    
+                    <td>@r.RequestedDate.Day / @r.RequestedDate.Month / @r.RequestedDate.Year</td>
+                    <td>@r.DispatchTime.TimeOfDay</td>
+                    <td>@r.ReturnTime.TimeOfDay</td>
+                    @if(r.ProfessorNip==0)
+                    {
+                        <td>Pending...</td>
+                    } else if(r.ProfessorNip==1){
+                        <td>Approved</td>
+                    }
+                    else if(r.ProfessorNip==2){
+                        <td>Denied</td>
+                    }
+                    <form method="get" action="/Listados/ViewRequestStudents">
+                        <input type="hidden" name="username" value=@Model.Username>
+                    </form>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

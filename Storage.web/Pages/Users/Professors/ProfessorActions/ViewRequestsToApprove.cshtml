@@ -113,6 +113,7 @@
                     <td>@r.ReturnTime.TimeOfDay</td>
                     <form method="get" action="/Users/Professors/ProfessorActions/ApproveDenyRequest">
                         <input type="hidden" name="RequestId" value=@r.RequestId>
+<<<<<<< HEAD
                         <input type="hidden" name="UserName" value=@Model.Username>
                         <input type="hidden" name="Nip" value=@Model.Nip>
                         <td>                        
@@ -121,6 +122,11 @@
                         <td>                        
                             <button type="submit" class="btn btn-primary" name="action" value="deny">Deny</button>
                         </td>
+=======
+                        <input type="hidden" name="username" value=@Model.Username>
+                        <button type="submit" class="btn btn-primary" name="action" value="approve">Approve</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="deny">Deny</button>
+>>>>>>> 68d00d2d1141b42fc3f82dea78c6d1bd15ef4879
                     </form>
                 </tr>
             }

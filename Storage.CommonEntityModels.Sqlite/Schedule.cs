@@ -22,8 +22,5 @@ public partial class Schedule
     [Required]
     [MaxLength(9)]
     public string? WeekDay { get; set; }
-
-    [InverseProperty("Schedule")]
-    public virtual ICollection<Teach> Teaches { get; set; } = new List<Teach>();
-
+    
 }

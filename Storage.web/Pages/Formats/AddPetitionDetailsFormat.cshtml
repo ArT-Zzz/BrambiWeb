@@ -7,7 +7,7 @@
 @using System.Diagnostics.CodeAnalysis;
 @using System.Runtime.Intrinsics.Arm;
 @{
-    ViewData["Title"] = "Add Requests Details";
+    ViewData["Title"] = "Add Petition Details";
 }
 <h1>@ViewData["Title"]</h1>
 
@@ -17,107 +17,84 @@
     List<string>? EquipmentsIdSelected {get; set;} = new List<string>();
     int? ChoosenClassroom { get; set; }
     string? ChoosenSubject { get; set; }
-    string? ChoosenProfessor { get; set; }
     string? StorerId { get; set; }
     short? ChoosenInitTime {get; set;}
     short? ChoosenEndTime {get; set;}
     string? ChoosenRequestedDate{get; set;}
+    bool IsDuplicated { get; set; } = false;
     bool ValidateAll {get; set;} 
     string? Username {get; set;}
     int SelectedEquipmentCount {get; set;}
-    int LastRequestId {get; set;}
+    int LastPetitionId {get; set;}
     string? Message {get; set;}
-    string? MessageDuplicated {get; set;}
     
-    // Función que recibe valores del formulario para crear un registro en las tamblas Request y Request Details
-    public IActionResult OnGet(string username, int selectedOptionClass, string selectedOptionSub, string selectedOptionProf, string requestedDate, short selectedOptionInitTime, short selectedOptionEndTime, int selectedEquipmentCount, int requestId, string selectedEquipment1, string selectedEquipment2, string selectedEquipment3, string selectedEquipment4)
+    public IActionResult OnGet(string username, int selectedOptionClass, string selectedOptionSub, string requestedDate, short selectedOptionInitTime, short selectedOptionEndTime, int selectedEquipmentCount, int requestId, string selectedEquipment1, string selectedEquipment2, string selectedEquipment3, string selectedEquipment4)
     {
-        // Declaracion de variables al Model para poder obtener los valores enviados de AddRequest
         Model.Username=username;
         Model.ChoosenClassroom=selectedOptionClass;
-        Model.ChoosenProfessor=selectedOptionProf;
         Model.ChoosenSubject=selectedOptionSub;
         Model.ChoosenRequestedDate=requestedDate;
         Model.ChoosenInitTime=selectedOptionInitTime;
         Model.ChoosenEndTime=selectedOptionEndTime;
         Model.SelectedEquipmentCount=selectedEquipmentCount;
 
-        WriteLine($"username: {Model.Username}");
+        /*WriteLine($"username: {Model.Username}");
         WriteLine($"classroom: {Model.ChoosenClassroom}");
         WriteLine($"ChoosenSubject: {Model.ChoosenSubject}");
         WriteLine($"ChoosenRequestedDate: {Model.ChoosenRequestedDate}");
         WriteLine($"ChoosenInitTime: {Model.ChoosenInitTime}");
         WriteLine($"ChoosenEndTime: {Model.ChoosenEndTime}");
-        WriteLine($"SelectedEquipmentCount: {Model.SelectedEquipmentCount}");
-        // Función para validar que los dias y las horas sean correctas
+        WriteLine($"SelectedEquipmentCount: {Model.SelectedEquipmentCount}");*/
         Model.Message=Validations(requestedDate, selectedOptionInitTime, selectedOptionEndTime);
-        // Si el mensaje que retorna es diferente de "0" quiere decir que hay un dato mal
         if(Model.Message!="0")
         {
-            // Pone un valor bool en falso para evitar que pueda ingresar otro dato
             Model.ValidateAll=false;
-            // Guarda el mensaje en un TempData
-            TempData["Message"] = Model.Message;
-            // Manda el mensaje a través del TempData a la página anterior donde pide esos datos de nuevo
-            return RedirectToPage("/Formats/AddRequestFormat"); 
+            TempData["Message"] = Model.Message; // save the info of message sent and the equipment id
+            return RedirectToPage("/Formats/AddPetitionFormat"); 
         }
-        // Si el valor que retorna es "0" quiere decir que todo esta dentro de los parametros
         if(Model.Message=="0")
         {
-            // Pone el valor bool en true para que se muestre el formulario
             Model.ValidateAll=true;
-            // Llama funcion para verificar que exista un almacenista 
             Model.StorerId = Functions.AddStorer();
-            // Si no existe regresa un " ", por lo que si es diferente a " " hay un almacenista y puede pedir material
             if(Model.StorerId != "")
             {
-                // Verifica que el usuario no haya seleccionado 0 o un valor menor
                 if(Model.SelectedEquipmentCount > 0)
                 {
-                    // Imprime la cantidad de equipos que va a seleccionar
-                    WriteLine($"The equipments to select are:{Model.SelectedEquipmentCount}");
-                    // Lista los equipos disponibles para fecha y hora de la clase
+                    WriteLine(Model.SelectedEquipmentCount);
                     var resultEquipments = Functions.ListEquipmentsAvailable(DateTime.Parse(requestedDate), selectedOptionInitTime, selectedOptionEndTime);
-                    // Guarda el valor 
                     Model.AllEquipmentsAvailable = resultEquipments.EquipmentsList;
                     WriteLine(selectedEquipment1);
                     if(Model.SelectedEquipmentCount==2)
                     {
                         if(selectedEquipment1 != selectedEquipment2)
                         {
-                            WriteLine("The equipments were added succesfull");
-                            Model.MessageDuplicated=" ";
+                            Model.IsDuplicated=false;
                         }
                         else
                         {
-                            WriteLine("The equipments were duplicated. Try again.");
-                            Model.MessageDuplicated="The equipments are duplicated, change them to continue";
+                            Model.IsDuplicated= true;
                         }
                     }
                     else if(Model.SelectedEquipmentCount==3)
                     {
                         if(selectedEquipment1 != selectedEquipment2 && selectedEquipment1 != selectedEquipment3 && selectedEquipment2 != selectedEquipment3)
                         {
-                            WriteLine("The equipments were added succesfull");
-                            Model.MessageDuplicated=" ";
+                            Model.IsDuplicated=false;
                         }
                         else
                         {
-                            WriteLine("The equipments were duplicated. Try again.");
-                            Model.MessageDuplicated="The equipments are duplicated, change them to continue";
+                            Model.IsDuplicated= true;
                         }
                     }
                     else if(Model.SelectedEquipmentCount==4)
                     {
                         if(selectedEquipment1 != selectedEquipment2 && selectedEquipment1 != selectedEquipment3 && selectedEquipment2 != selectedEquipment3 && selectedEquipment1!=selectedEquipment4 && selectedEquipment2!=selectedEquipment4 && selectedEquipment3!= selectedEquipment4)
                         {
-                            WriteLine("The equipments were added succesfull");
-                            Model.MessageDuplicated=" ";
+                            Model.IsDuplicated=false;
                         }
                         else
                         {
-                             WriteLine("The equipments were duplicated. Try again.");
-                            Model.MessageDuplicated="The equipments are duplicated, change them to continue";
+                            Model.IsDuplicated= true;
                         }
                     }
                     if(Model.SelectedEquipmentCount>=1 && selectedEquipment1 is not null)
@@ -151,16 +128,16 @@
                             WriteLine($"The equipment selected is {s}");   
                         }
                         
-                        if(Model.MessageDuplicated==" ")
+                        if(Model.IsDuplicated==false)
                         {
-                            int lastIdRequest = Functions.LastRequestId();
+                            int lastIdPetition = Functions.LastPetitionId();
                             var resultEquipmentsVerified = Functions.AddEquipmentsAndStatus(Model.EquipmentsIdSelected);
-                            var request = AddRequest(selectedOptionClass, selectedOptionProf, Model.Username, Model.StorerId, selectedOptionSub, lastIdRequest);
-                            var requestDetails = AddRequestDetails(request.RequestId, resultEquipmentsVerified.EquipmentsId, 0, resultEquipments.InitTime, resultEquipments.EndTime, DateTime.Parse(requestedDate), DateTime.Now, resultEquipmentsVerified.StatusEquipments);
-                            if(requestDetails.Affected.Count() > 0)
+                            var petition = AddPetition(selectedOptionClass, Model.Username, Model.StorerId, selectedOptionSub, lastIdPetition);
+                            var petitionDetails = AddPetitionDetails(petition.PetitionId, resultEquipmentsVerified.EquipmentsId, resultEquipments.InitTime, resultEquipments.EndTime, DateTime.Parse(requestedDate), DateTime.Now, resultEquipmentsVerified.StatusEquipments);
+                            if(petitionDetails.Affected.Count() > 0)
                             {
                                 WriteLine("the request was added");
-                                return RedirectToPage("/Users/Students/StudentsPrincipal"); 
+                                return RedirectToPage("/Users/StudentsPrincipal/"); 
                             } else
                             {
                                 WriteLine("the request was not added"); 
@@ -202,38 +179,37 @@
         return Message;
     }
 
-    public static (int Affected, int RequestId) AddRequest(int? ClassroomId, string? ProfessorId, string? StudentId, string? StorerId, string? SubjectId, int LastRequestId){
+    public static (int Affected, int PetitionId) AddPetition(int? ClassroomId, string? ProfessorId, string? StorerId, string? SubjectId, int LastPetitionId){
         using(bd_storage db = new()){
             // Verifica que exista la tabla
-            if(db.Requests is null){ 
+            if(db.Petitions is null){ 
                 throw new InvalidOperationException("The table request is not found");
             }
             else{ // Si existe la tabla
                 // Crea el objeto y le asigna valores
-                Request r  = new Request()
+                Petition p  = new Petition()
                 {
-                    RequestId = LastRequestId,
+                    PetitionId = LastPetitionId,
                     ClassroomId = ClassroomId,
                     ProfessorId = ProfessorId,
-                    StudentId = StudentId,
                     StorerId = StorerId,
                     SubjectId = SubjectId,
                 };
                 // Agrega el objeto a la tabla
-                EntityEntry<Request> Entity = db.Requests.Add(r);
+                EntityEntry<Petition> Entity = db.Petitions.Add(p);
                 // Cambia los valores de la bd
                 int Affected = db.SaveChanges();
                 // Retorna los valores de filas aceptadas y el ID del nuevo request
-                return (Affected, r.RequestId);
+                return (Affected, p.PetitionId);
             }
         }
     }
 
-    public static (List<int> Affected, List<int> RequestDetailsId) AddRequestDetails(int RequestId, List<string>? EquipmentsId, int ProfessorNip, DateTime InitTime, DateTime EndTime, DateTime RequestedDate, DateTime CurrentDate, List<byte?>? StatusEquipments){
+    public static (List<int> Affected, List<int> PetitionDetailsId) AddPetitionDetails(int PetitionId, List<string>? EquipmentsId, DateTime InitTime, DateTime EndTime, DateTime RequestedDate, DateTime CurrentDate, List<byte?>? StatusEquipments){
         // Variable para establecer el índice de las listas de los nombres de los equipos y los status de estos
         int i=0;
         // Lista que almacena los requestDetails Id de los registros nuevos agregados en la tabla
-        List<int>? RequestDetailsId = new List<int>();
+        List<int>? PetitionDetailsId = new List<int>();
         // Lista que almacena cuantas filas fueron afectadas en la tabla de Request Details al momento de re
         List<int>? Affecteds = new List<int>();
         // Verifica que la lista de equipmentId y statusId sean del mismo tamaño y no tengan valores nulos para poder usarlos
@@ -243,52 +219,50 @@
             // Si no son validas muestra el mensaje y retorna los valores
             WriteLine("The equipment selected was not correctly added. Try again.");
             //DeleteRequest(RequestId);
-            return (Affecteds, RequestDetailsId);
+            return (Affecteds, PetitionDetailsId);
         } else {
             using (bd_storage db = new()){
                 // Si la tabla no existe se lanza una excepcion
-                if(db.RequestDetails is null){ 
+                if(db.PetitionDetails is null){ 
                     throw new InvalidOperationException ("The table Request Details does not exist. Verify it");
                 }
-                int requestDetailId = Functions.LastRequestDetailId();
+                int petitionDetailId = Functions.LastPetitionDetailsId();
                 // Por cada equipo registrado en la tabla se genera una fila de datos en Request Details, donde se llenan los campos 
                 //con los datos recibidos por los parametros
                 foreach(var e in EquipmentsId){
-                    RequestDetail rD = new() {
-                        RequestDetailsId = requestDetailId,
-                        RequestId = RequestId,
+                    PetitionDetail pD = new() {
+                        PetitionDetailsId = petitionDetailId,
+                        PetitionId = PetitionId,
                         EquipmentId = EquipmentsId[i],
                         StatusId = StatusEquipments[i],
-                        ProfessorNip = ProfessorNip,
                         DispatchTime = InitTime,
                         ReturnTime = EndTime,
                         RequestedDate = RequestedDate,
                         CurrentDate = CurrentDate
                     };
                     // Se añaden los datos a la tabla
-                    EntityEntry<RequestDetail> entity = db.RequestDetails.Add(rD);
+                    EntityEntry<PetitionDetail> entity = db.PetitionDetails.Add(pD);
                     // Se guardan los datos en la bd y el valor de las filas affectadas se guarda en la lista de affecteds
                     Affecteds.Add(db.SaveChanges());
                     // Se guardan los ID generados en la lista de ID's
-                    RequestDetailsId.Add(rD.RequestDetailsId);
+                    PetitionDetailsId.Add(pD.PetitionDetailsId);
                     // Aumenta el indice de las listas
                     i++;
-                    requestDetailId++;
+                    petitionDetailId++;
                 }
             }
         }
-        return (Affecteds, RequestDetailsId);
+        return (Affecteds, PetitionDetailsId);
     }
 }
     
-<form method="get" action="/Formats/AddRequestDetailsFormat">
+<form method="get" action="/Formats/AddPetitionDetailsFormat">
     @if(ValidateAll==true)
     {
         /**/
             @if(Model.StorerId!=""){
             <input type="hidden" name="username" value="@Model.Username">
             <input type="hidden" name="selectedOptionClass" value="@Model.ChoosenClassroom">
-            <input type="hidden" name="selectedOptionProf" value="@Model.ChoosenProfessor">
             <input type="hidden" name="selectedOptionSub" value="@Model.ChoosenSubject">
             <input type="hidden" name="requestedDate" value="@Model.ChoosenRequestedDate">
             <input type="hidden" name="selectedOptionInitTime" value="@Model.ChoosenInitTime">
@@ -348,9 +322,9 @@
                         }
                     </select>
                 </div>
-                @if(Model.MessageDuplicated == "The equipments are duplicated, change them to continue")
+                @if(Model.IsDuplicated==true)
                 {
-                    <p style="color: red">@Model.MessageDuplicated</p>
+                    <p style="color: red">The equipments are duplicated, change them to continue</p>
                 } 
                 <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
             }
@@ -404,9 +378,9 @@
                         }
                     </select>
                 </div>
-                @if(Model.MessageDuplicated == "The equipments are duplicated, change them to continue")
+                @if(Model.IsDuplicated==true)
                 {
-                    <p style="color: red">@Model.MessageDuplicated</p>
+                    <p style="color: red">The equipments are duplicated, change them to continue</p>
                 } 
                 <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
             }
@@ -476,9 +450,9 @@
                         }
                     </select>
                 </div>
-                @if(Model.MessageDuplicated=="The equipments are duplicated, change them to continue")
+                @if(Model.IsDuplicated==true)
                 {
-                    <p style="color: red">@Model.MessageDuplicated</p>
+                    <p style="color: red">The equipments are duplicated, change them to continue</p>
                 } 
                 <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
             }

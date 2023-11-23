@@ -31,8 +31,6 @@ public partial class Subject
     [InverseProperty("Subject")]
     public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 
-    [InverseProperty("Subject")]
-    public virtual ICollection<Teach> Teaches { get; set; } = new List<Teach>();
     
     [InverseProperty("Subject")]
     public virtual ICollection<Petition> Petitions { get; set; } = new List<Petition>();

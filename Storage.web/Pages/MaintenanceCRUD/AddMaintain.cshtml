@@ -6,7 +6,7 @@
 @using System.Security.Cryptography;
 @using System.Text;
 @{
-    ViewData["Title"] = "Add Maintenance rRegister";
+    ViewData["Title"] = "Add Maintenance Register";
     //await Html.RenderPartialAsync("Functions.cshtml");
     // haz esto naco
     
@@ -26,11 +26,13 @@
 @functions
 {
     public string? MaintenanceRegisterID {get; set; }
+    public string? Username {get; set; }
     List<Equipment>? MaintanableEquipments {get; set;}
     List<Status>? AllStatus {get; set;}
     string Message = "";
     public void OnGet()    
     {
+        Model.Username = TempData["UserName"] as string;
         Model.MaintenanceRegisterID = TempData["MaintenanceRegisterId"] as string;
         Model.MaintanableEquipments = Functions.ViewAllMaintanableEquipments();
         Model.AllStatus = Functions.ListStatus();
@@ -38,9 +40,12 @@
         return; // the return Page() means that it will return to this same page, reload the same page
     }   
 
-    public void OnPostAddEquipment(string EquipmentText, string StatusText)
+    public void OnPostAddEquipment(string username, string EquipmentText, string StatusText, string maintenanceRegisterID)
     {
-        MaintenanceRegisterID = TempData["MaintenanceRegisterId"] as string;
+        Model.Username = username;
+        Model.MaintanableEquipments = Functions.ViewAllMaintanableEquipments();
+        Model.AllStatus = Functions.ListStatus();
+        MaintenanceRegisterID = maintenanceRegisterID;
         Console.WriteLine($"Maintenance Register : {MaintenanceRegisterID}");
         using(bd_storage db = new())
         {
@@ -71,9 +76,10 @@
         }        
     }
 
-    public IActionResult OnPostFinish()
+    public IActionResult OnPostFinish(string username)
     {
-        return RedirectToPage("/MaintenanceCRUD/AddMaintenance");
+        TempData["UserName"] = username;
+        return RedirectToPage("/Users/Storer/StorerPrincipal");
     }
 
     public int AddMaintain(string EquipmentID, string MaintenanceID)
@@ -83,7 +89,7 @@
         using(bd_storage db = new())
         {
              IQueryable<Maintain> maintainIds = db.Maintain
-                .OrderByDescending(d=>d.MaintenanceId);
+                .OrderByDescending(d=>d.MaintainId);
             if(maintainIds is null || !maintainIds.Any())
             {
                 BiggestId = 0;
@@ -113,7 +119,21 @@
                 .Where(e => e.EquipmentId == EquipmentID);
             if(EditedEquipment is not null && EditedEquipment.Any())
             {
-                EditedEquipment.First().StatusId = Convert.ToByte(StatusID);
+                if(Convert.ToByte(StatusID) == 1)
+                {
+                    if(EditedEquipment.First().StatusId != 4)
+                    {
+                        EditedEquipment.First().StatusId = 5;
+                    }
+                    else
+                    {
+                        EditedEquipment.First().StatusId = 1;
+                    }
+                }
+                else
+                {
+                    EditedEquipment.First().StatusId = 5;
+                }
                 affected = db.SaveChanges();
             }
             return affected;
@@ -124,8 +144,10 @@
 <p>Add as many equipments as you want and the status you want to keep while the maintenance doesn't start, add the information and click at Add Equipment to add an equipment to the maintenance </p>
 
 <form method="post" asp-page-handler="AddEquipment">
+    <input type="hidden" name="maintenanceRegisterID" value="@Model.MaintenanceRegisterID">
+    <input type="hidden" name="username" value="@Model.Username">
     <div class="mb-3">
-        <label class="form-label">Choose a equipment</label>
+        <label class="form-label">Choose an equipment to add</label>
         <select class="form-select" id="dropdown" name="EquipmentText">
             @if(Model.MaintanableEquipments is not null)
             {
@@ -165,5 +187,6 @@
 
 
 <form method="post" asp-page-handler="Finish">
-    <button type="submit" class="btn btn-primary">Finish Report</button>
+    <input type="hidden" name="username" value="@Model.Username">
+    <button type="submit" class="btn btn-primary" style="margin-top: 8px; background-color: rgb(142, 4, 4)">Finish Report</button>
 </form>

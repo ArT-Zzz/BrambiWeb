@@ -8,115 +8,6 @@ using System.Runtime.Intrinsics.Arm;
 
 partial class Functions
 {
-    public static List<Classroom> ListClassrooms()
-    {
-        using (bd_storage db = new())
-        {
-            // verifica que exista la tabla de Classroom
-            if( db.Classrooms is null)
-            {
-                throw new InvalidOperationException("The table does not exist.");
-            } 
-            else 
-            {
-                // Muestra toda la lista de classrooms con un indice y la clave de este
-                IQueryable<Classroom> ClassroomsQuery = db.Classrooms;
-                if (ClassroomsQuery.Any()){
-                    foreach (var cl in ClassroomsQuery)
-                    {
-                        WriteLine($"{cl.ClassroomId}. {cl.Clave}");
-                    }
-                    return ClassroomsQuery.ToList();
-                }
-                else
-                {
-                    List<Classroom> classroomsEmpty = new List<Classroom>();
-                    return classroomsEmpty;
-                }
-            }
-        }
-    }
-
-    public static List<Subject>? ListSubjects()
-    {
-        using (bd_storage db = new())
-        {
-            // verifica que exista la tabla de Classroom
-            if( db.Subjects is null)
-            {
-                throw new InvalidOperationException("The table does not exist.");
-            } 
-            else 
-            {
-                // Muestra toda la lista de classrooms con un indice y la clave de este
-                IQueryable<Subject> Subjects = db.Subjects;
-                if (Subjects.Any()){
-                    foreach (var s in Subjects)
-                    {
-                        Console.WriteLine($"{s.SubjectId}. {s.Name}");
-                    }
-                    return Subjects.ToList();
-                }
-                else
-                {
-                    List<Subject> subjectsEmpty = new List<Subject>();
-                    return subjectsEmpty;
-                }
-            }
-        }
-    }
-
-    public static List<Professor> ListProfessors()
-    {
-        using (bd_storage db = new())
-        {
-            // verifica que exista la tabla de Classroom
-            if( db.Professors is null)
-            {
-                throw new InvalidOperationException("The table does not exist.");
-            } 
-            else 
-            {
-                // Muestra toda la lista de classrooms con un indice y la clave de este
-                IQueryable<Professor> Professors = db.Professors;
-                if (Professors.Any()){
-                    foreach (var p in Professors)
-                    {
-                        Console.WriteLine($"{p.Name} {p.LastNameP} {p.LastNameM}");
-                    }
-                    return Professors.ToList();
-                }
-                else
-                {
-                    List<Professor> professorEmpty = new List<Professor>();
-                    return professorEmpty;
-                }
-            }
-        }
-    }
-
-    public static List<Schedule> ListSchedules(short offsetShort, short takeShort)
-    {
-        int offset = offsetShort, take = takeShort;
-        using (bd_storage db = new bd_storage())
-        {
-            List<Schedule> ListSchedule = new List<Schedule>();
-            if(db.Schedules is null)
-            {
-                throw new InvalidOperationException("The table does not exist.");
-            }
-            else
-            {
-                IQueryable<Schedule> SchedulesQuery = db.Schedules;
-                if(SchedulesQuery.Any())
-                {
-                    IQueryable<Schedule> SchedulesSelected = SchedulesQuery.Skip(offset).Take(take);
-                    ListSchedule = SchedulesSelected.ToList();
-                }
-            }
-            return ListSchedule;
-        }
-    }
     
     public static string AddStorer()
     {
@@ -169,20 +60,29 @@ partial class Functions
         }
     }
 
+    //Busca equipos disponibles en las horas y día de la solicitud, obteninedo las horas de la tabla schedules
     public static (List<Equipment>? EquipmentsList, List<byte?>? StatusEquipments, DateTime InitTime, DateTime EndTime) ListEquipmentsAvailable (DateTime RequestedDate, short InitTimeId, short EndTimeId)
     {
+        //Abrimos conexion a la bd
         using (bd_storage db = new())
         {
+            // Si la tabla es nula avienta una excepcion
             if(db.Equipments is null)
             {
                 throw new NullReferenceException("The table does not exist");
             }
+            // Si existe la tabla 
             else 
             {
+                // Busca el id de la tabla schedule con la hora inicial seleccionada por el usuario
                 IQueryable<Schedule> InitTimesQuery = db.Schedules.Where(s => s.ScheduleId==InitTimeId);
-                DateTime InitTime = InitTimesQuery.First().InitTime;
+                // Guarda el valor de la fecha de la solicitud y la hora de inicio de la clase
+                DateTime InitTime = RequestedDate.Date + (InitTimesQuery?.First().InitTime ?? DateTime.MinValue).TimeOfDay;
+                // Busca el id de la tabla schedule con la hora inicial seleccionada por el usuario
                 IQueryable<Schedule> EndTimesQuery = db.Schedules.Where(s => s.ScheduleId==EndTimeId);
-                DateTime EndTime = InitTimesQuery.First().InitTime;
+                // Guarda el valor de la fecha de la solicitud y la hora de finalizacion de la clase
+                DateTime EndTime = RequestedDate.Date + (EndTimesQuery?.First().InitTime ?? DateTime.MinValue).TimeOfDay;
+                // Crea las listas para poder agregar los equipos disponibles
                 List<Equipment>? equipmentsList = new();
                 List<byte?>? equipmentsStatusList = new();
                 var EquipmentIdsInUseStud = db.RequestDetails
@@ -256,8 +156,8 @@ partial class Functions
                 lastRequestId = db.RequestDetails.Max(c => (int?)c.RequestDetailsId) ?? 0;
                 if(lastRequestId == 0)
                 {
-                    IQueryable<Request> requests = db.Requests;
-                    lastRequestId= requests.Count()+2;
+                    IQueryable<RequestDetail> requests = db.RequestDetails;
+                    lastRequestId= requests.Count()+1;
                 }else
                 {
                     lastRequestId += 1;

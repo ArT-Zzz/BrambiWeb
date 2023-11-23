@@ -83,7 +83,16 @@
         {
             IQueryable<DyLequipment> damageLostEquipments = db.DyLequipments
                 .OrderByDescending(d=>d.DyLequipmentId);
-                int BiggestId = damageLostEquipments.First().DyLequipmentId;
+                //try catch
+                int BiggestId = 0;
+                if(damageLostEquipments is null)
+                {
+                    BiggestId = 0;
+                }
+                else
+                {
+                    BiggestId = damageLostEquipments.First().DyLequipmentId;
+                }
 
             if(db.DyLequipments is null){ return(0,0);}
             DyLequipment dl = new() 

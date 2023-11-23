@@ -8,11 +8,12 @@ using System.Runtime.Intrinsics.Arm;
 
 partial class Functions
 {
+    // Retorna una lista de equipos dañados o perdidos por un estudiante cuyo id se recibe para buscar los equipos
     public static List<DyLequipment>? FindDandLequipmentByStudentId(string? StudentIdToFind)
     {
         using (bd_storage db = new())
         {
-            //busca equipos registrados como dañados o perdidos
+            //busca equipos registrados como dañados o perdidos con el id del estudiante proporcionado en los parametros de la funcion
             IQueryable<DyLequipment> dyLequipments = db.DyLequipments
                 .Include(dal => dal.Status)
                 .Include(dal => dal.Equipment)
@@ -20,13 +21,13 @@ partial class Functions
                 .Include(dal => dal.Coordinator)
                 .Where(dal => dal.Student.StudentId==StudentIdToFind)
                 .Where(dal=>dal.Equipment.StatusId == 4 || dal.Equipment.StatusId == 3 ); 
-
+            // Si no contiene nada la query muestra el mensaje
             if (!dyLequipments.Any())
             {
                 WriteLine("No damaged or lost equipment found with Student Id: " + StudentIdToFind);
                 return null;
             }
-
+            // Imprime con formato los equipos dañados o perdidos por el estudiante
             WriteLine("| {0,-11} | {1,-8} | {2,-35} | {3,-30} | {4}",
                 "EquipmentId", "Status", "Name", "To Return", "Date of Return");
 
@@ -34,22 +35,25 @@ partial class Functions
             {
                 WriteLine($"| {dal.Equipment?.EquipmentId,-11} | {dal.Status?.Value,-8} | {dal.Equipment?.Name,-35} | {dal.objectReturn, -30} | {dal.DateOfReturn}");
             }
+            // Retorna una lista de los equipos encontrados
             return dyLequipments.ToList();
         }
     }
 
-    
+    // Verifica que exista la Id de un professor
     public static Professor? VerifyProfessorIdExistence(string ProfessorId)
     {
         using(bd_storage db = new())
         {
+            // Busca al profesor que tenga el id que recibe la funcion
             IQueryable<Professor> professors = db.Professors
             .Where(s=>s.ProfessorId == EncryptPass(ProfessorId));
+            // Si no encuentra una retorna un valor nulo
             if(professors is null || !professors.Any())
             {
                 //no matching professorId
                 return null;
-            }
+            }//Si encuentra uno retorna el objeto profesor que encontro
             else
             {
                 return professors.First();
@@ -57,17 +61,21 @@ partial class Functions
         }
     }
 
+    //Verifica que exista el nip de la cuenta del profesor
     public static bool VerifyProfessorNipExistence(string Nip)
     {
         using(bd_storage db = new())
         {
+            // Busca un profesor cuyo Nip sea como el ingresado
             IQueryable<Professor> professors = db.Professors
             .Where(s=>s.Nip == Nip);
+            // Si no se encuenta retorna que el nip no es existente
             if(professors is null || !professors.Any())
             {
                 //no matching nip
                 return false;
             }
+            // Si lo encuentra retorna que el nip es existente
             else
             {
                 return true;
@@ -75,25 +83,28 @@ partial class Functions
         }
     }
 
-       
+    // Verifica la existencia del almacenista conforme el id       
     public static AutoGens.Storer? VerifyStorerIdExistence(string StorerId)
     {
         using(bd_storage db = new())
         {
+            // Busca al almacenista que tenga el id que recibe en los parametros
             IQueryable<AutoGens.Storer> storers = db.Storers
             .Where(s=>s.StorerId == EncryptPass(StorerId));
             if(storers is null || !storers.Any())
             {
-                //no matching professorId
+                // Si no existe retorna un nulo
                 return null;
             }
             else
             {
+                // Regresa el almacenista que encuentra
                 return storers.First();
             }
         }
     }
-           
+
+    //Verifica que el coordinador exista de acuerdo a su Id 
     public static Coordinator? VerifyCoordinatorIdExistence(string CoordinatorId)
     {
         using(bd_storage db = new())
@@ -129,7 +140,116 @@ partial class Functions
         }
     }
 
-    
+    public static List<Classroom> ListClassrooms()
+    {
+        using (bd_storage db = new())
+        {
+            // verifica que exista la tabla de Classroom
+            if( db.Classrooms is null)
+            {
+                throw new InvalidOperationException("The table does not exist.");
+            } 
+            else 
+            {
+                // Muestra toda la lista de classrooms con un indice y la clave de este
+                IQueryable<Classroom> ClassroomsQuery = db.Classrooms;
+                if (ClassroomsQuery.Any()){
+                    foreach (var cl in ClassroomsQuery)
+                    {
+                        WriteLine($"{cl.ClassroomId}. {cl.Clave}");
+                    }
+                    return ClassroomsQuery.ToList();
+                }
+                else
+                {
+                    List<Classroom> classroomsEmpty = new List<Classroom>();
+                    return classroomsEmpty;
+                }
+            }
+        }
+    }
+
+    public static List<Subject>? ListSubjects()
+    {
+        using (bd_storage db = new())
+        {
+            // verifica que exista la tabla de Classroom
+            if( db.Subjects is null)
+            {
+                throw new InvalidOperationException("The table does not exist.");
+            } 
+            else 
+            {
+                // Muestra toda la lista de classrooms con un indice y la clave de este
+                IQueryable<Subject> Subjects = db.Subjects;
+                if (Subjects.Any()){
+                    foreach (var s in Subjects)
+                    {
+                        Console.WriteLine($"{s.SubjectId}. {s.Name}");
+                    }
+                    return Subjects.ToList();
+                }
+                else
+                {
+                    List<Subject> subjectsEmpty = new List<Subject>();
+                    return subjectsEmpty;
+                }
+            }
+        }
+    }
+
+    public static List<Professor> ListProfessors()
+    {
+        using (bd_storage db = new())
+        {
+            // verifica que exista la tabla de Classroom
+            if( db.Professors is null)
+            {
+                throw new InvalidOperationException("The table does not exist.");
+            } 
+            else 
+            {
+                // Muestra toda la lista de classrooms con un indice y la clave de este
+                IQueryable<Professor> Professors = db.Professors;
+                if (Professors.Any()){
+                    foreach (var p in Professors)
+                    {
+                        Console.WriteLine($"{p.Name} {p.LastNameP} {p.LastNameM}");
+                    }
+                    return Professors.ToList();
+                }
+                else
+                {
+                    List<Professor> professorEmpty = new List<Professor>();
+                    return professorEmpty;
+                }
+            }
+        }
+    }
+
+    public static List<Schedule> ListSchedules(short offsetShort, short takeShort)
+    {
+        int offset = offsetShort, take = takeShort;
+        using (bd_storage db = new bd_storage())
+        {
+            List<Schedule> ListSchedule = new List<Schedule>();
+            if(db.Schedules is null)
+            {
+                throw new InvalidOperationException("The table does not exist.");
+            }
+            else
+            {
+                IQueryable<Schedule> SchedulesQuery = db.Schedules;
+                if(SchedulesQuery.Any())
+                {
+                    IQueryable<Schedule> SchedulesSelected = SchedulesQuery.Skip(offset).Take(take);
+                    ListSchedule = SchedulesSelected.ToList();
+                }
+            }
+            return ListSchedule;
+        }
+    }
+
     public static List<RequestDetail>? LateReturningStudent(string Username)
     {
         bool aux = false;
@@ -272,4 +392,24 @@ partial class Functions
             return requests.ToList();
         }
     }
+
+    public static List<RequestDetail>? ListEquipmentsRequests(string UserName)
+    {
+        using (bd_storage db = new())
+        {
+            // Se obtienen las solicitudes de detalles de la base de datos
+           IQueryable<RequestDetail> requests = db.RequestDetails
+                .Include(r => r.Request).ThenInclude(p=>p.Professor)
+                .Include(e=>e.Equipment)
+                .Where(d =>d.Request.StudentId == UserName).OrderBy(r => r.RequestId);
+            if(requests is not null)
+            {
+                return requests.ToList();
+            } else
+            {
+                return null;
+            }
+        }
+    }
+
 }

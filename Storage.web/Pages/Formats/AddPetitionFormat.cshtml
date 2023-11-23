@@ -5,7 +5,7 @@
 @using System.Security.Cryptography;
 @using System.Text;
 @{
-    ViewData["Title"] = "Add Requests";
+    ViewData["Title"] = "Add Petition";
 }
 <h1>@ViewData["Title"]</h1>
 
@@ -15,8 +15,6 @@
     int? ChoosenClassroom { get; set; }
     List<Subject>? AllSubjects { get; set; }
     string? ChoosenSubject { get; set; }
-    List<Professor>? AllProfessors { get; set; }
-    string? ChoosenProfessor { get; set; }
     List<Schedule>? AllSchedulesInit {get; set;}
     List<Schedule>? AllSchedulesEnd {get; set;}
     List<Equipment>? AllEquipmentsAvailable {get; set;}
@@ -25,17 +23,17 @@
     string? MinDate { get; set; }
     string? MaxDate { get; set; }
     string? Username {get; set;}
-    public string? Message {get; set;}
+    public string? Message {get; set;} = "0";
     int SelectedEquipmentCount {get; set;}
 
-    public void OnGet(string username, int selectedOptionClass, string selectedOptionSub, string selectedOptionProf, string requestedDate, short selectedOptionInitTime, short selectedOptionEndTime, int selectedEquipmentCount)
+    public void OnGet(string username, int selectedOptionClass, string selectedOptionSub, string requestedDate, short selectedOptionInitTime, short selectedOptionEndTime, int selectedEquipmentCount)
     {
         Model.Message = TempData["Message"] as string;
 
         Console.WriteLine($"Username received in AddRequest: {username}");
         Model.StorerId = Functions.AddStorer();
         Model.Username=username;
-        int LastRequestId = Functions.LastRequestId();
+        int LastRequestId = Functions.LastPetitionId();
         DateTime CurrentDate = DateTime.Now;
         // Añade un día a la fecha actual para establecer que solo se pueda seleccionar después de un día
         DateTime Tommorrow = CurrentDate.AddDays(1);
@@ -43,7 +41,7 @@
         DateTime TwoWeeks = CurrentDate.AddDays(14);
         Model.MaxDate= TwoWeeks.ToString("yyyy-MM-dd");
         if(Model.StorerId != ""){
-            if(selectedOptionClass > 0 && selectedOptionProf != "0" && selectedOptionSub !="0"){
+            if(selectedOptionClass > 0 && selectedOptionSub !="0"){
                 if(selectedOptionClass > 0)
                 {
                     Model.ChoosenClassroom = selectedOptionClass;
@@ -54,12 +52,6 @@
                     Model.ChoosenSubject = selectedOptionSub;
                     WriteLine("Subject selected");
                 }
-                if(selectedOptionProf !="0")
-                {
-                    Model.ChoosenProfessor = selectedOptionProf;
-                    WriteLine("Professor selected");
-                }
-                
                 if(selectedEquipmentCount>0)
                 {
                     Model.SelectedEquipmentCount = selectedEquipmentCount;
@@ -67,7 +59,6 @@
             } 
             int difference = 10 - (int)selectedOptionInitTime;
             Model.AllClassrooms = Functions.ListClassrooms();
-            Model.AllProfessors= Functions.ListProfessors();
             Model.AllSubjects =  Functions.ListSubjects();
             Model.AllSchedulesInit = Functions.ListSchedules(0, 9);
             Model.AllSchedulesEnd = Functions.ListSchedules(selectedOptionInitTime, (short)difference);
@@ -76,8 +67,8 @@
     } 
 }
     
-<form method="get" action="/Formats/AddRequestDetailsFormat">
-    @if(Model.Message=="You cannot choose a Saturday or a Sunday" || Model.Message=="The ending time cannot be before the starting time" || Model.Message=="The minimun of time must be 50 minuts")
+<form method="get" action="/Formats/AddPetitionDetailsFormat">
+    @if(Model.Message!="0")
     {
         <p style = "color: red">@Model.Message. Try again.</p>
     }
@@ -123,23 +114,6 @@
                     }
                     else{
                         <option value="0">No subjects found</option>
-                    }
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label" for="dropdown">Select a professor:</label>
-                <select class="form-select" id="dropdown" name="selectedOptionProf" required>
-                    @if(Model.AllProfessors is not null)
-                    {
-                        @foreach(var c in Model.AllProfessors)
-                        { 
-                            <option value="@c.ProfessorId">@c.Name @c.LastNameP @c.LastNameM</option>
-                        }
-                    }
-                    else
-                    {
-                        <option value="0">No professors found</option>
                     }
                 </select>
             </div>

@@ -318,6 +318,10 @@ public static partial class Functions
             }
         }
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 68d00d2d1141b42fc3f82dea78c6d1bd15ef4879
     public static bool VerifyNipExistenceProf(string NipP, string User)
     {
         using(bd_storage db = new())
