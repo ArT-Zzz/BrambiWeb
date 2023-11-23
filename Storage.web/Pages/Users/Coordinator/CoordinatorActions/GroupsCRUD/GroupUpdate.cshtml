@@ -1,0 +1,76 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+
+@{
+    ViewData["Title"] = "Update Groups";
+}
+
+<h1>@ViewData["Title"]</h1>
+<a class="btn btn-primary" href="/Users/Coordinator/CoordinatorActions/GroupsCRUD/ViewGroups">Go to View Groups</a>
+
+
+@functions {
+    bool Ban = false;
+    Professor? ProfessorSearched { get; set; }
+    string Message = "";
+
+    public IActionResult OnGet(int GroupId, string NameText)
+    {
+        if (GroupId != 0)
+        {
+            int ControlNumAffected = Functions.VerifyNotRepeatedNameGroup(NameText);
+            if (ControlNumAffected == 0) // if the control number is not repeated, means
+            {
+                //updates all the camps of the Equipment Object that corresponds to the EquipmentId sent, return 0 or 1 to know if it was updated
+            int affected = UpdateGroup(GroupId, NameText);
+
+                if (affected == 0)
+                {
+                    Message = "The group could not be updated";
+                    TempData["ResultInfoShown"] = "0"; // if it couldn't be updated
+                }
+                else
+                {
+                    Message = "The camps of the group were updated!";
+                    TempData["ResultInfoShown"] = $"{affected}"; // if some camps but not all were updated
+                }
+
+                TempData["NameText"] = GroupId; // save the info of message sent and the equipment id
+
+            }
+            else if (ControlNumAffected == 1)
+            {
+                Message = "That Name is already in use"; // because the camps are not correct, so return
+            }
+            return Page();
+        }
+        else
+        {
+            Message = "Name doesn´t exists";
+            return Page();
+        }
+    }
+
+    public int UpdateGroup(int GroupId, string NameText)
+    {
+        using (bd_storage db = new())
+        {
+            int affected = 0;
+            IQueryable<Group> Group = db.Groups.Where(g => g.GroupId == GroupId);
+            if (Group is not null && Group.Any())
+            {
+                Group.First().GroupId = GroupId;
+                Group.First().Name = NameText;
+                affected = db.SaveChanges();
+            }
+            return affected;
+        }
+    }
+}
+
+@if (Message != "")
+{
+    <h2>@Message</h2>
+}

@@ -1,0 +1,72 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+
+@{
+    ViewData["Title"] = "Update Students";
+}
+
+<h1>@ViewData["Title"]</h1>
+<a class="btn btn-primary" href="/Users/Students/CRUD/ViewStudents">Go to View Students</a>
+
+@functions {
+    bool Ban = false;
+    Student? StudentSearched { get; set; }
+    string Message = "";
+
+    public IActionResult OnGet(string StudentId, string NameText, string LastNamePText, string LastNameMText, int GroupId,
+    string PasswordText)
+    {
+        if (GroupId != 0)
+        {
+            int affected = UpdateStudent(StudentId, NameText, LastNamePText, LastNameMText, GroupId, PasswordText);
+
+            if (affected == 0)
+            {
+                WriteLine("The Student could not be updated");
+                TempData["ResultInfoShown"] = "0"; // if it couldn't be updated
+            }
+            else
+            {
+                WriteLine($"The fields of the Student were updated!");
+                TempData["ResultInfoShown"] = $"{affected}"; // if some fields but not all were updated
+            }
+
+            TempData["StudentId"] = StudentId; // save the info of message sent and the Student id
+            
+            return Page();
+        }
+        else
+        {
+            Message = "Invalid Student ID";
+            return Page();
+        }
+    }
+
+
+    public int UpdateStudent(string StudentId, string NameText, string LastNamePText, string LastNameMText, int GroupId,
+    string PasswordText)
+    {
+        using (bd_storage db = new())
+        {
+            int affected = 0;
+            IQueryable<Student> Student = db.Students.Where(s => s.StudentId == StudentId);
+            if (Student is not null && Student.Any())
+            {
+                Student.First().Name = NameText;
+                Student.First().LastNameP = LastNamePText;
+                Student.First().LastNameM = LastNameMText;
+                Student.First().GroupId = GroupId;
+                Student.First().Password = Functions.EncryptPass(PasswordText);
+                affected = db.SaveChanges();
+            }
+            return affected;
+        }
+    }
+}
+
+@if (Message != "")
+{
+    <h2>@Message</h2>
+}

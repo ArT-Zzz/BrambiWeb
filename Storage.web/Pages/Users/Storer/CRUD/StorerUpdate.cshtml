@@ -1,0 +1,79 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@{
+    ViewData["Title"] = "Update Storers";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@functions {
+    bool Ban = false;
+    Storer? StorerSearched { get; set; }
+    string Message = "";
+
+    public IActionResult OnGet(string StorerId, string NameText, string LastNamePText, string LastNameMText, string PasswordText)
+    {
+        if (!string.IsNullOrEmpty(StorerId))
+        {
+            // Updates all the fields of the Storer object that corresponds to the StorerId sent, return 0 or 1 to know if it was updated
+            int affected = UpdateStorer(StorerId, NameText, LastNamePText, LastNameMText, PasswordText);
+
+            if (affected == 0)
+            {
+                WriteLine("The storer could not be updated");
+                TempData["ResultInfoShown"] = "0"; // if it couldn't be updated
+            }
+            else
+            {
+                WriteLine($"The fields of the Storer were updated!");
+                TempData["ResultInfoShown"] = $"{affected}"; // if some fields but not all were updated
+                TempData["SuccessMessage"] = "Storer updated successfully.";
+            }
+
+            TempData["StorerId"] = StorerId; // save the info of message sent and the storer id
+
+            return Page();
+        }
+        else
+        {
+            Message = "Invalid Storer ID";
+            return Page();
+        }
+    }
+
+    public int UpdateStorer(string storerId, string name, string lastNameP, string lastNameM, string password)
+    {
+        using (bd_storage db = new())
+        {
+            int affected = 0;
+            IQueryable<Storer> Storer = db.Storers.Where(s => s.StorerId == storerId);
+            if (Storer is not null && Storer.Any())
+            {
+                Storer.First().Name = name;
+                Storer.First().LastNameP = lastNameP;
+                Storer.First().LastNameM = lastNameM;
+                Storer.First().Password = Functions.EncryptPass(password);
+                affected = db.SaveChanges();
+            }
+            return affected;
+        }
+    }
+}
+
+@if (Message != "")
+{
+    <h2>@Message</h2>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success mt-3" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<div class="mt-3">
+    <a class="btn btn-primary" asp-page="/Users/Storer/CRUD/ViewStorer">Go to Storer List</a>
+</div>

@@ -1,0 +1,93 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using System.Security.Cryptography;
+@{
+    ViewData["Title"] = "Update Storers";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to Update Storers.</p>
+
+@functions {
+    bool Ban = false;
+    Storer? StorerSearched { get; set; }
+    string Message = "";
+
+    public void OnGet(string StorerId, string NameText, string LastNamePText, string LastNameMText, string PasswordText)
+    {
+        if (StorerId != null && StorerId != "")
+        {
+            string encryptedStorerId = Functions.EncryptPass(StorerId);
+
+            StorerSearched = Functions.VerifyStorerIdExistence(encryptedStorerId);
+            Message = $"Variable: {StorerId}";
+
+            if (StorerSearched != null)
+            {
+                Ban = true;
+                Message = $"These are the fields you can update for Storer {StorerId}:";
+            }
+            else
+            {
+                Message = $"Variable: {StorerId} - That Storer does not exist.";
+                Ban = false;
+            }
+        }
+    }
+}
+
+@if (Ban == false)
+{
+    <h3>Provide the storer ID you would like to modify:</h3>
+    @if (Message != "")
+    {
+        <div class="error-message">
+            @Message
+        </div>
+    }
+    <form method="get" action="/Users/Storer/CRUD/UpdateStorer">
+        <input type="text" class="form-control" id="StorerIdText" name="StorerId" maxlength="10" required>
+        <br>
+        <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
+    </form>
+}
+else
+{
+    <h3 class="mb-4">@Message</h3>
+    <br>
+
+    @if (StorerSearched is not null)
+    {
+        <form method="get" action="/Users/Storer/CRUD/StorerUpdate">
+            <input hidden type="text" name="StorerId" value="@StorerSearched.StorerId" readonly>
+            <div class="mb-3">
+                <label class="form-label">Provide the new Storer Name: </label>
+                <input type="text" class="form-control" id="NameText" name="NameText" value="@StorerSearched.Name"
+                    maxlength="40" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the new Storer Last Name (Paternal): </label>
+                <input type="text" class="form-control" id="LastNamePText" name="LastNamePText"
+                    value="@StorerSearched.LastNameP" maxlength="40" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the new Storer Last Name (Maternal): </label>
+                <input type="text" class="form-control" id="LastNameMText" name="LastNameMText"
+                    value="@StorerSearched.LastNameM" maxlength="40" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the new Storer Password: </label>
+                <input type="password" class="form-control" id="PasswordText" name="PasswordText"
+                    value="@StorerSearched.Password" maxlength="255" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" name="action" value="confirm">Update Storer</button>
+        </form>
+    }
+}

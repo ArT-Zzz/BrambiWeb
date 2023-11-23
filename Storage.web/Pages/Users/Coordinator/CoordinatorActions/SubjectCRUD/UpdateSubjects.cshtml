@@ -1,0 +1,99 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using System.Security.Cryptography;
+@{
+    ViewData["Title"] = "Update Subjects";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to Update Subjects.</p>
+
+@functions {
+    bool Ban = false;
+    Subject? SubjectSearched { get; set; }
+    string Message = "";
+    List<Academy>? AllAcademies {get; set;}
+
+    public void OnGet(string SubjectId, string NameText, int AcademyId)
+    {
+        if (SubjectId != null && SubjectId != "")
+        {
+            SubjectSearched = Functions.VerifySubjectIdExistence(SubjectId);
+            Message = $"Variable: {SubjectId}";
+
+            if (SubjectSearched != null)
+            {
+                Ban = true;
+                Message = $"These are the fields you can update for Subject {SubjectId}:";
+                AllAcademies = Functions.ListAcademies();
+            }
+            else
+            {
+                Message = $"Variable: {SubjectId} - That Subject does not exist.";
+                Ban = false;
+            }
+        }
+    }
+}
+
+@if (Ban == false)
+{
+    <h3>Provide the subject ID you would like to modify:</h3>
+    @if (Message != "")
+    {
+        <div class="error-message">
+            @Message
+        </div>
+    }
+    <form method="get" action="/Users/Coordinator/CoordinatorActions/SubjectCRUD/UpdateSubjects">
+        <input type="text" class="form-control" id="SubjectIdText" name="SubjectId" required>
+        <br>
+        <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
+    </form>
+}
+else
+{
+    <h3 class="mb-4">@Message</h3>
+    <br>
+
+    @if (SubjectSearched is not null)
+    {
+        <form method="get" action="/Users/Coordinator/CoordinatorActions/SubjectCRUD/SubjectUpdate">
+            <input hidden type="text" name="SubjectId" value="@SubjectSearched.SubjectId" readonly>
+            <div class="mb-3">
+                <label class="form-label">Provide the new Subject Name: </label>
+                <input type="text" class="form-control" id="NameText" name="NameText" value="@SubjectSearched.Name"
+                    maxlength="40" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the new Subject Academy:</label>
+                <select class="form-select" id="dropdown" name="AcademyId">
+                    @if(AllAcademies is not null)
+                    {
+                        @foreach(var a in AllAcademies)
+                        {  // checks if the statusId of each status found matches the one of the equipment showed, if yes isSelected = "selected" is not isSelected=""
+                            if(a.AcademyId == SubjectSearched.AcademyId)
+                            {
+                                <option value="@a.AcademyId" selected>@a.Name</option> 
+                            }
+                            else
+                            {
+                                <option value="@a.AcademyId">@a.Name</option> 
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <option value = 0>No academies Found</option>
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary" name="action" value="confirm">Update Subject</button>
+        </form>
+    }
+}

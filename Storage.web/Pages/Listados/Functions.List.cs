@@ -47,7 +47,7 @@ partial class Functions
         {
             // Busca al profesor que tenga el id que recibe la funcion
             IQueryable<Professor> professors = db.Professors
-            .Where(s=>s.ProfessorId == EncryptPass(ProfessorId));
+            .Where(s=>s.ProfessorId == ProfessorId);
             // Si no encuentra una retorna un valor nulo
             if(professors is null || !professors.Any())
             {
@@ -90,7 +90,7 @@ partial class Functions
         {
             // Busca al almacenista que tenga el id que recibe en los parametros
             IQueryable<AutoGens.Storer> storers = db.Storers
-            .Where(s=>s.StorerId == EncryptPass(StorerId));
+            .Where(s=>s.StorerId == StorerId);
             if(storers is null || !storers.Any())
             {
                 // Si no existe retorna un nulo
@@ -411,5 +411,56 @@ partial class Functions
             }
         }
     }
+    public static Group? FindGroups(int GroupId)
+    {
+        using(bd_storage db = new())
+        {
+            IQueryable<Group> groups = db.Groups
+            .Where(g=>g.GroupId == GroupId);
+            if(groups is null || !groups.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return groups.First();
+            }
+        }
+    }
+    public static Subject? VerifySubjectIdExistence(string SubjectId)
+    {
+        using (bd_storage db = new())
+        {
+            IQueryable<Subject> subjects = db.Subjects
+            .Where(s => s.SubjectId == SubjectId);
+            if (subjects is null || !subjects.Any())
+            {
+                //no matching professorId
+                return null;
+            }
+            else
+            {
+                return subjects.First();
+            }
+        }
+    }
 
+    public static List<Academy>? ListAcademies()
+    {
+        using (bd_storage db = new())
+        {
+            IQueryable<Academy> academies = db.Academies;
+            if ((academies is null) || !academies.Any())
+            {
+                WriteLine("There are no academies found");
+                return null;
+            }
+            // Use the data
+            foreach (var academy in academies)
+            {
+                WriteLine($"{academy.AcademyId} . {academy.Name} ");
+            }
+            return academies.ToList();
+        }
+    }
 }

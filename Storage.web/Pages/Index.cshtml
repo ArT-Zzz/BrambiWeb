@@ -4,11 +4,24 @@
     ViewData["Title"] = "Home page";
 }
 
+<!-- Contenido de la página -->
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    
-    <div class="mt-3">
-        <a class="btn btn-primary" asp-page="/AccessSite/LogIn">Log In</a>
-        <a class="btn btn-success" asp-page="/AccessSite/SignUp">Sign Up</a>        
+    <!-- Inclusión del logotipo del CETI -->
+    <img src="~/images/ceti.jfif" alt="CETI Logo" class="img-fluid mb-4" style="max-width: 300px;" />
+
+    <!-- Encabezado principal de bienvenida -->
+    <h1 class="display-4">Welcome to the storage system</h1>
+
+    <!-- Descripción de la plataforma -->
+    <div class="mt-4">
+        <p class="lead">Explore our platform and manage your tasks with ease.</p>
+        <!-- Botones para acceder a las páginas de inicio de sesión y registro -->
+        <div class="d-flex justify-content-center">
+            <!-- Botón de inicio de sesión cumpliendo con la ruta de su carpeta correspondiente -->
+            <a class="btn btn-primary btn-lg mr-3" asp-page="/AccessSite/LogIn">Log In</a>
+            <!-- Botón de registro cumpliendo con la ruta de su carpeta correspondiente -->
+            <a class="btn btn-success btn-lg" asp-page="/AccessSite/SignUp">Sign Up</a>
+        </div>
     </div>
 </div>
+

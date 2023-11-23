@@ -8,10 +8,13 @@
     ViewData["ShowNavBar"] = false;
     bool logged = false;
 
+    // Verificar si la solicitud es de tipo POST
     if (Request.Method == "POST")
     {
+        // Intentar iniciar sesión con las credenciales proporcionadas
         (logged, var rol, var username) = IniciarSesion(Request.Form["username"], Request.Form["password"]);
 
+        // Si se ha iniciado sesión con éxito
         if (logged)
         {
             // Redirigir a la página principal del usuario según su rol
@@ -23,8 +26,11 @@
 }
 
 <div class="container">
-    <h1 class="display-4">Login</h1>
+    <div class="text-center">
+        <h1 class="display-4">Login</h1>
+    </div>
 
+    <!-- Formulario de inicio de sesión -->
     <form method="post">
         <div class="form-group">
             <label for="username">Username:</label>
@@ -32,16 +38,26 @@
         </div>
 
         <div class="form-group">
-            <label class="form-label" for="password">Password:</label>
-            <input class="form-control" type="password" id="password" name="password" class="form-control" required />
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" class="form-control" required />
         </div>
 
-        <p></p>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </div>
     </form>
 
-    <a class="btn btn-warning" style="margin-top: 5px;" asp-page="/Password.Recovery">Forgot Password</a>
+    <!-- Enlace para recuperar contraseña -->
+    <div class="text-center mt-3">
+        <a class="btn btn-warning btn-sm" asp-page="/AccessSite/Password.Recovery">Forgot Password</a>
+    </div>
 
+    <!-- Enlace para registrarse -->
+    <div class="text-center mt-3">
+        <p>Don't have an account? <a href="/AccessSite/SignUp">Sign Up</a></p>
+    </div>
+
+    <!-- Mensaje de error si el inicio de sesión falla -->
     @if (Request.Method == "POST" && !logged)
     {
         <div class="alert alert-danger mt-3" role="alert">
@@ -51,6 +67,7 @@
 </div>
 
 @functions {
+    // Método para iniciar sesión
     public static (bool logged, string? rol, string username) IniciarSesion(string username, string password)
     {
         using (bd_storage db = new())
@@ -58,46 +75,57 @@
             Console.WriteLine("Write your ID: ");
             string UserName = username;
             WriteLine(UserName);
+
+            // Encriptar el nombre de usuario
             string encryptedUsername = Functions.EncryptPass(username);
             Console.WriteLine($"Encrypted Username: {encryptedUsername}");
 
+            // Encriptar la contraseña
             string encryptedPassword = Functions.EncryptPass(password);
 
+            // Autenticar al usuario con las credenciales proporcionadas
             var (rol, user) = AuthenticateUser(db, encryptedUsername, encryptedPassword, UserName);
 
             return (rol != null, rol, user);
         }
     }
 
+    // Método para autenticar al usuario
     private static (string? rol, string user) AuthenticateUser(bd_storage db, string encryptedUsername, string encryptedPassword, string username)
     {
+        // Verificar si el usuario es un estudiante
         var students = db.Students.Where(s => s.StudentId == username && s.Password == encryptedPassword).ToList();
         if (students.Any())
         {
             return ("students", username);
         }
 
+        // Verificar si el usuario es un profesor
         var professors = db.Professors.Where(p => p.ProfessorId == encryptedUsername && p.Password == encryptedPassword).ToList();
         if (professors.Any())
         {
             return ("professors", username);
         }
 
+        // Verificar si el usuario es un almacenista
         var storers = db.Storers.Where(s => s.StorerId == encryptedUsername && s.Password == encryptedPassword).ToList();
         if (storers.Any())
         {
             return ("storers", username);
         }
 
+        // Verificar si el usuario es un coordinador
         var coordinators = db.Coordinators.Where(c => c.CoordinatorId == encryptedUsername && c.Password == encryptedPassword).ToList();
         if (coordinators.Any())
         {
             return ("coordinators", username);
         }
 
+        // Si no se encuentra el usuario, devolver valores nulos
         return (null, "");
     }
 
+    // Método para obtener la URL de redirección según el rol del usuario
     private static string GetRedirectUrl(string role)
     {
         return role switch
@@ -106,7 +134,7 @@
             "professors" => "/Users/Professors/ProfessorPrincipal",
             "storers" => "/Users/Storer/StorerPrincipal",
             "coordinators" => "/Users/Coordinator/CoordinatorPrincipal",
-            _ => "/Error", // Cambia "/Error" a la página de error adecuada
+            _ => "/Home/Index", // Redirigir a la página principal por defecto si el rol no se reconoce
         };
     }
 }

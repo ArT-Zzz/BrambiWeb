@@ -1,0 +1,26 @@
+@page
+
+@{
+    string username = TempData["Username"]?.ToString() ?? "11111111";
+    ViewData["ShowNavBar"] = true;
+    var userTypeAndUsername = Tuple.Create("Coordinador", username);
+}
+<div class="container">
+    <div class="container">
+        <!-- Incluir la vista parcial y pasar el modelo -->
+        <partial name="_NavBar" model="userTypeAndUsername" />
+    </div>
+    <h1 class="display-4">Subject CRUD Menu</h1>
+
+    <div class="d-inline-block">
+        <form method="get" action="/Users/Coordinator/CoordinatorActions/SubjectCRUD/ViewSubjects">
+            <button type="submit" class="btn btn-primary">View Subjects</button>
+        </form>
+    </div>
+
+    <div class="d-inline-block">
+        <form method="get" action="/Users/Coordinator/CoordinatorActions/SubjectCRUD/UpdateSubjects">
+            <button type="submit" class="btn btn-primary">Update Subjects</button>
+        </form>
+    </div>
+</div>

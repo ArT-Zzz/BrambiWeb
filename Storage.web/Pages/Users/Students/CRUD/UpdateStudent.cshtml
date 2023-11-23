@@ -1,0 +1,113 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using System.Security.Cryptography;
+@{
+    ViewData["Title"] = "Update Students";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to Update Students.</p>
+
+@functions {
+    bool Ban = false;
+    Student? StudentSearched { get; set; }
+    string Message = "";
+    List<Group>? AllGroups {get; set;}
+
+    public void OnGet(string StudentId, string NameText, string LastNamePText, string LastNameMText, int GroupId, string PasswordText)
+    {
+        if (!string.IsNullOrWhiteSpace(StudentId))
+        {
+            StudentSearched = Functions.VerifyStudentIdExistence(StudentId);
+            Message = $"Student ID: {StudentId}";
+
+            if (StudentSearched != null)
+            {
+                Ban = true;
+                Message = $"These are the fields you can update for Student {StudentId}:";
+                AllGroups = Functions.ListGroups();
+            }
+            else
+            {
+                Message = $"{StudentId} - That Student does not exist.";
+                Ban = false;
+            }
+        }
+    }
+}
+
+@if (Ban == false)
+{
+    <h3>Provide the Student ID you would like to modify:</h3>
+    @if (Message != "")
+    {
+        <div class="error-message">
+            @Message
+        </div>
+    }
+    <form method="get" action="/Users/Students/CRUD/UpdateStudent">
+        <input type="text" class="form-control" id="StudentIdText" name="StudentId" maxlength="8" required>
+        <br>
+        <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
+    </form>
+}
+else
+{
+    <h3 class="mb-4">@Message</h3>
+    <br>
+
+    @if (StudentSearched is not null)
+    {
+        <form method="get" action="/Users/Students/CRUD/StudentsUpdate">
+            <input hidden type="text" name="StudentId" value="@StudentSearched.StudentId" readonly>
+            <div class="mb-3">
+                <label class="form-label">Provide the new Student Name: </label>
+                <input type="text" class="form-control" id="NameText" name="NameText" value="@StudentSearched.Name" maxlength="40" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the new Student Last Name (Paternal): </label>
+                <input type="text" class="form-control" id="LastNamePText" name="LastNamePText" value="@StudentSearched.LastNameP" maxlength="40" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the new Student Last Name (Maternal): </label>
+                <input type="text" class="form-control" id="LastNameMText" name="LastNameMText" value="@StudentSearched.LastNameM" maxlength="40" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the new Student Group:</label>
+                <select class="form-select" id="dropdown" name="GroupId">
+                    @if(AllGroups is not null)
+                    {
+                        @foreach(var a in AllGroups)
+                        {  // checks if the statusId of each status found matches the one of the equipment showed, if yes isSelected = "selected" is not isSelected=""
+                            if(a.GroupId == StudentSearched.GroupId)
+                            {
+                                <option value="@a.GroupId" selected>@a.Name</option> 
+                            }
+                            else
+                            {
+                                <option value="@a.GroupId">@a.Name</option> 
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <option value = 0>No groups Found</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the new Student Password: </label>
+                <input type="password" class="form-control" id="PasswordText" name="PasswordText" value="@StudentSearched.Password" maxlength="255" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" name="action" value="confirm">Update Student</button>
+        </form>
+    }
+}

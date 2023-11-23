@@ -1,0 +1,102 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using System.Security.Cryptography;
+@{
+    ViewData["Title"] = "Update Professors";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to Update Professors.</p>
+
+@functions {
+    bool Ban = false;
+    Professor? ProfessorSearched { get; set; }
+    string Message = "";
+
+    public void OnGet(string ProfessorId, string NameText, string LastNamePText, string LastNameMText, string NipText,
+        string PasswordText)
+    {
+        if (!string.IsNullOrEmpty(ProfessorId))
+        {
+            string encryptedProfessorId = Functions.EncryptPass(ProfessorId);
+
+            Console.WriteLine($"Encrypted ProfessorId: {encryptedProfessorId}"); // Imprime la variable encriptada
+
+            ProfessorSearched = Functions.VerifyProfessorIdExistence(encryptedProfessorId);
+            Message = $"Variable: {ProfessorId}";
+
+            if (ProfessorSearched != null)
+            {
+                Ban = true;
+                Message = $"These are the fields you can update for Professor {ProfessorId}:";
+            }
+            else
+            {
+                Message = $"Variable: {ProfessorId} - That Professor does not exist.";
+                Ban = false;
+            }
+        }
+    }
+}
+
+@if (Ban == false)
+{
+    <h3>Provide the professor ID you would like to modify:</h3>
+    @if (!string.IsNullOrEmpty(Message))
+    {
+        <div class="error-message">
+            @Message
+        </div>
+    }
+    <form method="get" action="/Users/Professors/CRUD/UpdateProfessor">
+        <input type="text" class="form-control" id="ProfessorIdText" name="ProfessorId" maxlength="10" required>
+        <br>
+        <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
+    </form>
+}
+else
+{
+    <h3 class="mb-4">@Message</h3>
+    <br>
+
+    @if (ProfessorSearched is not null)
+    {
+        <form method="get" action="/Users/Professors/CRUD/ProfessorUpdate">
+            <input hidden type="text" name="ProfessorId" value="@ProfessorSearched.ProfessorId" readonly>
+            <div class="mb-3">
+                <label class="form-label">Provide the new Professor Name: </label>
+                <input type="text" class="form-control" id="NameText" name="NameText" value="@ProfessorSearched.Name"
+                    maxlength="40" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the new Professor Last Name (Paternal): </label>
+                <input type="text" class="form-control" id="LastNamePText" name="LastNamePText"
+                    value="@ProfessorSearched.LastNameP" maxlength="40" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the new Professor Last Name (Maternal): </label>
+                <input type="text" class="form-control" id="LastNameMText" name="LastNameMText"
+                    value="@ProfessorSearched.LastNameM" maxlength="40" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the new Professor NIP: </label>
+                <input type="text" class="form-control" id="NipText" name="NipText" value="@ProfessorSearched.Nip"
+                    maxlength="20" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Provide the new Professor Password: </label>
+                <input type="password" class="form-control" id="PasswordText" name="PasswordText"
+                    value="@ProfessorSearched.Password" maxlength="255" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" name="action" value="confirm">Update Professor</button>
+        </form>
+    }
+}

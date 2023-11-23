@@ -55,10 +55,13 @@
                     var professor = db.Professors
                         .Include(p => p.Petitions)
                         .Include(r => r.Requests)
-                        .FirstOrDefault(p => p.ProfessorId ==   Functions.EncryptPass(encryptedProfessorId));
+                        .FirstOrDefault(p => p.ProfessorId == Functions.EncryptPass(encryptedProfessorId));
 
                     if (professor != null)
                     {
+                        // Eliminar referencias en otras tablas
+                        db.Petitions.RemoveRange(professor.Petitions);
+                        db.Requests.RemoveRange(professor.Requests);
                         db.Professors.Remove(professor);
                         db.SaveChanges();
                         transaction.Commit();

@@ -1,0 +1,79 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using AutoGens
+@{
+    // Establecer el título de la página
+    ViewData["Title"] = "Delete Storer";
+}
+
+<!-- Título de la página -->
+<h1 class="display-4">Delete a Storer by ID</h1>
+
+<div class="container">
+    <form method="post">
+        <div class="form-group">
+            <label for="storerIdToDelete">Storer ID:</label>
+            <input type="text" id="storerIdToDelete" name="storerIdToDelete" class="form-control" required />
+        </div>
+
+        <button type="submit" class="btn btn-danger">Delete Storer</button>
+    </form>
+
+    @if (Request.Method == "POST")
+    {
+        <div class="mt-3">
+            @{
+                // Obtener el ID del storer encriptado desde el formulario
+                var encryptedStorerId = Request.Form["storerIdToDelete"];
+                // Invocar la lógica de eliminación de storer y almacenar el resultado en una variable
+                var deletionResult = DeleteStorer(encryptedStorerId);
+            }
+
+            @if (deletionResult)
+            {
+                <p class="text-success">Storer deleted successfully.</p>
+            }
+            else
+            {
+                <p class="text-danger">Unable to delete the storer. Please check the provided ID.</p>
+            }
+        </div>
+    }
+</div>
+
+@functions
+{
+    public bool DeleteStorer(string encryptedStorerId)
+    {
+        using (bd_storage db = new())
+        {
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var storer = db.Storers
+                        .Include(p => p.Petitions)
+                        .Include(r => r.Requests)
+                        .FirstOrDefault(s => s.StorerId == Functions.EncryptPass(encryptedStorerId));
+
+                    if (storer != null)
+                    {
+                        db.Storers.Remove(storer);
+                        db.SaveChanges();
+                        transaction.Commit();
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    Console.WriteLine($"Error: {ex.Message}");
+                    Console.WriteLine($"StackTrace: {ex.StackTrace}");
+                    return false;
+                }
+            }
+        }
+        return default;
+    }
+}

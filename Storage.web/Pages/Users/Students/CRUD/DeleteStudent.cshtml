@@ -1,0 +1,78 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using AutoGens
+@{
+    // Establecer el título de la página
+    ViewData["Title"] = "Delete Student";
+}
+
+<!-- Título de la página -->
+<h1 class="display-4">Delete a Student by ID</h1>
+
+<div class="container">
+    <form method="post">
+        <div class="form-group">
+            <label for="studentIdToDelete">Student ID:</label>
+            <input type="text" id="studentIdToDelete" name="studentIdToDelete" class="form-control" required />
+        </div>
+
+        <button type="submit" class="btn btn-danger">Delete Student</button>
+    </form>
+
+    @if (Request.Method == "POST")
+    {
+        <div class="mt-3">
+            @{
+                // Obtener el ID del estudiante desde el formulario
+                var studentIdToDelete = Request.Form["studentIdToDelete"];
+                // Invocar la lógica de eliminación de estudiante y almacenar el resultado en una variable
+                var deletionResult = DeleteStudent(studentIdToDelete);
+            }
+
+            @if (deletionResult)
+            {
+                <p class="text-success">Student deleted successfully.</p>
+            }
+            else
+            {
+                <p class="text-danger">Unable to delete the student. Please check the provided ID.</p>
+            }
+        </div>
+    }
+</div>
+
+@functions
+{
+    public bool DeleteStudent(string studentIdToDelete)
+    {
+        using (bd_storage db = new())
+        {
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var student = db.Students
+                        .Include(r => r.Requests)
+                        .FirstOrDefault(s => s.StudentId == studentIdToDelete);
+
+                    if (student != null)
+                    {
+                        db.Students.Remove(student);
+                        db.SaveChanges();
+                        transaction.Commit();
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    Console.WriteLine($"Error: {ex.Message}");
+                    Console.WriteLine($"StackTrace: {ex.StackTrace}");
+                    return false;
+                }
+            }
+        }
+        return default;
+    }
+}
