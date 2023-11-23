@@ -52,15 +52,15 @@
                     </li>
                     <li class="nav-item">
                         <!-- Opcion para borrar permisos cuya fecha sea futura -->
-                        <a class="nav-link" asp-area="" asp-page="/" asp-route-username="@Model.Item2">Delete Request for Material</a>
+                        <a class="nav-link" asp-area="" asp-page="/" asp-route-username="@Model.Item2">My Petitions</a>
                     </li>
                     <li class="nav-item">
                         <!--  Ve todos los equipos existentes en almacen-->
-                        <a class="nav-link" asp-area="" asp-page="/">View All materials of the storage</a>
+                        <a class="nav-link" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments">View All materials of the storage</a>
                     </li>
                     <li class="nav-item">
                         <!-- Modifica su perfil -->
-                        <a class="nav-link" asp-area="" asp-page="/" asp-route-username="@Model.Item2">Update my info</a>
+                        <a class="nav-link" asp-area="" asp-page="/Users/Professors/CRUD/ManageCRUD" asp-route-username="@Model.Item2">Update my info</a>
                     </li>  
                 }
                 else if (Model.Item1 == "Almacenista")

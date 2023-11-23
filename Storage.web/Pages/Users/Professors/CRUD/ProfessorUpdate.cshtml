@@ -7,6 +7,8 @@
 }
 
 <h1>@ViewData["Title"]</h1>
+<a class="btn btn-primary" href="/Users/Professors/CRUD/ViewProfessors">Go to View Professors</a>
+
 
 @functions {
     bool Ban = false;
@@ -63,7 +65,7 @@
                 Professor.First().LastNameP = lastNameP;
                 Professor.First().LastNameM = lastNameM;
                 Professor.First().Nip = Functions.EncryptPass(nip);
-                Professor.First().Password = password;
+                Professor.First().Password = Functions.EncryptPass(password);
                 affected = db.SaveChanges();
             }
             return affected;

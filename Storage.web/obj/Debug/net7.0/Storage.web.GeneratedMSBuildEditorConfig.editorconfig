@@ -180,6 +180,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQ29vcmRpbmF0b3JcQ29vcmRpbmF0b3JBY3Rpb25zXFN1YmplY3RDUlVEXE1hbmFnZUNSVUQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Coordinator/CoordinatorActions/SubjectCRUD/SubjectUpdate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQ29vcmRpbmF0b3JcQ29vcmRpbmF0b3JBY3Rpb25zXFN1YmplY3RDUlVEXFN1YmplY3RVcGRhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Coordinator/CoordinatorActions/SubjectCRUD/UpdateSubjects.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQ29vcmRpbmF0b3JcQ29vcmRpbmF0b3JBY3Rpb25zXFN1YmplY3RDUlVEXFVwZGF0ZVN1YmplY3RzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -278,6 +282,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Students/CRUD/ManageCRUD.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3R1ZGVudHNcQ1JVRFxNYW5hZ2VDUlVELmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Students/CRUD/StudentsUpdate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3R1ZGVudHNcQ1JVRFxTdHVkZW50c1VwZGF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Students/CRUD/UpdateStudent.cshtml]

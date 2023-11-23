@@ -1,0 +1,68 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+
+@{
+    ViewData["Title"] = "Update Subjects";
+}
+
+<h1>@ViewData["Title"]</h1>
+<a class="btn btn-primary" href="/Users/Coordinator/CoordinatorActions/SubjectCRUD/ViewSubjects">Go to View Subjects</a>
+
+@functions {
+    bool Ban = false;
+    Subject? SubjectSearched { get; set; }
+    string Message = "";
+
+    public IActionResult OnGet(string SubjectId, string NameText, int AcademyId)
+    {
+        if (AcademyId != 0)
+        {
+            int affected = UpdateSubject(SubjectId, NameText, AcademyId);
+
+            if (affected == 0)
+            {
+                WriteLine("The subject could not be updated");
+            }
+            else
+            {
+                WriteLine($"The fields of the Subject were updated!");
+            }
+            return Page();
+        }
+        else
+        {
+            Message = "Invalid Subject ID";
+            return Page();
+        }
+    }
+
+    public int UpdateSubject(string subjectId, string name, int academyId)
+    {
+        using (bd_storage db = new())
+        {
+            int affected = 0;
+            IQueryable<Subject> Subject = db.Subjects.Where(s => s.SubjectId == subjectId);
+            if (Subject is not null && Subject.Any())
+            {
+                Subject.First().Name = name;
+                Subject.First().AcademyId = academyId;
+                affected = db.SaveChanges();
+            }
+            return affected;
+        }
+    }
+}
+
+@if (Message != "")
+{
+    <h2>@Message</h2>
+
+    @if (TempData["ResultInfoShown"] != null && TempData["ResultInfoShown"].ToString() == "1")
+    {
+        <form method="get" action="/Users/Coordinator/CoordinatorActions/SubjectCRUD/ViewSubjects">
+            <button type="submit" class="btn btn-primary">View Subjects</button>
+        </form>
+    }
+}
