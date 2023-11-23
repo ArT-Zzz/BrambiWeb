@@ -356,17 +356,17 @@ else if(Model.Ban == 2)
         </div>
         <div class="mb-3">
             <label class="form-label">Provide your first and second name: </label>
-            <input type="text" class="form-control" id="NameText" name="Name" maxlength="30" required>
+            <input type="text" class="form-control" id="NameText" name="Name" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Only alphabetical characters allowed" maxlength="30" required>
         </div>
         
         <div class="mb-3">
             <label class="form-label">Provide Your Paternal Last Name: </label>
-            <input type="text" class="form-control" id="LastNameP" name="LastNameP" maxlength="30" required>
+            <input type="text" class="form-control" id="LastNameP" name="LastNameP" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Only alphabetical characters allowed" maxlength="30" required>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Provide Your Maternal Last Name: </label>
-            <input type="text" class="form-control" id="LastNameM" name="LastNameM" maxlength="30" required>
+            <input type="text" class="form-control" id="LastNameM" name="LastNameM" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" title="Only alphabetical characters allowed" maxlength="30" required>
         </div>
         
         <div class="mb-3">

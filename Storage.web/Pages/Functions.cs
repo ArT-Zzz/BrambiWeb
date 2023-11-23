@@ -6,7 +6,7 @@ using System.Text;
 
 public static partial class Functions
 {
-    
+    // Método para ver todos los equipos
     public static List<Equipment>? ViewAllEquipments()
     {
         using(bd_storage db = new())
@@ -23,33 +23,33 @@ public static partial class Functions
         }
     }
 
+    // Método para listar todas las áreas de los equipos guardados en el inventario
     public static List<Area>? ListAreas()
     {
-        using( bd_storage db = new())
+        using(bd_storage db = new())
         {
-        IQueryable<Area> areas = db.Areas;
+            IQueryable<Area> areas = db.Areas;
             if ((areas is null) || !areas.Any())
             {
                 Console.WriteLine("There are no areas found");
                 return null;
             }
-            // Use the data
+            // Utiliza los datos
             foreach (var area in areas)
             {
                 Console.WriteLine($"{area.AreaId} . {area.Name} ");
             }
             return areas.ToList();
+            //retornamos la lista
         }
     }
-    public static string EncryptPass(string PlainText) // encrypts with a specified key a string
+
+    // Método para encriptar una contraseña 
+    public static string EncryptPass(string PlainText)
     {
         using (Aes aesAlg = Aes.Create())
         {
-
-            aesAlg.Key = Encoding.UTF8.GetBytes("llave secreta".PadRight(32));//32 caracteres hexadecimales
-            //cada byte esta representado por 2 hex, cada hex son 4 bytes
-            //con esta cantidad de bytes se tienen 32 digitos (0-9 y A-F)
-            //32 caracteres hex * 4 bytes que recordemos que cada hex son 4 bytes=128
+            aesAlg.Key = Encoding.UTF8.GetBytes("llave secreta".PadRight(32));
             aesAlg.IV = new byte[16]; 
 
             ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
@@ -67,7 +67,9 @@ public static partial class Functions
             }
         }
     }
-    public static string Decrypt(string? CipherText) // decrypts previously encrypted text with the key it was encrypted with
+
+    // Método para descifrar una cadena previamente encriptada
+    public static string Decrypt(string? CipherText)
     {
         using (Aes aesAlg = Aes.Create())
         {
@@ -90,6 +92,8 @@ public static partial class Functions
             return "";
         }
     }
+
+    // Método para listar todos los coordinadores
     public static List<Coordinator>? ListCoordinators()
     {
         using (bd_storage db = new())
@@ -114,13 +118,12 @@ public static partial class Functions
         }
     }
 
-    
+    // Método para listar todos los estudiantes
     public static List<Student>? ListStudents()
     {
         using (bd_storage db = new())
         {
-            IQueryable<Student> students = db.Students
-            .Include(s=>s.Group).OrderByDescending(s=>s.StudentId);
+            IQueryable<Student> students = db.Students.Include(s => s.Group).OrderByDescending(s => s.StudentId);
             if ((students is null) || !students.Any())
             {
                 Console.WriteLine("There are no registered students found");
@@ -130,17 +133,18 @@ public static partial class Functions
         }
     }
 
+    // Método para listar todos los estados
     public static List<Status>? ListStatus()
     {
         using( bd_storage db = new())
         {
-        IQueryable<Status> status = db.Statuses;
+            IQueryable<Status> status = db.Statuses;
             if ((status is null) || !status.Any())
             {
                 Console.WriteLine("There are no status found");
                 return null;
             }
-            // Use the data
+            // Utiliza los datos
             foreach (var stat in status)
             {
                 Console.WriteLine($"{stat.StatusId} . {stat.Value} ");
@@ -149,6 +153,7 @@ public static partial class Functions
         }
     }
 
+    // Método para verificar la existencia de un número de control y un ID de equipo
     public static (int EquipAffected, int ControlNumAffected) VerifyEquipmentIdControlNumber(string EquipmentId, string ControlNumber)
     {
         int equipmentIdAffected = 0;
@@ -156,31 +161,32 @@ public static partial class Functions
         using(bd_storage db = new())
         {
             IQueryable<Equipment> equipments = db.Equipments
-                .Where(e=> e.ControlNumber == ControlNumber);                
-                if(equipments is null || !equipments.Any())
-                {
-                    equipmentIdAffected = 0;
-                }
-                else
-                {
-                    Console.WriteLine("That control number is already in use, try again.");
-                    equipmentIdAffected = 1;
-                }
+                .Where(e => e.ControlNumber == ControlNumber);                
+            if(equipments is null || !equipments.Any())
+            {
+                equipmentIdAffected = 0;
+            }
+            else
+            {
+                Console.WriteLine("That control number is already in use, try again.");
+                equipmentIdAffected = 1;
+            }
             IQueryable<Equipment> equipmentsId = db.Equipments
-                .Where(e=> e.EquipmentId == EquipmentId);
-                if(equipmentsId is null || !equipmentsId.Any())
-                {
-                    controlNumberAffected = 0;
-                }
-                else
-                {
-                    Console.WriteLine("That control number is already in use, try again.");
-                    controlNumberAffected = 1;
-                } 
+                .Where(e => e.EquipmentId == EquipmentId);
+            if(equipmentsId is null || !equipmentsId.Any())
+            {
+                controlNumberAffected = 0;
+            }
+            else
+            {
+                Console.WriteLine("That control number is already in use, try again.");
+                controlNumberAffected = 1;
+            } 
         }
         return (equipmentIdAffected, controlNumberAffected);
     }
 
+    // Método para verificar la no repetición de un número de control en la edición de equipos
     public static int VerifyEquipmentIdControlNumberMinusThis(string EquipmentId, string ControlNumber)
     {
         Console.Write("EquipmentID: ");
@@ -191,20 +197,21 @@ public static partial class Functions
         using(bd_storage db = new())
         {
             IQueryable<Equipment> equipments = db.Equipments
-                .Where(e=> e.ControlNumber == ControlNumber && e.EquipmentId != EquipmentId);                
-                if(equipments is null || !equipments.Any())
-                {
-                    controlNumberAffected = 0;
-                }
-                else
-                {
-                    Console.WriteLine("That control number is already in use, try again.");
-                    controlNumberAffected = 1;
-                }
+                .Where(e => e.ControlNumber == ControlNumber && e.EquipmentId != EquipmentId);                
+            if(equipments is null || !equipments.Any())
+            {
+                controlNumberAffected = 0;
+            }
+            else
+            {
+                Console.WriteLine("That control number is already in use, try again.");
+                controlNumberAffected = 1;
+            }
         }
         return controlNumberAffected;
     }
 
+    // Método para verificar la existencia de un ID de equipo
     public static Equipment? VerifyEquipmentIdExistence(string EquipmentId)
     {
         using(bd_storage db = new())
@@ -251,8 +258,6 @@ public static partial class Functions
         }
         return equipmentsList;
     }
-
-    
     public static List<Equipment>? SearchEquipmentsById(string? SearchTerm)
     {
         if (string.IsNullOrEmpty(SearchTerm))
