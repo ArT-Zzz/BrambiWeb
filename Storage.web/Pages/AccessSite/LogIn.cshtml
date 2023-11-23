@@ -4,36 +4,19 @@
 @using AutoGens
 @{
     ViewData["Title"] = "Login";
-    string? rol = null;
-    string? username = null;
+    ViewData["ShowNavBar"] = false;
     bool logged = false;
 
     if (Request.Method == "POST")
     {
-        (logged, rol, username) = IniciarSesion(out string? Rol, Request.Form["username"], Request.Form["password"]);
+        (logged, var rol, var username) = IniciarSesion(Request.Form["username"], Request.Form["password"]);
+
         if (logged)
         {
             // Redirigir a la página principal del usuario según su rol
-            if (rol == "students")
-            {
-                TempData["Username"] = username;
-                Response.Redirect("/Users/StudentsPrincipal");
-            }
-            else if (rol == "professors")
-            {
-                TempData["Username"] = username;
-                Response.Redirect("/Users/Professors/ProfessorPrincipal");
-            }
-            else if( rol == "storers")
-            {
-                TempData["Username"] = username;
-                Response.Redirect("/Users/Storer/StorerPrincipal");
-            }
-            else if( rol == "coordinators")
-            {
-                TempData["Username"] = username;
-                Response.Redirect("/Users/Coordinator/CoordinatorPrincipal");
-            }
+            var redirectUrl = GetRedirectUrl(rol);
+            TempData["Username"] = username;
+            Response.Redirect(redirectUrl);
         }
     }
 }
@@ -51,6 +34,7 @@
             <label class="form-label" for="password">Password:</label>
             <input class="form-control" type="password" id="password" name="password" class="form-control" required />
         </div>
+
         <p></p>
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
@@ -66,86 +50,62 @@
 </div>
 
 @functions {
-    public static (bool logged, string? rol, string username) IniciarSesion(out string? Rol, string username, string password)
+    public static (bool logged, string? rol, string username) IniciarSesion(string username, string password)
     {
         using (bd_storage db = new())
         {
             Console.WriteLine("Write your ID: ");
-            string? encyptUsr = Functions.EncryptPass(username);
+            string UserName = username;
+            WriteLine(UserName);
+            string encryptedUsername = Functions.EncryptPass(username);
+            Console.WriteLine($"Encrypted Username: {encryptedUsername}");
 
-            Console.WriteLine("Write your password: ");
-            string pass = Functions.EncryptPass(password);
+            string encryptedPassword = Functions.EncryptPass(password);
 
-            string idUser = "studentId";
-            while (true)
-            {
-                if (idUser == "studentId")
-                {
-                    IQueryable<Student>? students = db.Students
-                        .Where(s => s.StudentId == username && s.Password == pass);
+            var (rol, user) = AuthenticateUser(db, encryptedUsername, encryptedPassword, UserName);
 
-                    if (students is null || !students.Any())
-                    {
-                        idUser = "professorId";
-                        Rol = null;
-                    }
-                    else
-                    {
-                        Rol = "students";
-                        return (true, Rol, username);
-                    }
-                }
-                else if (idUser == "professorId")
-                {
-                    IQueryable<Professor>? professors = db.Professors
-                        .Where(p => p.ProfessorId == encyptUsr && p.Password == pass);
-
-                    if (professors is null || !professors.Any())
-                    {
-                        idUser = "storerId";
-                        Rol = null;
-                    }
-                    else
-                    {
-                        Rol = "professors";
-                        return (true, Rol, username);
-                    }
-                }
-                else if (idUser == "storerId")
-                {
-                    IQueryable<Storer>? storers = db.Storers
-                        .Where(s => s.StorerId == encyptUsr && s.Password == pass);
-                    if (storers is null || !storers.Any())
-                    {
-                        idUser = "coordinatorId";
-                        Rol = null;
-                    }
-                    else
-                    {
-                        Rol = "storers";
-                        return (true, Rol, username);
-                    }
-                }
-                else if (idUser == "coordinatorId")
-                {
-                    IQueryable<Coordinator>? coordinators = db.Coordinators
-                        .Where(s => s.CoordinatorId == encyptUsr && s.Password == pass);
-                    if (coordinators is null || !coordinators.Any())
-                    {
-                        Rol = null;
-                        idUser = "none";
-                        break;
-                    }
-                    else
-                    {
-                        Rol = "coordinators";
-                        return (true, Rol, username);
-                    }
-                }
-            }
-
-            Rol = null;
-            return (true, Rol, username);
+            return (rol != null, rol, user);
         }
+    }
+
+    private static (string? rol, string user) AuthenticateUser(bd_storage db, string encryptedUsername, string encryptedPassword, string username)
+    {
+        var students = db.Students.Where(s => s.StudentId == username && s.Password == encryptedPassword).ToList();
+        if (students.Any())
+        {
+            return ("students", username);
+        }
+
+        var professors = db.Professors.Where(p => p.ProfessorId == encryptedUsername && p.Password == encryptedPassword).ToList();
+        if (professors.Any())
+        {
+            return ("professors", encryptedUsername);
+        }
+
+        var storers = db.Storers.Where(s => s.StorerId == encryptedUsername && s.Password == encryptedPassword).ToList();
+        if (storers.Any())
+        {
+            return ("storers", encryptedUsername);
+        }
+
+        var coordinators = db.Coordinators.Where(c => c.CoordinatorId == encryptedUsername && c.Password == encryptedPassword).ToList();
+        if (coordinators.Any())
+        {
+            return ("coordinators", encryptedUsername);
+        }
+
+        return (null, "");
+    }
+
+    private static string GetRedirectUrl(string role)
+    {
+        return role switch
+        {
+            "students" => "/Users/Students/StudentsPrincipal",
+            "professors" => "/Users/Professors/ProfessorPrincipal",
+            "storers" => "/Users/Storer/StorerPrincipal",
+            "coordinators" => "/Users/Coordinator/CoordinatorPrincipal",
+            _ => "/Error", // Cambia "/Error" a la página de error adecuada
+        };
     }
 }

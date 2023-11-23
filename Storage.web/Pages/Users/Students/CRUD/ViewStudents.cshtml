@@ -1,0 +1,97 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using AutoGens
+@{
+    ViewData["Title"] = "View Registered Students"; // título que se mostrará en la página
+}
+
+@functions {
+    public static bool ListStudentsforCoord(out List<Student> allStudents)
+    {
+        // Flag to indicate whether there are registered students.
+        bool hasStudents = false;
+
+        allStudents = new List<Student>();
+
+        // Set up a connection to the database.
+        using (bd_storage db = new())
+        {
+            // Retrieve students and their associated groups from the database.
+            IQueryable<Student> students = db.Students
+                .Include(s => s.Group);
+
+            // Disable lazy loading for better performance.
+            db.ChangeTracker.LazyLoadingEnabled = false;
+
+            // Check if there are no students in the database.
+            if (!students.Any())
+            {
+                // Print a message and set the flag to true.
+                WriteLine("There are no registered students found");
+                hasStudents = false;
+                return hasStudents;
+            }
+
+            allStudents = students.ToList();
+        }
+
+        // Set the flag indicating whether there are registered students.
+        hasStudents = true;
+
+        return hasStudents;
+    }
+}
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-page="/StudentsCRUD/UpdateStudent">Update Student</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Last Name (Paternal)</th>
+                <th>Last Name (Maternal)</th>
+                <th>Password</th>
+                <th>Group ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                List<Student> allStudents;
+                if (ListStudentsforCoord(out allStudents) && allStudents.Any())
+                {
+                    foreach (var student in allStudents)
+                    {
+                        <tr>
+                            <td>@student.StudentId</td>
+                            <td>@student.Name</td>
+                            <td>@student.LastNameP</td>
+                            <td>@student.LastNameM</td>
+                            <td>@Functions.Decrypt(student.Password)</td>
+                            <td>@student.Group?.Name</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <h2>No se encontraron estudiantes registrados en la base de datos</h2>
+                    WriteLine("No se encontraron estudiantes registrados en la base de datos");
+                }
+            }
+        </tbody>
+    </table>
+</div>

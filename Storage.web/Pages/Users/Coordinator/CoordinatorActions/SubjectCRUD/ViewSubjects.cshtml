@@ -1,0 +1,88 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using AutoGens
+@{
+    ViewData["Title"] = "View All Subjects"; // título que se mostrará en la página
+}
+
+@functions {
+    public static bool ListSubjects(out List<Subject> allSubjects)
+    {
+        // Flag to indicate whether there are any subjects.
+        bool hasSubjects = false;
+
+        allSubjects = new List<Subject>();
+
+        // Set up a connection to the database.
+        using (bd_storage db = new())
+        {
+            // Retrieve subjects and their associated academies from the database.
+            IQueryable<Subject> subjects = db.Subjects
+                .Include(su => su.Academy);
+
+            // Check if there are no subjects in the database.
+            if ((subjects is null) || !subjects.Any())
+            {
+                // Print a message and set the flag to true.
+                WriteLine("There are no subjects");
+                hasSubjects = false;
+                return hasSubjects;
+            }
+
+            allSubjects = subjects.ToList();
+        }
+
+        // Set the flag indicating whether there are subjects.
+        hasSubjects = true;
+
+        return hasSubjects;
+    }
+}
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-page="/SubjectsCRUD/UpdateSubject">Update Subject</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Subject Name</th>
+                <th>Academy</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                List<Subject> allSubjects;
+                if (ListSubjects(out allSubjects) && allSubjects.Any())
+                {
+                    foreach (var subject in allSubjects)
+                    {
+                        <tr>
+                            <td>@subject.SubjectId</td>
+                            <td>@subject.Name</td>
+                            <td>@subject.Academy?.Name</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <h2>No se encontraron materias en la base de datos</h2>
+                    WriteLine("No se encontraron materias en la base de datos");
+                }
+            }
+        </tbody>
+    </table>
+</div>

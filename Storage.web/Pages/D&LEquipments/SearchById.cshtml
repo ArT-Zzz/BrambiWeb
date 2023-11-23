@@ -3,21 +3,33 @@
 @using Microsoft.EntityFrameworkCore.ChangeTracking
 @using AutoGens
 @{
+    // Configurar el título de la página
     ViewData["Title"] = "Search Damage and Lost Equipments By ID";
+    string username = TempData["Username"]?.ToString() ?? "11111111";
+    ViewData["ShowNavBar"] = true;
+    var userTypeAndUsername = Tuple.Create("Coordinador", username);
 }
 
 <div class="container">
+    <div class="container">
+        <!-- Incluir la vista parcial y pasar el modelo -->
+        <partial name="_NavBar" model="userTypeAndUsername" />
+    </div>
+    <!-- Encabezado principal de la página -->
     <h1 class="display-4">Search Damage and Lost Equipments By ID</h1>
 
+    <!-- Formulario para buscar equipos dañados o perdidos por ID -->
     <form method="post">
         <div class="form-group">
             <label for="equipmentIdToFind">Equipment ID:</label>
+            <!-- Entrada de texto para ingresar el ID del equipo a buscar -->
             <input type="text" id="equipmentIdToFind" name="equipmentIdToFind" class="form-control" required />
         </div>
-
+         <!-- Botón para enviar el formulario de búsqueda -->
         <button type="submit" class="btn btn-primary">Search Equipment</button>
     </form>
 
+    <!-- Sección para mostrar los resultados de la búsqueda -->
     @if (Request.Method == "POST")
     {
         <div class="mt-3">
@@ -29,6 +41,7 @@
 
             @if (searchResults.Any())
             {
+                <!-- Mostrar una tabla de resultados si se encuentran equipos dañados o perdidos -->
                 <table class="table">
                     <thead>
                         <tr>
@@ -44,6 +57,7 @@
                     <tbody>
                         @foreach (var dal in searchResults)
                         {
+                            <!-- Filas de la tabla con la información de cada equipo -->
                             <tr>
                                 <td>@dal.DyLequipmentId</td>
                                 <td>@dal.Status?.Value</td>
@@ -59,6 +73,7 @@
             }
             else
             {
+                <!-- Mensaje si no se encuentran resultados -->
                 <p>No damaged or lost equipment found with the specified ID.</p>
             }
         </div>
@@ -67,10 +82,13 @@
 
 @functions
 {
+    // Método para buscar equipos dañados o perdidos por ID en la base de datos
     public List<DyLequipment> FindDandLequipmentById(string equipmentIdToFind)
     {
+        // Utilizar una nueva instancia del contexto de la base de datos
         using (bd_storage db = new())
         {
+            // Construir la consulta a la base de datos utilizando Entity Framework Core
             IQueryable<DyLequipment>? dyLequipments = db.DyLequipments
                 .Include(dal => dal.Status)
                 .Include(dal => dal.Equipment)
@@ -78,8 +96,7 @@
                 .Include(dal => dal.Coordinator)
                 .Where(dal => dal.DyLequipmentId.ToString().StartsWith(equipmentIdToFind));
 
-            db.ChangeTracker.LazyLoadingEnabled = false;
-
+            // Convertir los resultados de la consulta a una lista y devolverla
             return dyLequipments.ToList();
         }
     }

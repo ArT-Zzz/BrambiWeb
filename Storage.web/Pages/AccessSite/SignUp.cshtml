@@ -14,19 +14,19 @@
 @if(Model.Ban != 3 && Model.Ban != 1 && Model.Ban != 2 && Model.Ban != 4 && Model.Ban != 5)
 {
     <p>Choose the type of user you are going to be:</p>
-    <form method="get" action="/SignUp">
+    <form method="get" action="/AccessSite/SignUp">
         <button type="submit" class="btn btn-primary" name="SignUp" value="students" style="width: 500px; height:80px; font-size: 22px;">Sign Up as a Student</button>
     </form>
     <br>
-    <form method="get" action="/SignUp">
+    <form method="get" action="/AccessSite/SignUp">
         <button type="submit" class="btn btn-primary" name="SignUp" value="professors" style="width: 500px; height:80px; font-size: 22px;" >Sign Up as a Professor</button>
     </form>
     <br>
-    <form method="get" action="/SignUp">
+    <form method="get" action="/AccessSite/SignUp">
         <button type="submit" class="btn btn-primary" name="SignUp" value="storers" style="width: 500px; height:80px; font-size: 22px;" >Sign Up as a Storer</button>
     </form>
     <br>
-    <form method="get" action="/SignUp">
+    <form method="get" action="/AccessSite/SignUp">
         <button type="submit" class="btn btn-primary" name="SignUp" value="coordinators" style="width: 500px; height:80px;  font-size: 22px;" >Sign Up as a Coordinator</button>
     </form>
 }
@@ -93,7 +93,7 @@
         Model.AllGroups = Functions.ListGroups();
     }
 
-    public void OnPostAddProfessor(int Payroll, string Name, string LastNameP, string LastNameM, int Nip, string Password)
+    public void OnPostAddProfessor(string Payroll, string Name, string LastNameP, string LastNameM, int Nip, string Password)
     {
         Model.Ban = 2;        
             Professor? professor = Functions.VerifyProfessorIdExistence(Payroll.ToString());
@@ -120,7 +120,7 @@
         Model.AllGroups = Functions.ListGroups();
     }
 
-    public void OnPostAddStorer(int Payroll, string Name, string LastNameP, string LastNameM, string Password)
+    public void OnPostAddStorer(string Payroll, string Name, string LastNameP, string LastNameM, string Password)
     {
         Model.Ban = 3;
         
@@ -149,7 +149,7 @@
     }
 
     
-    public void OnPostAddCoordinator(int Payroll, string Name, string LastNameP, string LastNameM, string Password)
+    public void OnPostAddCoordinator(string Payroll, string Name, string LastNameP, string LastNameM, string Password)
     {
         Model.Ban = 4;
             Coordinator? coordinator = Functions.VerifyCoordinatorIdExistence(Payroll.ToString());

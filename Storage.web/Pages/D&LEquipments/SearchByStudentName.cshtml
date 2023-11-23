@@ -4,9 +4,16 @@
 @using AutoGens
 @{
     ViewData["Title"] = "Search Damage and Lost Equipments Student Name";
+    string username = TempData["Username"]?.ToString() ?? "11111111";
+    ViewData["ShowNavBar"] = true;
+    var userTypeAndUsername = Tuple.Create("Coordinador", username);
 }
 
 <div class="container">
+    <div class="container">
+        <!-- Incluir la vista parcial y pasar el modelo -->
+        <partial name="_NavBar" model="userTypeAndUsername" />
+    </div>
     <h1 class="display-4">Search Damage and Lost Equipments By Student Name</h1>
 
     <form method="post">

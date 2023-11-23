@@ -1,0 +1,89 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using AutoGens
+@{
+    ViewData["Title"] = "View Damaged and Lost Equipments"; // título que se mostrará en la página
+}
+
+@functions {
+    public static bool ListDandLequipment(out List<DyLequipment> allDyLequipments)
+    {
+        // Variable to indicate if there are no damaged or lost equipments found
+        bool hasDyLequipments = false;
+
+        allDyLequipments = new List<DyLequipment>();
+
+        // Use Entity Framework to query the database for damaged or lost equipments, including related entities
+        using (bd_storage db = new())
+        {
+            IQueryable<DyLequipment> dyLequipments = db.DyLequipments
+                .Include(dal => dal.Status)
+                .Include(dal => dal.Equipment)
+                .Include(dal => dal.Student)
+                .Include(dal => dal.Coordinator)
+                .OrderBy(dal => dal.DateOfEvent);
+
+            // Disable lazy loading to ensure related entities are loaded
+            db.ChangeTracker.LazyLoadingEnabled = false;
+
+            // Check if there are no damaged or lost equipments found
+            if ((dyLequipments is null) || !dyLequipments.Any())
+            {
+                WriteLine("There are no registered damaged or lost equipments found");
+                hasDyLequipments = false;
+                return hasDyLequipments;
+            }
+
+            allDyLequipments = dyLequipments.ToList();
+        }
+
+        // Set the flag indicating if there are damaged or lost equipments found
+        hasDyLequipments = true;
+
+        return hasDyLequipments;
+    }
+}
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Equipment ID</th>
+                <th>Status</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Student</th>
+                <th>Coordinator</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                List<DyLequipment> allDyLequipments;
+                if (ListDandLequipment(out allDyLequipments) && allDyLequipments.Any())
+                {
+                    foreach (var dal in allDyLequipments)
+                    {
+                        <tr>
+                            <td>@dal.DyLequipmentId</td>
+                            <td>@dal.Status?.Value</td>
+                            <td>@dal.Equipment?.Name</td>
+                            <td>@dal.Description</td>
+                            <td>@dal.DateOfEvent.ToString("dd/MM/yyyy")</td>
+                            <td>@dal.Student?.Name</td>
+                            <td>@dal.Coordinator?.Name</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <h2>No se encontraron equipos dañados o perdidos registrados en la base de datos</h2>
+                    WriteLine("No se encontraron equipos dañados o perdidos registrados en la base de datos");
+                }
+            }
+        </tbody>
+    </table>
+</div>

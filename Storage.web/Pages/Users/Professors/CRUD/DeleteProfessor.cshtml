@@ -1,0 +1,85 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using AutoGens
+@{
+    // Establecer el título de la página
+    ViewData["Title"] = "Delete Professor";
+}
+
+<!-- Título de la página -->
+<h1 class="display-4">Delete a Professor by ID</h1>
+
+<div class="container">
+    <form method="post">
+        <div class="form-group">
+            <label for="professorIdToDelete">Professor ID:</label>
+            <input type="text" id="professorIdToDelete" name="professorIdToDelete" class="form-control" required />
+        </div>
+
+        <button type="submit" class="btn btn-danger">Delete Professor</button>
+    </form>
+
+    @if (Request.Method == "POST")
+    {
+        <div class="mt-3">
+            @{
+                // Obtener el ID del profesor encriptado desde el formulario
+                var encryptedProfessorId =Request.Form["professorIdToDelete"];
+                // Mostrar el ID encriptado para fines de depuración
+                <p>Encrypted Professor ID: @encryptedProfessorId</p>
+                // Invocar la lógica de eliminación de profesor y almacenar el resultado en una variable
+                var deletionResult = DeleteProfessor(encryptedProfessorId);
+            }
+
+            @if (deletionResult)
+            {
+                <p class="text-success">Professor deleted successfully.</p>
+            }
+            else
+            {
+                <p class="text-danger">Unable to delete the professor. Please check the provided ID.</p>
+            }
+        </div>
+    }
+</div>
+
+@functions
+{
+    public bool DeleteProfessor(string encryptedProfessorId)
+    {
+        using (bd_storage db = new())
+        {
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var professor = db.Professors
+                        .Include(p => p.Petitions)
+                        .Include(r => r.Requests)
+                        .Include(t => t.Teaches)
+                        .FirstOrDefault(p => p.ProfessorId ==   Functions.EncryptPass(encryptedProfessorId));
+
+                        <p>Encrypted Professor ID: @Functions.EncryptPass(encryptedProfessorId)</p>
+                        <p>Encrypted Professor ID: @Functions.Decrypt("3jII3knjrhOo7Q1P0P+9nQ==")</p>
+
+                    if (professor != null)
+                    {
+                        db.Professors.Remove(professor);
+                        db.SaveChanges();
+                        transaction.Commit();
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    Console.WriteLine($"Error: {ex.Message}");
+                    Console.WriteLine($"StackTrace: {ex.StackTrace}");
+                    return false;
+                }
+            }
+        }
+        return default;
+    }
+}

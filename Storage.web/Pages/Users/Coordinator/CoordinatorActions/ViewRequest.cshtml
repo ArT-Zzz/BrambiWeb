@@ -1,0 +1,89 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using AutoGens
+@{
+    ViewData["Title"] = "List Equipment Requests"; // título que se mostrará en la página
+}
+
+@functions {
+    public static string? ListEquipmentsRequests(out List<RequestDetail> allRequestDetails)
+    {
+        // Variable to indicate if there are no requests found
+        bool hasRequests = false;
+
+        allRequestDetails = new List<RequestDetail>();
+
+        // Use Entity Framework to query the database for equipment requests, including related entities
+        using (bd_storage db = new())
+        {
+            IQueryable<RequestDetail>? requestDetails = db.RequestDetails
+                .Include(e => e.Equipment)
+                .Include(s => s.Status)
+                .Include(e => e.Request.Student)
+                .Where(r => r.ProfessorNip == 1)
+                .OrderByDescending(f => f.RequestedDate);
+
+            // Check if there are no requests found
+            if ((requestDetails is null) || !requestDetails.Any())
+            {
+                WriteLine("There are no requests found");
+                hasRequests = false;
+                return null;
+            }
+
+            allRequestDetails = requestDetails.ToList();
+        }
+
+        // Set the flag indicating if there are requests found
+        hasRequests = true;
+
+        return "";
+    }
+}
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>NO. Request</th>
+                <th>RequestId</th>
+                <th>Student</th>
+                <th>StatusId</th>
+                <th>ProfessorNip</th>
+                <th>DispatchTime</th>
+                <th>Return Time</th>
+                <th>RequestedDate</th>
+                <th>Equipment Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @* @{
+                List<RequestDetail> allRequestDetails;
+                if (ListEquipmentsRequests(out allRequestDetails) && allRequestDetails.Any())
+                {
+                    foreach (var requestDetail in allRequestDetails)
+                    {
+                        <tr>
+                            <td>@requestDetail.RequestId</td>
+                            <td>@requestDetail.Request?.Student?.Name</td>
+                            <td>@requestDetail.Status?.Value</td>
+                            <td>@(requestDetail.ProfessorNip == 1 ? "aceptado" : "Pendiente")</td>
+                            <td>@requestDetail.DispatchTime.TimeOfDay</td>
+                            <td>@requestDetail.ReturnTime.TimeOfDay</td>
+                            <td>@($"{requestDetail.RequestedDate.Day}/{requestDetail.RequestedDate.Month}/{requestDetail.RequestedDate.Year}")</td>
+                            <td>@requestDetail.Equipment.Name</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <h2>No se encontraron solicitudes de equipos en la base de datos</h2>
+                    WriteLine("No se encontraron solicitudes de equipos en la base de datos");
+                }
+            } *@
+        </tbody>
+    </table>
+</div>

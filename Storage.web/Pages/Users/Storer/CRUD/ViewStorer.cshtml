@@ -1,0 +1,95 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using AutoGens
+@{
+    ViewData["Title"] = "View All Storers"; // título que se mostrará en la página
+}
+
+@functions {
+    public static bool ViewAllStorers(out List<Storer> allStorers, out int totalStorers)
+    {
+        // Flag to indicate whether there are any storers.
+        bool hasStorers = false;
+
+        allStorers = new List<Storer>();
+        totalStorers = 0;
+
+        // Set up a connection to the database.
+        using (bd_storage db = new())
+        {
+            // Retrieve storers from the database.
+            IQueryable<Storer> storers = db.Storers;
+
+            // Check if there are no storers in the database.
+            if ((storers is null) || !storers.Any())
+            {
+                // Print a message and set the flag to true.
+                WriteLine("There are no storers");
+                hasStorers = false;
+                return hasStorers;
+            }
+
+            allStorers = storers.ToList();
+            totalStorers = allStorers.Count;
+        }
+
+        // Set the flag indicating whether there are storers.
+        hasStorers = true;
+
+        return hasStorers;
+    }
+}
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-page="/StorersCRUD/UpdateStorer">Update Storer</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Last Name P</th>
+                <th>Last Name M</th>
+                <th>Password</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                List<Storer> allStorers;
+                int totalStorers;
+                if (ViewAllStorers(out allStorers, out totalStorers) && allStorers.Any())
+                {
+                    foreach (var storer in allStorers)
+                    {
+                        <tr>
+                            <td>@storer.StorerId</td>
+                            <td>@storer.Name</td>
+                            <td>@storer.LastNameP</td>
+                            <td>@storer.LastNameM</td>
+                            <td>@storer.Password</td>
+                        </tr>
+                    }
+                    WriteLine($"Total: {totalStorers}");
+                }
+                else
+                {
+                    <h2>No se encontraron almacenadores en la base de datos</h2>
+                    WriteLine("No se encontraron almacenadores en la base de datos");
+                }
+            }
+        </tbody>
+    </table>
+</div>

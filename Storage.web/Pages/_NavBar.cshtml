@@ -1,0 +1,140 @@
+
+@model Tuple<string, string>  // Tuple que contiene el UserType y el username
+@{
+    string userType = Context.Request.Query["userType"].ToString();
+    bool showNavBar = !string.IsNullOrEmpty(userType);
+}
+
+@if (ViewData["ShowNavBar"] != null && (bool)ViewData["ShowNavBar"])
+{
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <ul class="navbar-nav">
+                @if (Model.Item1 == "Estudiante")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Index">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/Formats/AddRequestFormat" asp-route-username="@Model.Item2">Fill a Request Format</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/Listados/ViewAllEquipmentsForStudents" asp-route-username="@Model.Item2">View All Equipment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/EquipmentsCRUD/UpdateEquipments" asp-route-username="@Model.Item2">View my Request Format</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/EquipmentsCRUD/UpdateEquipments" asp-route-username="@Model.Item2">Edit my Request Format</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/EquipmentsCRUD/UpdateEquipments" asp-route-username="@Model.Item2">Delete my Request Format</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/Listados/EquipmentsLateForReturningStudents" asp-route-username="@Model.Item2">Equipments Late of Returning</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/Listados/EquipmentsD&LStudents" asp-route-username="@Model.Item2">Equipments Damaged or Lost</a>
+                    </li>
+                }
+                else if (Model.Item1 == "Profesor")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Index">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Ve un historial de permisos que ha y no ha aprobado -->
+                        <a class="nav-link" asp-area="" asp-page="/Users/Professors/ProfessorActions/ViewRequestsToApprove" asp-route-username="@Model.Item2">My Student's Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Opción para solicitar material -->
+                        <a class="nav-link" asp-area="" asp-page="/" asp-route-username="@Model.Item2">Request for Material</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Opcion para borrar permisos cuya fecha sea futura -->
+                        <a class="nav-link" asp-area="" asp-page="/" asp-route-username="@Model.Item2">Delete Request for Material</a>
+                    </li>
+                    <li class="nav-item">
+                        <!--  Ve todos los equipos existentes en almacen-->
+                        <a class="nav-link" asp-area="" asp-page="/">View All materials of the storage</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Modifica su perfil -->
+                        <a class="nav-link" asp-area="" asp-page="/" asp-route-username="@Model.Item2">Update my info</a>
+                    </li>  
+                }
+                else if (Model.Item1 == "Almacenista")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Index">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/Storer/StorerPrincipal" asp-route-username="@Model.Item2">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Formats/CreateReportDamage&Lost" asp-route-username="@Model.Item2">Report Damage&Lost</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/Storer/StorerActions/ViewStudents">Student's Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments" asp-route-username="@Model.Item2" asp-route-userType="@Model.Item1">View inventory</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/ViewMaintenanceNotMade" asp-route-username="@Model.Item2">Maintenance Registers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/SearchStudentHistory">Search History of a student in specific</a>
+                    </li>
+                }
+                else if (Model.Item1 == "Coordinador")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Index">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments" onclick="setUserType('@Model.Item1')">View inventory</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/EquipmentsCRUD/SearchEquipmentById">Search equipment by serial number</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/D&LEquipments/ViewD&L">View damaged and lost equipment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/D&LEquipments/SearchById">Search damaged or lost equipment by serial number</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/D&LEquipments/SearchByName">Search damaged or lost equipment by equipment name</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/D&LEquipments/SearchByDateOfEvent">Search damaged or lost equipment by date of event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/D&LEquipments/SearchByStudentName">Search damaged or lost equipment by student name</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/Users/Coordinator/CoordinatorActions/ViewRequest">View loan history</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/">Manage groups</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/Users/Professors/CRUD/ManageCRUD">Manage professors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/">Manage storers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/">Manage students</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-page="/">Manage subjects</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+}
+

@@ -8,12 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Storage.CommonEntityModels.Sqlite
-<<<<<<< HEAD
-build_property.ProjectDir = D:\Valeria\Documents\.ceti\7mo\prograAvanzada\3P\BrambiWeb\Storage.CommonEntityModels.Sqlite\
-=======
-<<<<<<< HEAD
 build_property.ProjectDir = C:\Users\Samantha\Documents\progra\progra avanzada\Proyecto_WebPA\BrambiWeb\Storage.CommonEntityModels.Sqlite\
-=======
-build_property.ProjectDir = C:\Users\aacar\Documents\PA1\BrambiWeb\Storage.CommonEntityModels.Sqlite\
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5

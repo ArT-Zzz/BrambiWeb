@@ -5,9 +5,16 @@
 @{
     // Establecer el título de la página
     ViewData["Title"] = "Search Damage and Lost Equipments By Date";
+    string username = TempData["Username"]?.ToString() ?? "11111111";
+    ViewData["ShowNavBar"] = true;
+    var userTypeAndUsername = Tuple.Create("Coordinador", username);
 }
 
 <div class="container">
+    <div class="container">
+        <!-- Incluir la vista parcial y pasar el modelo -->
+        <partial name="_NavBar" model="userTypeAndUsername" />
+    </div>
     <!-- Título de la página -->
     <h1 class="display-4">Search Damage and Lost Equipments By Date</h1>
 

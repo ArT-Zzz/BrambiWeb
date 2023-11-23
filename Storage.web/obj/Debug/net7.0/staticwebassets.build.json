@@ -1,14 +1,6 @@
 {
   "Version": 1,
-<<<<<<< HEAD
-  "Hash": "qms+4xIBoBGkVHF+MiG+u8+AhVmtCU2Cx6M0Bk1+bcU=",
-=======
-<<<<<<< HEAD
   "Hash": "jRbdDCYt3hNyv7Mb4Z+6VKDQbIwYkjxBXZ9KMgF7bwM=",
-=======
-  "Hash": "mIKjoCyEETSqqCje0Qv/GXuPGQWDXimhgOF94XQyg+o=",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
   "Source": "Storage.web",
   "BasePath": "_content/Storage.web",
   "Mode": "Default",
@@ -18,39 +10,17 @@
     {
       "Name": "Storage.web\\wwwroot",
       "Source": "Storage.web",
-<<<<<<< HEAD
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\bundle\\Storage.web.styles.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Computed",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\bundle\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\bundle\\Storage.web.styles.css",
       "SourceId": "Storage.web",
       "SourceType": "Computed",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\bundle\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\bundle\\Storage.web.styles.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\bundle\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "Storage.web.styles.css",
       "AssetKind": "All",
@@ -61,16 +31,6 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-<<<<<<< HEAD
-      "OriginalItemSpec": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\bundle\\Storage.web.styles.css"
-    },
-    {
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\Storage.web.bundle.scp.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Computed",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\",
-=======
-<<<<<<< HEAD
       "OriginalItemSpec": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\bundle\\Storage.web.styles.css"
     },
     {
@@ -78,16 +38,6 @@
       "SourceId": "Storage.web",
       "SourceType": "Computed",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\",
-=======
-      "OriginalItemSpec": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\bundle\\Storage.web.styles.css"
-    },
-    {
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\Storage.web.bundle.scp.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "Storage.web.bundle.scp.css",
       "AssetKind": "All",
@@ -98,16 +48,6 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-<<<<<<< HEAD
-      "OriginalItemSpec": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\Storage.web.bundle.scp.css"
-    },
-    {
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\css\\site.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "OriginalItemSpec": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\Storage.web.bundle.scp.css"
     },
     {
@@ -115,16 +55,6 @@
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "OriginalItemSpec": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\Storage.web.bundle.scp.css"
-    },
-    {
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\css\\site.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -138,24 +68,10 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\favicon.ico",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\favicon.ico",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\favicon.ico",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",
@@ -169,24 +85,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\js\\site.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\js\\site.js",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\js\\site.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "js/site.js",
       "AssetKind": "All",
@@ -200,24 +102,10 @@
       "OriginalItemSpec": "wwwroot\\js\\site.js"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.css",
       "AssetKind": "All",
@@ -231,24 +119,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.css.map",
       "AssetKind": "All",
@@ -262,24 +136,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.min.css",
       "AssetKind": "All",
@@ -293,24 +153,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
       "AssetKind": "All",
@@ -324,24 +170,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.css",
       "AssetKind": "All",
@@ -355,24 +187,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map",
       "AssetKind": "All",
@@ -386,24 +204,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css",
       "AssetKind": "All",
@@ -417,24 +221,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map",
       "AssetKind": "All",
@@ -448,24 +238,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.css",
       "AssetKind": "All",
@@ -479,24 +255,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.css.map",
       "AssetKind": "All",
@@ -510,24 +272,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.min.css",
       "AssetKind": "All",
@@ -541,24 +289,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
       "AssetKind": "All",
@@ -572,24 +306,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.css",
       "AssetKind": "All",
@@ -603,24 +323,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map",
       "AssetKind": "All",
@@ -634,24 +340,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css",
       "AssetKind": "All",
@@ -665,24 +357,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map",
       "AssetKind": "All",
@@ -696,24 +374,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.css",
       "AssetKind": "All",
@@ -727,24 +391,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.css.map",
       "AssetKind": "All",
@@ -758,24 +408,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.min.css",
       "AssetKind": "All",
@@ -789,24 +425,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.min.css.map",
       "AssetKind": "All",
@@ -820,24 +442,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.css",
       "AssetKind": "All",
@@ -851,24 +459,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map",
       "AssetKind": "All",
@@ -882,24 +476,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css",
       "AssetKind": "All",
@@ -913,24 +493,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map",
       "AssetKind": "All",
@@ -944,24 +510,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.css",
       "AssetKind": "All",
@@ -975,24 +527,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.css.map",
       "AssetKind": "All",
@@ -1006,24 +544,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.min.css",
       "AssetKind": "All",
@@ -1037,24 +561,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -1068,24 +578,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.css",
       "AssetKind": "All",
@@ -1099,24 +595,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.css.map",
       "AssetKind": "All",
@@ -1130,24 +612,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.min.css",
       "AssetKind": "All",
@@ -1161,24 +629,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.min.css.map",
       "AssetKind": "All",
@@ -1192,24 +646,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.js",
       "AssetKind": "All",
@@ -1223,24 +663,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.js.map",
       "AssetKind": "All",
@@ -1254,24 +680,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.min.js",
       "AssetKind": "All",
@@ -1285,24 +697,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
       "AssetKind": "All",
@@ -1316,24 +714,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.js",
       "AssetKind": "All",
@@ -1347,24 +731,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.js.map",
       "AssetKind": "All",
@@ -1378,24 +748,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.min.js",
       "AssetKind": "All",
@@ -1409,24 +765,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.min.js.map",
       "AssetKind": "All",
@@ -1440,24 +782,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.js",
       "AssetKind": "All",
@@ -1471,24 +799,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.js.map",
       "AssetKind": "All",
@@ -1502,24 +816,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.min.js",
       "AssetKind": "All",
@@ -1533,24 +833,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.min.js.map",
       "AssetKind": "All",
@@ -1564,24 +850,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\LICENSE",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\LICENSE",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\bootstrap\\LICENSE",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/bootstrap/LICENSE",
       "AssetKind": "All",
@@ -1595,24 +867,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\LICENSE"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "AssetKind": "All",
@@ -1626,24 +884,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
       "AssetKind": "All",
@@ -1657,24 +901,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/jquery-validation-unobtrusive/LICENSE.txt",
       "AssetKind": "All",
@@ -1688,24 +918,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.js",
       "AssetKind": "All",
@@ -1719,24 +935,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.min.js",
       "AssetKind": "All",
@@ -1750,24 +952,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.js",
       "AssetKind": "All",
@@ -1781,24 +969,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.min.js",
       "AssetKind": "All",
@@ -1812,24 +986,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/jquery-validation/LICENSE.md",
       "AssetKind": "All",
@@ -1843,24 +1003,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery\\dist\\jquery.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery\\dist\\jquery.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/jquery/dist/jquery.js",
       "AssetKind": "All",
@@ -1874,24 +1020,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.js"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/jquery/dist/jquery.min.js",
       "AssetKind": "All",
@@ -1905,24 +1037,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/jquery/dist/jquery.min.map",
       "AssetKind": "All",
@@ -1936,24 +1054,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-<<<<<<< HEAD
-      "Identity": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery\\LICENSE.txt",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Valeria\\Documents\\.ceti\\7mo\\prograAvanzada\\3P\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-<<<<<<< HEAD
       "Identity": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "SourceId": "Storage.web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Samantha\\Documents\\progra\\progra avanzada\\Proyecto_WebPA\\BrambiWeb\\Storage.web\\wwwroot\\",
-=======
-      "Identity": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.web\\wwwroot\\lib\\jquery\\LICENSE.txt",
-      "SourceId": "Storage.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\aacar\\Documents\\PA1\\BrambiWeb\\Storage.Web\\wwwroot\\",
->>>>>>> 4dd3a924d75fd28863839dfa2a9adf66e4dbc42b
->>>>>>> 0fd50268514f2f94a3df05d1abe2b06d8e1c6ba5
       "BasePath": "_content/Storage.web",
       "RelativePath": "lib/jquery/LICENSE.txt",
       "AssetKind": "All",
