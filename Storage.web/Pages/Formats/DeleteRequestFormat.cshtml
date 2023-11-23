@@ -1,0 +1,71 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using System.Globalization;
+@{
+    ViewData["Title"] = "Delete my Non-Approved Requests";
+}
+<h1>@ViewData["Title"]</h1>
+@functions
+{
+    List<RequestDetail>? RequestDetailsToDelete {get; set;}
+    string? Message {get; set;}
+    int RequestId {get; set;}
+    public IActionResult OnGet(int RequestId, string? UserName)
+    {
+        Console.WriteLine(RequestId);
+        Model.RequestId = RequestId;
+        Model.Message = "";
+        if(RequestId != 0)
+        {
+            var result = DeleteRequestFormat(Model.RequestId);
+            Console.WriteLine($"affected details: {result.AffectedDetails}");
+            Console.WriteLine($"affected request: {result.AffectedRequest}");
+            if(result.AffectedDetails > 0 && result.AffectedRequest > 0)
+            {
+                Model.Message = $"The request N.{Model.RequestId} of the student {UserName} was succesfully deleted!";
+            }
+            else if(result.AffectedDetails > 0 && result.AffectedRequest <= 0)
+            {
+                Model.Message = $"Only the first part of the request N.{Model.RequestId} of the student {UserName} was deleted.";
+            }
+            else if(result.AffectedDetails <= 0 && result.AffectedRequest > 0)
+            {
+                Model.Message = $"Only the second part of the request N.{Model.RequestId} of the student {UserName} was deleted.";
+            }
+        }
+        TempData["DeleteMessage"] = Model.Message;
+        TempData["Username"] = UserName;
+        WriteLine(TempData["DeleteMessage"]);
+        return RedirectToPage("/Listados/ViewRequestStudents");
+    }
+    
+    public static (int AffectedDetails, int AffectedRequest) DeleteRequestFormat(int RequestId)
+    {
+        int AffectedDetails = -1, AffectedRequest = -1;
+            using (bd_storage db = new())
+            {
+                    // Eliminar todos los RequestDetails con el mismo RequestId
+                    var RequestDetailsToDelete = db.RequestDetails.Where(d => d.RequestId == RequestId);
+                    db.RequestDetails.RemoveRange(RequestDetailsToDelete);
+
+                    AffectedDetails = db.SaveChanges();
+                    // Mostrar los mensajes dependiendo del valor de Affected
+                    if (AffectedDetails > 0)
+                    {
+                        WriteLine("RequestDetails successfully deleted");
+
+                        // Eliminar la solicitud principal
+                        var Request = db.Requests.FirstOrDefault(r => r.RequestId == RequestId);
+                        if (Request is not null)
+                        {
+                            db.Requests.Remove(Request);
+                            AffectedRequest = db.SaveChanges();
+                            // Mostrar los mensajes necesarios por el estado de la consulta
+                        }
+                    }
+            }
+
+            return (AffectedDetails, AffectedRequest);
+    }
+}

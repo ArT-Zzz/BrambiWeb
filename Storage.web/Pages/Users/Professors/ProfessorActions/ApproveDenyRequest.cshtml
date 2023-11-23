@@ -32,24 +32,6 @@
             {
                 affected = UpdateRequestDetailsByRequestId(Model.RequestId, 1); // status approved    
                 Model.Message = "Your request was approved";            
-<<<<<<< HEAD
-            }
-            else if(action == "deny")
-            {
-                affected = UpdateRequestDetailsByRequestId(Model.RequestId, 2); // status denied
-                Model.Message ="Your request was denied";
-            }
-            if(affected > 0)
-            {
-                Console.WriteLine("Professor Nip changed");
-            }
-            Console.WriteLine(affected);
-            Model.AllRequestsToApprove = Functions.WatchRequestsToApprove(Model.Username);
-            if(Model.AllRequestsToApprove is null)
-            {
-                Model.Message ="There are no requests left to approve or deny";
-=======
->>>>>>> 68d00d2d1141b42fc3f82dea78c6d1bd15ef4879
             }
             else if(action == "deny")
             {
@@ -86,30 +68,7 @@
                 }
                 return affected;
         }
-        
     }
-
-<<<<<<< HEAD
-    public static int UpdateRequestDetailsByRequestId(int RequestId, byte Nip)
-    {
-        using(bd_storage db = new())
-        {
-            IQueryable<RequestDetail> requestDetails = db.RequestDetails
-                .Where(r=>r.RequestId == RequestId);
-                int affected = 0;
-                if(requestDetails is not null && requestDetails.Any())
-                    {
-                        affected = requestDetails.ExecuteUpdate(u => u.SetProperty(
-                        p => p.ProfessorNip, // Property Selctor
-                        p => Nip // Value to edit
-                    ));
-                }
-                return affected;
-        }
-    }
-=======
-
->>>>>>> 68d00d2d1141b42fc3f82dea78c6d1bd15ef4879
 }
 
 @if(Model.Message != "")
@@ -154,7 +113,6 @@
                     <td>@r.RequestedDate.Day / @r.RequestedDate.Month / @r.RequestedDate.Year</td>
                     <td>@r.DispatchTime.TimeOfDay</td>
                     <td>@r.ReturnTime.TimeOfDay</td>
-<<<<<<< HEAD
                     <form method="get" action="/Users/Professors/ProfessorActions/ApproveDenyRequest">
                         <input type="hidden" name="RequestId" value=@r.RequestId>
                         <input type="hidden" name="UserName" value=@Model.Username>
@@ -165,16 +123,6 @@
                             <button type="submit" class="btn btn-primary" name="action" value="deny">Deny</button>
                         </td>
                     </form>
-=======
-                    <td>
-                    <form method="get" action="/Users/Professors/ProfessorActions/ApproveDenyRequest">
-                        <input type="hidden" name="RequestId" value=@r.RequestId>
-                        <input type="hidden" name="UserName" value=@Model.Username>
-                        <button type="submit" class="btn btn-primary" name="action" value="approve">Approve</button>
-                        <button type="submit" class="btn btn-primary" name="action" value="deny">Deny</button>
-                    </form>
-                    </td>
->>>>>>> 68d00d2d1141b42fc3f82dea78c6d1bd15ef4879
                 </tr>
             }
         </tbody>

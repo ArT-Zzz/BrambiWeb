@@ -15,32 +15,9 @@
         if (logged)
         {
             // Redirigir a la página principal del usuario según su rol
-<<<<<<< HEAD
             var redirectUrl = GetRedirectUrl(rol);
             TempData["Username"] = username;
             Response.Redirect(redirectUrl);
-=======
-            if (rol == "students")
-            {
-                TempData["Username"] = username;
-                Response.Redirect("/Users/Students/StudentsPrincipal");
-            }
-            else if (rol == "professors")
-            {
-                TempData["Username"] = username;
-                Response.Redirect("/Users/Professors/ProfessorPrincipal");
-            }
-            else if( rol == "storers")
-            {
-                TempData["Username"] = username;
-                Response.Redirect("/Users/Storer/StorerPrincipal");
-            }
-            else if( rol == "coordinators")
-            {
-                TempData["Username"] = username;
-                Response.Redirect("/Users/Coordinator/CoordinatorPrincipal");
-            }
->>>>>>> 68d00d2d1141b42fc3f82dea78c6d1bd15ef4879
         }
     }
 }

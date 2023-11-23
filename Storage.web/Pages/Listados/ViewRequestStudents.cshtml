@@ -12,10 +12,22 @@
     List<RequestDetail>? AllMyRequests {get; set;}
     string? Username {get; set;}
     string? Message {get; set;}
+    string? DeleteMessage {get; set;}
     public void OnGet(string? username) 
     {
         //Recibe el username del inicio de sesion
-        Model.Username = username;
+        if(TempData["Username"] as string is not null)
+        {
+            Model.Username = TempData["Username"] as string;
+        }
+        else
+        {
+            Model.Username = username;
+        }
+        Model.Message = "";
+        //recibe el dato temporal mandado desde el delete, para comprobar si se realizó la eliminación
+        Model.DeleteMessage = TempData["DeleteMessage"] as string;
+        
         // Si el username tiene algun valor
         if(Model.Username is not null)
         {
@@ -31,6 +43,14 @@
             }
         }
     }
+}
+@if(Model.Message != "")
+{
+    <h5>@Model.Message</h5>
+}
+@if(Model.DeleteMessage != "")
+{
+    <h8>@Model.DeleteMessage</h8>
 }
 
 @if(Model.AllMyRequests is not null )
@@ -75,6 +95,16 @@
                     }
                     else if(r.ProfessorNip==2){
                         <td>Denied</td>
+                    }
+                    @if(r.ProfessorNip == 0)
+                    {
+                        <form method="get" action="/Formats/DeleteRequestFormat">
+                            <input type="hidden" name="RequestId" value=@r.RequestId>
+                            <input type="hidden" name="UserName" value=@Model.Username>
+                            <td>                        
+                                <button type="submit" class="btn btn-primary" name="action" value="delete">Delete</button>
+                            </td>
+                        </form>
                     }
                     <form method="get" action="/Listados/ViewRequestStudents">
                         <input type="hidden" name="username" value=@Model.Username>

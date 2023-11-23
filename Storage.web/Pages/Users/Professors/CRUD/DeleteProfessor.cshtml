@@ -26,8 +26,6 @@
             @{
                 // Obtener el ID del profesor encriptado desde el formulario
                 var encryptedProfessorId =Request.Form["professorIdToDelete"];
-                // Mostrar el ID encriptado para fines de depuración
-                <p>Encrypted Professor ID: @encryptedProfessorId</p>
                 // Invocar la lógica de eliminación de profesor y almacenar el resultado en una variable
                 var deletionResult = DeleteProfessor(encryptedProfessorId);
             }
@@ -57,11 +55,7 @@
                     var professor = db.Professors
                         .Include(p => p.Petitions)
                         .Include(r => r.Requests)
-                        .Include(t => t.Teaches)
                         .FirstOrDefault(p => p.ProfessorId ==   Functions.EncryptPass(encryptedProfessorId));
-
-                        <p>Encrypted Professor ID: @Functions.EncryptPass(encryptedProfessorId)</p>
-                        <p>Encrypted Professor ID: @Functions.Decrypt("3jII3knjrhOo7Q1P0P+9nQ==")</p>
 
                     if (professor != null)
                     {
