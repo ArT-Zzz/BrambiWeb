@@ -1,0 +1,138 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using System.Globalization;
+@using System.Security.Cryptography;
+@using System.Text;
+@{
+    ViewData["Title"] = "Add Maintenance Register";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to finish a maintenance register, filling the pending info</p>
+
+@functions
+{   // declaration of all the Models that will be used in the html code
+    List<MaintenanceType>? AllMaintenanceTypes {get; set;}
+    string Message ="";
+    string? UserName {get; set;}
+    string? MaintenanceID {get; set; }
+    string? MaxDate {get; set;}
+    string? MinDate {get; set;}
+    
+    // is called when the page is initially loaded, receives values from the other page and initializes values to send them to the html code
+    public void OnGet()
+    {
+        Model.Message = "";
+        Model.UserName = TempData["UserName"] as string;
+        Console.WriteLine($"Username :  {Model.UserName}");
+        Model.MaintenanceID = TempData["MaintenanceID"] as string;
+
+        Model.MaxDate = DateTime.Now.Date.AddYears(5).ToString("yyyy-MM-dd");
+        using(bd_storage db = new()) // creates connection with the database
+        {
+            IQueryable<MaintenanceRegister> maintenanceReg = db.MaintenanceRegisters // finds the maintenance register corresponding to the id
+                .Where(m => m.MaintenanceId == Convert.ToInt32(Model.MaintenanceID));
+
+            if(maintenanceReg is not null && maintenanceReg.Any())
+            {
+                Model.MinDate = maintenanceReg.First().ProgrammedDate.Date.ToString("yyyy-MM-dd"); // ensures exit date isn't before proogrammed date
+            }
+        }
+    }
+
+    // receives the info necessary to complete all the fields on a maintenance report, as well as the id of the report that the user wants to complete
+    // if the update is done correctly, it returns the user to storer's main menu 
+    public IActionResult OnPost(string? username, string maintenanceId, string maintenanceDesc, DateTime exitdate, string maintenanceMatsDesc)
+    {
+        Model.UserName = username;
+        Model.MaintenanceID = maintenanceId;
+        if(username is not null)
+        {
+            int affected = UpdateMaintenance(maintenanceId, maintenanceDesc, exitdate, maintenanceMatsDesc); // updates maintenance and equipments related to it
+            if(affected > 0)
+            {
+                // created succesfully
+                Console.WriteLine($"Afectado : {affected}");
+                TempData["UserName"] = username; // creates temp data to send to the main menu
+                return RedirectToPage("/Users/Storer/StorerPrincipal"); // redirects user too storer's main menu
+            }
+            else
+            {
+                Model.Message = "The maintenance couldn't be updated, please try again";
+                return Page();
+            }
+        }
+        else
+        {
+            Model.Message = "Your username is not being saved correctly, sorry";
+        }
+        return Page();
+    }
+
+    // update maintenance report and make equipments related available, receives maintenance register id, maintenance description, maintenance exit date and maintenance materials description
+    public int UpdateMaintenance(string MaintenanceId, string MaintenanceDesc, DateTime ExitDate, string MaintenanceMatsDesc)
+    {
+        int affected = 0;
+        using(bd_storage db =  new()) // creats connection witn the database
+        {
+            IQueryable<MaintenanceRegister> updatedMaintenance = db.MaintenanceRegisters // finds the maintenance register inside the database table "MaintenanceRegister"
+                .Where(m => m.MaintenanceId == Convert.ToInt32(MaintenanceId));
+            
+            if(updatedMaintenance is not null && updatedMaintenance.Any()) // if it founds the maintenance, updates it with the info entered bbyb by the user
+            {
+                updatedMaintenance.First().MaintenanceDescription = MaintenanceDesc;
+                updatedMaintenance.First().ExitDate = ExitDate;
+                updatedMaintenance.First().MaintenanceMaterialsDescription = MaintenanceMatsDesc;
+                affected += db.SaveChanges(); // saves changes on the database
+            }
+
+            IQueryable<string> equipments = db.Maintain // gets the equipment ids of the equipments related to the maintenance register chosen
+                .Where(m => m.MaintenanceId == Convert.ToInt32(MaintenanceId))
+                .Select(m => m.EquipmentId);
+
+            if(equipments is not null && equipments.Any()) // if it finds any equipments, update their status to available
+            {
+                foreach(var equipment in equipments)
+                {
+                    IQueryable<Equipment> updatedEquipment = db.Equipments // finds the equipments with their id
+                        .Where(e => e.EquipmentId == equipment);
+                    
+                    if(updatedEquipment is not null && updatedEquipment.Any()) // if the query returns something, update it
+                    {
+                        updatedEquipment.First().StatusId = 1;
+                        affected += db.SaveChanges();  // saves changes on the database
+                    }
+                }
+            }
+            return affected; // return number of rows affected by the updates
+        }
+    }
+}
+
+@if(Model.Message != "")
+{
+    <h3>@Model.Message</h3>
+}
+
+<form method="post" asp-page-handler="Finish">
+    <input type="hidden" name="username" value="@Model.UserName">
+    <input type="hidden" name="maintenanceId" value="@Model.MaintenanceID">
+    <div class="mb-3">
+        <label class="form-label">Provide the Description of the Maintenance made:</label>
+        <input type="textarea" class="form-control" id="Description" name="maintenanceDesc" maxlength="255" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="fecha">Provide the Date when the Maintenance was finished:</label>
+        <input type="date" class="form-control" id="fecha" name="exitdate" pattern="\d{4}-\d{2}-\d{2}" maxlength="10" min="@Model.MinDate" max="@Model.MaxDate" placeholder="YYYY-MM-DD" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Provide the Description of the Materials that were user for the Maintenance:</label>
+        <input type="textarea" class="form-control" id="Description" name="maintenanceMatsDesc" maxlength="255" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Finish the Maintenance</button>
+</form>

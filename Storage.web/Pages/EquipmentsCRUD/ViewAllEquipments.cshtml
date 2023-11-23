@@ -1,6 +1,7 @@
 @page
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.EntityFrameworkCore.ChangeTracking
+@using System.Text
 @using AutoGens
 @{
     ViewData["Title"] = "View All Equipments"; // title that will be shown in the page
@@ -8,111 +9,145 @@
 @functions
 {
     public List<Equipment>? AllEquipments { get; set; } //list to store all the 20 fisrt equipments in the bd
-    int Offset {get; set;} // start count of equipments
     int TotalEquipments = 0; // total equipments
-    int Pages {get; set;}
-    int TotalPages {get; set;}
     string? UserName;
-    public void OnGet(string action, string username) // get all the equipments, the action is to see if th button Next or Previous was pushed
+    public void OnGet(string username) // get all the equipments, the action is to see if th button Next or Previous was pushed
     {
-        if(username != null)  Model.UserName = username;       
-        if(Offset < 0){Model.Offset = 0;}
-        if (action == "Previous" && Model.Offset >= 20)
-        {
-            Model.Offset -= 20; // to start from the last 20 equipments
-            Model.Pages -=1; // show in which page it is
-        }
-        if (action == "Next" )
-        {
-            Console.WriteLine($"entro aqui ");
-            Model.Offset += 20; // to start from the next 20 equipments
-            Model.Pages += 1;
-            Console.WriteLine(Model.Offset);
-        }
+        if(username != null)  Model.UserName = username;
 
-        var result = ViewAllEquipmentsByOffset(Model.Offset); // calling the method that will consult the bd and bring 20 equipments found, starting from the sent offset
+        var result = ViewAllEquipments(); // calling the method that will consult the bd and bring 20 equipments found, starting from the sent offset
         Model.AllEquipments = result.EquipmentList; // Model.AllEquipments = 20 equipments
-        //Model.Offset = result.Offset; // Model.Offset = when it starts
         Model.TotalEquipments = result.Total; //Model.TotalEquipments = int how many equipments were found in the whole Equipments Table
-        if(Model.TotalEquipments % 20 == 0)
+    }
+
+    public void OnPost(string username, string equipment)
+    {
+        Model.UserName = username;
+        DeleteEquipment(equipment);
+
+        var result = ViewAllEquipments(); // calling the method that will consult the bd and bring 20 equipments found, starting from the sent offset
+        Model.AllEquipments = result.EquipmentList; // Model.AllEquipments = 20 equipments
+        Model.TotalEquipments = result.Total; //Model.TotalEquipments = int how many equipments were found in the whole Equipments Table
+    }
+
+    public void DeleteEquipment(string EquipmentID)
+    {
+        using(bd_storage db = new())
         {
-            Model.TotalPages = Model.TotalEquipments / 20;
+            using (var transaction = db.Database.BeginTransaction()) // protect data integrity by deleting everything that needs to be deleted or not deleting anything
+            {
+                try // delete order details that have product id, than delete the products that have the category id id, than delete the category that has the catgory id
+                {   
+                    // delete related DyLEquipments 
+                    IQueryable<DyLequipment> relatedDyLEquipments = db.DyLequipments.Where(e => e.EquipmentId == EquipmentID);
+                    if(relatedDyLEquipments is not null && relatedDyLEquipments.Any())
+                    {
+                        var deletedDyLEquipments = relatedDyLEquipments.ToList();
+                        db.DyLequipments.RemoveRange(deletedDyLEquipments);
+                        db.SaveChanges(); 
+                    }
+
+                    // delete related Maintains
+                    IQueryable<Maintain> relatedMaintains = db.Maintain.Where(e => e.EquipmentId == EquipmentID);
+                    if(relatedMaintains is not null && relatedMaintains.Any())
+                    {
+                        var deletedMaintains = relatedMaintains.ToList();
+                        db.Maintain.RemoveRange(deletedMaintains);
+                        db.SaveChanges();
+                    } 
+
+                    // delete related Requests
+                    IQueryable<RequestDetail> relatedRequests = db.RequestDetails.Where(e => e.EquipmentId == EquipmentID);
+                    if(relatedRequests is not null && relatedRequests.Any())
+                    {
+                        var deletedRequests = relatedRequests.ToList();
+                        db.RequestDetails.RemoveRange(deletedRequests);
+                        db.SaveChanges();
+                    }  
+
+                    // delete related Petitions
+                    IQueryable<PetitionDetail> relatedPetitions = db.PetitionDetails.Where(e => e.EquipmentId == EquipmentID);
+                    if(relatedPetitions is not null && relatedPetitions.Any())
+                    {
+                        var deletedPetitions = relatedPetitions.ToList();
+                        db.PetitionDetails.RemoveRange(deletedPetitions);
+                        db.SaveChanges();
+                    }                  
+
+                    // Delete Chosen Equipment
+                    IQueryable<Equipment> equipment = db.Equipments.Where(e => e.EquipmentId == EquipmentID);
+                    var EquipmentList = equipment.ToList();
+                    if (equipment is not null && equipment.Any())
+                    {
+                        db.Equipments.Remove(equipment.FirstOrDefault());
+                        db.SaveChanges(); // Saves chages on the database
+                    }
+
+                    transaction.Commit(); // saves changes if everything was successfully deleted
+                }
+                catch (Exception ex) // catches possibble exceptions
+                {
+                    Console.WriteLine(ex.Message);
+                    transaction.Rollback(); // undos made changes 
+                }
+            }
         }
-        else
-        {
-            Model.TotalPages = (Model.TotalEquipments / 20 ) + 1;
-        }
-        action = "";
     }
     // returns the equipments found, in what equipment it starts (offset), and the total of equipments
-    public static (List<Equipment>? EquipmentList,int Offset, int Total) ViewAllEquipmentsByOffset(int Offset) 
+    public static (List<Equipment>? EquipmentList, int Total) ViewAllEquipments() 
     {
-        using( bd_storage db = new())
+        using(bd_storage db = new())
         {
             IQueryable<Equipment>? equipments = db.Equipments
             .Include(e => e.Area).Include(e => e.Status).Include(e => e.Coordinator).OrderBy(e=>e.AreaId);
-            
-            int offset = Offset;
 
             if((equipments is null) || !equipments.Any())
             {
                 Console.WriteLine("There are no equipments found");
-                return(null, offset, 0);
+                return(null, 0);
             } 
             else 
             {
-                int countTotal = equipments.Count();
-                int batchS = 20;
-                int pages = countTotal / batchS;
-                if(countTotal%batchS != 0){pages+=1;}
-                var equips = equipments.Skip(offset).Take(batchS);
-                    Console.WriteLine("| {0,-15} | {1,-80} | {2,7} | {3,-22} |",
-                        "EquipmentId", "Equipment Name", "Year", "Status");
-                    Console.WriteLine("-------------------------------------------------------------------------------------------------------------------------------------");
-                    
-                    foreach( var e in equips)
-                    {
-                        Console.WriteLine("| {0,-15} | {1,-80} | {2,7} | {3,-22} |",
-                         e.EquipmentId, e.Name, e.Year, e.Status?.Value);
-                    }
+                Console.WriteLine("| {0,-15} | {1,-80} | {2,7} | {3,-22} |",
+                    "EquipmentId", "Equipment Name", "Year", "Status");
+                Console.WriteLine("-------------------------------------------------------------------------------------------------------------------------------------");
                 
-                    Console.WriteLine();
-                    List<Equipment>? EquipmentsList = equips.ToList();
-            return (EquipmentsList, offset, equipments.Count());
+                foreach( var e in equipments)
+                {
+                    Console.WriteLine("| {0,-15} | {1,-80} | {2,7} | {3,-22} |",
+                        e.EquipmentId, e.Name, e.Year, e.Status?.Value);
+                }
+            
+                Console.WriteLine();
+                List<Equipment>? EquipmentsList = equipments.ToList();
+                return (EquipmentsList, equipments.Count());
             }
         }
     }
 }
 
-<<<<<<< HEAD
-=======
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
-            <a class="navbar-brand" asp-area="" asp-page="/Index">Storage.web</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/Storer/StorerPrincipal" asp-route-username="@Model.UserName">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Formats/CreateReportDamage&Lost" asp-route-username="@Model.UserName">Report Damage&Lost</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/Storer/StorerActions/ViewStudents" asp-route-username="@Model.UserName">Student's Info</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments" asp-route-username="@Model.UserName">Equipments</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/ViewMaintenanceNotMade" asp-route-username="@Model.UserName">Maintenance Registers</a>
-                    </li>
-                </ul>
-            </div>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-page="/Users/Storer/StorerPrincipal" asp-route-username="@Model.UserName">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-page="/Formats/CreateReportDamage&Lost" asp-route-username="@Model.UserName">Report Damage&Lost</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-page="/Users/Storer/StorerActions/ViewStudents" asp-route-username="@Model.UserName">Student's Info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments" asp-route-username="@Model.UserName">View inventory</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/ViewMaintenanceNotMade" asp-route-username="@Model.UserName">Maintenance Registers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="/Index" style="color: darkred;">Sign Out</a>
+            </li>
         </div>
     </nav>
 </header>
@@ -122,37 +157,28 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/AddEquipments">Add Equipment</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/AddEquipments" asp-route-username="@Model.UserName">Add Equipment</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/UpdateEquipments">Update Equipments</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/UpdateEquipments" asp-route-username="@Model.UserName">Update Equipments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/DeleteEquipments">Delete Equipments</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/SearchEquipmentById" asp-route-username="@Model.UserName">Search for One Equipment ID</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/SearchEquipmentById">Search for One Equipment ID</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/SearchEquipmentsByName">Search By Equipment Name</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/SearchEquipmentsByName" asp-route-username="@Model.UserName">Search By Equipment Name</a>
                     </li>
                 </ul>
             </div>
         </div>
 </nav>
 
->>>>>>> 68d00d2d1141b42fc3f82dea78c6d1bd15ef4879
 <div class="text-center">
     <h1 class="display-4">@ViewData["Title"]</h1>
     
-    <h2>Total: @Model.TotalEquipments . Showing @Model.Pages / @Model.TotalPages</h2>
-
-    <form method="get" action="/EquipmentsCRUD/ViewAllEquipments">
-        <button type="submit" name="action" value="Previous" @if (Model.Offset == 0) { <text>disabled</text> }>Previous</button>
-        <button type="submit" name="action" value="Next" @if (Model.Pages >= Model.TotalPages) { <text>disabled</text> }>Next</button>
-    </form>
+    <h2>Total: @Model.TotalEquipments</h2>
     @{
-    Console.WriteLine($"Offset: {Model.Offset}, TotalEquipments: {Model.TotalEquipments}"); // this is just so you can check
+    Console.WriteLine($"TotalEquipments: {Model.TotalEquipments}"); // this is just so you can check
     }
     <table class="table">
             <thead>
@@ -164,6 +190,7 @@
                     <th>Year</th>
                     <th>Status</th>
                     <th>Control Number</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -178,9 +205,14 @@
                             <td>@c.Year</td>
                             <td>@c.Status?.Value</td>
                             <td>@c.ControlNumber</td>
+                            <td>
+                                <form method="post" asp-page-handler="Delete">
+                                    <input type="hidden" name="username" value="@Model.UserName">
+                                    <button type="submit" class="btn btn-primary" style="margin-top: 8px; background-color: rgb(142, 4, 4)" asp-route-equipment=@c.EquipmentId>Kill</button>
+                                </form>
+                            </td>
                         </tr>
                     }
-                    Console.WriteLine($"Total: {Model.TotalEquipments} . Showing: {Model.Pages} / {Model.TotalPages}");
                 }
                 else
                 {

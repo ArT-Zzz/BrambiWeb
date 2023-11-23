@@ -5,9 +5,6 @@
 @{
     ViewData["Title"] = "Update Equipments";
 }
-<h1>@ViewData["Title"]</h1>
-
-<p>Use this page to Update Equipments equipments.</p>
 @functions
 {
     bool Ban = false;
@@ -17,9 +14,11 @@
     List<Area>? AllAreas {get; set;}
     List<Coordinator>? AllCoordinators {get; set;}
     List<Status>? AllStatus {get; set;}
+    string? UserName {get; set; }
     // predetermined function of OnGet when the button of the forms is clicked, it sends here all the info of the forms, each parameters corresponds to the name="" of a camp
-    public void OnGet(string EquipmentId, string NameText, short AreaText, string DescriptionText, byte StatusText, int YearText, string CoordinatorText, string ControlNumberText)
+    public void OnGet(string username, string EquipmentId, string NameText, short AreaText, string DescriptionText, byte StatusText, int YearText, string CoordinatorText, string ControlNumberText)
     {
+        if(username != null)  Model.UserName = username;
         if(EquipmentId != null && EquipmentId != "")
         {
             //Checks that an Equipment with the EquipmentId sent exists, if yes returns an Equipment object, if not, returns null
@@ -41,6 +40,33 @@
         }
     }
 }
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments" asp-route-username="@Model.UserName">View inventory</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/AddEquipments" asp-route-username="@Model.UserName">Add Equipment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/UpdateEquipments" asp-route-username="@Model.UserName">Update Equipments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/SearchEquipmentById" asp-route-username="@Model.UserName">Search for One Equipment ID</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/SearchEquipmentsByName" asp-route-username="@Model.UserName">Search By Equipment Name</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</nav>
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to Update Equipments equipments.</p>
 
 @if(Model.Ban == false)
 {
@@ -52,6 +78,7 @@
         </div>
     }
     <form method="get" action="/EquipmentsCRUD/UpdateEquipments">
+        <input type="hidden" name="username" value="@Model.UserName">
         <input type="text" class="form-control" id="EquipmentIdText" name="EquipmentId" maxlength="15" required>
         <br>
         <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirmar</button>
@@ -66,6 +93,7 @@ else
     @if(EquipmentSearched is not null)
     {
         <form method="get" action="/EquipmentsCRUD/EquipmentUpdate">
+            <input type="hidden" name="username" value="@Model.UserName">
             <input hidden type = "text" name= "EquipmentId" value=@EquipmentSearched.EquipmentId readonly>
             <div class="mb-3">
                 <label class="form-label">Provide the new Equipment Name: </label>

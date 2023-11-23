@@ -8,32 +8,27 @@
 @functions
 {
     public List<Maintain>? AllPendingMaintenances { get; set; } // list that stores first 20 pending maintenance registers
-    int Offset = 0; // start count of pending maintenance registers
     int TotalMaintenances = 0; // total maintenance registers
-    int Pages = 1;
     string? UserName; 
+
     public void OnGet(string action, string username) // the action is to see if the Next or Previous button was pushed
     {     
         if(username != null)  Model.UserName = username; 
         Console.WriteLine($"Username :  {Model.UserName}");
-        var result = ViewMaintenanceNotMade(Offset); // gets the 20 maintenance registers afetr the offset
+
+        var result = ViewMaintenanceNotMade(); // gets the 20 maintenance registers afetr the offset
         Model.AllPendingMaintenances = result.pendingMaintenanceRegisters; // sends to html maintenance registers batch
-        Model.Offset = result.Offset; // sends to html the offset
         Model.TotalMaintenances = result.Total; // sends to html how many maintenance registers there are in total
-        if (action == "Previous" && Offset >= 20)
-        {
-            Model.Offset -= 20; // first batch first 20 maintenance registers
-            Model.Pages -=1; // show in which page it is
-        }
-        else if (action == "Next" )
-        {
-            Model.Offset += 20; // each batch shows the next 20 maintenance registers
-            Model.Pages +=1; // advances page
-        } 
-        @TempData.Remove("Username");
     }
 
-    public static (List<Maintain>? pendingMaintenanceRegisters,int Offset, int Total) ViewMaintenanceNotMade(int Offset)
+    public IActionResult OnPost(string username, string maintenanceId)
+    {
+        TempData["UserName"] = username;
+        TempData["MaintenanceID"] = maintenanceId;
+        return RedirectToPage("/MaintenanceCRUD/FinishPendingMaintenance");
+    }
+
+    public static (List<Maintain>? pendingMaintenanceRegisters, int Total) ViewMaintenanceNotMade()
     {
         using (bd_storage db = new())
         {
@@ -49,19 +44,11 @@
                 .OrderBy(m => m.MaintainId);
             // var maintainGroup = maintain.GroupBy(ma=>ma.Maintenance.MaintenanceId);
 
-            int offset = Offset;
-
             if (maintain is null || !maintain.Any())
             {
                 Console.WriteLine("There are no pending maintenance registers right now");
-                return(null, offset, 0);
+                return(null, 0);
             }
-
-            int countTotal = maintain.Count();
-            int batchS = 20;
-            int pages = countTotal / batchS;
-            if(countTotal%batchS != 0){pages+=1;}
-            var pendingMaintenance = maintain.Skip(offset).Take(batchS);
 
             Console.WriteLine(
                 "|{0,-3}|{1,-12}|{2,-55}|{3,-11}|{4,-75}|{5, -15}|{6, -15}|",
@@ -76,7 +63,7 @@
             Console.WriteLine(
                 "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
             );
-            foreach (var m in pendingMaintenance)
+            foreach (var m in maintain)
             {
                 Console.WriteLine(
                 "|{0,-3}|{1,-12}|{2,-55}|{3,-11}|{4,-75}|{5, -15}|{6, -15}|",
@@ -90,39 +77,34 @@
                 );
             }
             Console.WriteLine();
-            List<Maintain>? pMaintain = pendingMaintenance.ToList();
-            return (pMaintain, offset, maintain.Count());
+            List<Maintain>? pMaintain = maintain.ToList();
+            return (pMaintain, maintain.Count());
         }
     }
 }
 
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <a class="navbar-brand" asp-area="" asp-page="/Index">Storage.web</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/Storer/StorerPrincipal" asp-route-username="@Model.UserName">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Formats/CreateReportDamage&Lost" asp-route-username="@Model.UserName">Report Damage&Lost</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewStudents" asp-route-username="@Model.UserName">Student's Info</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments" asp-route-username="@Model.UserName">Equipments</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/ViewMaintenanceNotMade" asp-route-username="@Model.UserName">Maintenance Registers</a>
-                    </li>
-                </ul>
-            </div>
+        <div class="container">            
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-page="/Users/Storer/StorerPrincipal" asp-route-username="@Model.UserName">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-page="/Formats/CreateReportDamage&Lost" asp-route-username="@Model.UserName">Report Damage&Lost</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-page="/Users/Storer/StorerActions/ViewStudents" asp-route-username="@Model.UserName">Student's Info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments" asp-route-username="@Model.UserName">View inventory</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/ViewMaintenanceNotMade" asp-route-username="@Model.UserName">Maintenance Registers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="/Index" style="color: darkred;">Sign Out</a>
+            </li>
         </div>
     </nav>
 </header>
@@ -135,10 +117,7 @@
                         <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/AddMaintenance" asp-route-username="@Model.UserName">Add Maintenance Report</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/FinishPendingMaintenance">Finish Pending Maintenance</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/FullMaintenanceHistory">Full Maintenance History</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/FullMaintenanceHistory" asp-route-username="@Model.UserName">Full Maintenance History</a>
                     </li>
                 </ul>
             </div>
@@ -148,13 +127,9 @@
 <div class="text-center">
     <h1 class="display-4">@ViewData["Title"]</h1>
     
-    <h2>Total: @Model.TotalMaintenances . Showing: @Model.Pages / @(@Model.TotalMaintenances/20)</h2>
-    <form method="get" action="/MaintenanceCRUD/ViewMaintenanceNotMade">
-        <button type="submit" name="action" value="Previous" @if (Model.Offset == 0) { <text>disabled</text> }>Previous</button>
-        <button type="submit" name="action" value="Next" @if (Model.Offset + 20 >= Model.TotalMaintenances) { <text>disabled</text> }>Next</button>
-    </form>
+    <h2>Total: @Model.TotalMaintenances</h2>
     @{
-    Console.WriteLine($"Offset: {Model.Offset}, TotalMaintenances: {Model.TotalMaintenances}"); // this is just so you can check
+    Console.WriteLine($"TotalMaintenances: {Model.TotalMaintenances}"); // this is just so you can check
     }
     <table class="table">
         <thead>
@@ -166,6 +141,7 @@
                 <th>Instructions</th>
                 <th>Date Started</th>
                 <th>Storer ID</th>
+                <th>Finish</th>
             </tr>
         </thead>
         <tbody>
@@ -180,9 +156,14 @@
                         <td>@pMaintenance.Maintenance?.MaintenanceInstructions</td>
                         <td>@pMaintenance.Maintenance?.ProgrammedDate.ToString("dd-MM-yyyy")</td>
                         <td>@Functions.Decrypt(pMaintenance.Maintenance?.Storer?.StorerId)</td>
+                        <td>
+                            <form method="post" asp-page-handler="Finish">
+                                <input type="hidden" name="username" value="@Model.UserName">
+                                <button type="submit" class="btn btn-primary" style="margin-top: 8px; background-color: rgb(142, 4, 4)" asp-route-maintenanceId=@pMaintenance.Maintenance?.MaintenanceId>Finish Report</button>
+                            </form>
+                        </td>
                     </tr>
                 }
-                Console.WriteLine($"Total: {Model.TotalMaintenances} . Showing: {Model.Pages} / {Model.TotalMaintenances/20}");
             }
             else
             {

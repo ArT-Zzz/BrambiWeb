@@ -66,26 +66,23 @@
                 else if (Model.Item1 == "Almacenista")
                 {
                     <li class="nav-item">
-                        <a class="nav-link" href="/Index">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/Storer/StorerPrincipal" asp-route-username="@Model.Item2">Home</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/Storer/StorerPrincipal">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Formats/CreateReportDamage&Lost" asp-route-username="@Model.Item2">Report Damage&Lost</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/Storer/StorerActions/ViewStudents">Student's Info</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/Storer/StorerActions/ViewStudents" asp-route-username="@Model.Item2">Student's Info</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments" asp-route-username="@Model.Item2" asp-route-userType="@Model.Item1">View inventory</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments" asp-route-username="@Model.Item2">View inventory</a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/ViewMaintenanceNotMade" asp-route-username="@Model.Item2">Maintenance Registers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/ViewActionsAboutStudents/SearchStudentHistory">Search History of a student in specific</a>
+                        <a class="nav-link text-dark" href="/Index" style="color: darkred;">Sign Out</a>
                     </li>
                 }
                 else if (Model.Item1 == "Coordinador")

@@ -10,7 +10,7 @@
     //await Html.RenderPartialAsync("Functions.cshtml");
     // haz esto naco
     
-//second form to end // show here, when the button is clicked, send to the postFinish, in there check that the MaintenanceTypeText
+    //second form to end // show here, when the button is clicked, send to the postFinish, in there check that the MaintenanceTypeText
     // != 0, if it is different, than add maintenanceRegister, hacer un chequeo de que Query Last MaintenanceRegisterId + 1, 
     //despues agregar MaintenanceType, ProgrammedDate, Instrucctions, storer that is already sent (Username), db.SaveChanges y regresar eso en la funcion
     // if affected = db.SaveChanges() es > 0 than TempData["MaintenanceRegisterId"] that was created, and Redirect.ToPage("/MaintenanceCRUD/AddMaintain")
@@ -40,6 +40,8 @@
         return; // the return Page() means that it will return to this same page, reload the same page
     }   
 
+    // checks the equipment chosen hasn't been added to the maintenance register, and if it hasn't, it adds it to a new maintain register and updates the equipment's status
+    // receives storer's username, equipment's id, status' id, and maintenance register's id
     public void OnPostAddEquipment(string username, string EquipmentText, string StatusText, string maintenanceRegisterID)
     {
         Model.Username = username;
@@ -47,7 +49,7 @@
         Model.AllStatus = Functions.ListStatus();
         MaintenanceRegisterID = maintenanceRegisterID;
         Console.WriteLine($"Maintenance Register : {MaintenanceRegisterID}");
-        using(bd_storage db = new())
+        using(bd_storage db = new()) // creates connection with the database
         {
             IQueryable<Maintain> maintains = db.Maintain
                 .Where(m => m.MaintenanceId == Convert.ToInt32(MaintenanceRegisterID)); // looks for every maintain that has the maintenance id connected it
@@ -55,7 +57,7 @@
             bool repeated = false;
             if(maintains is not null && maintains.Any())
             {
-                foreach(var m in maintains) // checks with each of the maintains of that maintenance register if the equipment id wasn-t addded yet
+                foreach(var m in maintains) // checks with each of the maintains of that maintenance register if the equipment id chosen wasn't added yet
                 {
                     if(EquipmentText == m.EquipmentId)
                     {
@@ -67,78 +69,91 @@
                 }
             }
 
-            if(repeated == false)
+            if(repeated == false) // if it isn't repeated, standard procedure is followed, if it is repeated, alert the user
             {
                 AddMaintain(EquipmentText, MaintenanceRegisterID);
                 UpdateStatus(EquipmentText, StatusText);
+                Model.Message = "";
+            }
+            else
+            {
+                Model.Message = "That Equipment was already added to the maintenance report";
             }
             return;
         }        
     }
 
+    // creates tempdata with the current user's username and returns user to storer's main menu
     public IActionResult OnPostFinish(string username)
     {
         TempData["UserName"] = username;
         return RedirectToPage("/Users/Storer/StorerPrincipal");
     }
 
+    // creates a maintain register that connects last maitenance register created with an equipment id, receives the id of the maintenance register and the equipment's id, return numbr of rows affected
     public int AddMaintain(string EquipmentID, string MaintenanceID)
     {
         int affected = 0;
         int BiggestId = 0;
-        using(bd_storage db = new())
+        using(bd_storage db = new()) // creates connection with the db
         {
-             IQueryable<Maintain> maintainIds = db.Maintain
+             IQueryable<Maintain> maintainIds = db.Maintain // lists all maintain registers and orders them from highest to lowest
                 .OrderByDescending(d=>d.MaintainId);
-            if(maintainIds is null || !maintainIds.Any())
+            if(maintainIds is null || !maintainIds.Any()) // checks if the query returned something, if it didn't biggest id will be 1 
             {
                 BiggestId = 0;
             }
             else
             {
-                BiggestId = maintainIds.First().MaintainId;
+                BiggestId = maintainIds.First().MaintainId; // gets the current highest maintain id and saves it in a variable 
             }
-            Maintain m = new()
+            Maintain m = new() // creates a maintain object and gives it the current biggest id + 1, in order for ids to not be repeated
             {
                 MaintainId = BiggestId + 1,
                 MaintenanceId = Convert.ToInt32(MaintenanceID),
                 EquipmentId = EquipmentID
             };
-            EntityEntry<Maintain> entity = db.Maintain.Add(m); // adds the object that was just created to Equipments table inside the database
-            affected = db.SaveChanges();
-            return affected;
+            EntityEntry<Maintain> entity = db.Maintain.Add(m); // adds the object that was just created to maintain table inside the database
+            affected = db.SaveChanges(); // saves changes on the database
+            return affected; // returns number of rows affected by the addition 
         }       
     }
 
+    // changes equipments status using users input, receives the equipment id and the status the users wants it to have, returns number of rows affected by the update
     public int UpdateStatus(string EquipmentID, string StatusID)
     {
         int affected = 0;
-        using(bd_storage db = new())
+        using(bd_storage db = new()) // creates connection with the database
         {
-            IQueryable<Equipment> EditedEquipment = db.Equipments
+            IQueryable<Equipment> EditedEquipment = db.Equipments // looks for the equipment id inside the equipment table
                 .Where(e => e.EquipmentId == EquipmentID);
             if(EditedEquipment is not null && EditedEquipment.Any())
             {
-                if(Convert.ToByte(StatusID) == 1)
+                if(Convert.ToByte(StatusID) == 1) // checks what the user chose for the current equipment
                 {
-                    if(EditedEquipment.First().StatusId != 4)
+                    if(EditedEquipment.First().StatusId != 4) // if "available" option was chosen, but the equipment's current status is damaged, new status will be "under maintenance, disregarding users choice"
                     {
-                        EditedEquipment.First().StatusId = 5;
+                        EditedEquipment.First().StatusId = 1; // changes equipment's status to "available"
                     }
                     else
                     {
-                        EditedEquipment.First().StatusId = 1;
+                        EditedEquipment.First().StatusId = 5;  // changes equipment's status to "under maintenance"
                     }
                 }
                 else
                 {
-                    EditedEquipment.First().StatusId = 5;
+                    EditedEquipment.First().StatusId = 5;  // changes equipment's status to "under maintenance"
                 }
-                affected = db.SaveChanges();
+                affected = db.SaveChanges(); // saves changes on the database
             }
-            return affected;
+            return affected; // returns number of rows afffected by the update and save changes
         }  
     }
+}
+
+@if(Model.Message != "")
+{
+    <h3>@Model.Message</h3>
 }
 
 <p>Add as many equipments as you want and the status you want to keep while the maintenance doesn't start, add the information and click at Add Equipment to add an equipment to the maintenance </p>
@@ -148,7 +163,7 @@
     <input type="hidden" name="username" value="@Model.Username">
     <div class="mb-3">
         <label class="form-label">Choose an equipment to add</label>
-        <select class="form-select" id="dropdown" name="EquipmentText">
+        <select class="form-select" id="dropdown" name="EquipmentText"> <!--list of all equipments available for maintenance, only those whose status id is 1 or 4 (available or damaged)-->
             @if(Model.MaintanableEquipments is not null)
             {
                 @foreach(var a in Model.MaintanableEquipments)
@@ -164,8 +179,8 @@
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Choose the status of this equipment </label>
-        <select class="form-select" id="dropdown" name="StatusText">
+        <label class="form-label">Choose the status of this equipment </label> 
+        <select class="form-select" id="dropdown" name="StatusText"> <!--gives to options: available or under maintenance-->
             @if(Model.AllStatus is not null)
             {
                 foreach(var s in Model.AllStatus)

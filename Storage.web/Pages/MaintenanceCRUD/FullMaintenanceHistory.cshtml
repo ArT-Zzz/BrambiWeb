@@ -8,32 +8,23 @@
 @functions
 {
     public List<Maintain>? AllMaintenances { get; set; } // list that stores first 20 pending maintenance registers
-    int Offset = 0; // start count of pending maintenance registers
     int TotalMaintenances = 0; // total maintenance registers
-    int Pages = 1;
-    public void OnGet(string action) // get all the equipments, the action is to see if th button Next or Previous was pushed
+    string? UserName {get; set; }
+    public void OnGet(string action, string username) // get all the equipments, the action is to see if th button Next or Previous was pushed
     {
-        if (action == "Previous" && Offset >= 20)
-        {
-            Model.Offset -= 20; // to start from the last 20 equipments
-            Model.Pages -=1; // show in which page it is
-        }
-        else if (action == "Next" )
-        {
-            Model.Offset += 20; // to start from the next 20 equipments
-            Model.Pages +=1;
-        }
-        var result = ViewMaintenanceHistory(Offset); // calling the method that will consult the bd and bring 20 equipments found, starting from the sent offset
+        if(username != null)  Model.UserName = username;
+        var result = ViewMaintenanceHistory(); // calling the method that will consult the bd and bring 20 equipments found, starting from the sent offset
         Model.AllMaintenances = result.MaintenanceRegisters; // Model.AllEquipments = 20 equipments
-        Model.Offset = result.Offset; // Model.Offset = when it starts
         Model.TotalMaintenances = result.Total; //Model.TotalEquipments = int how many equipments were found in the whole Equipments Table
     }
 
-    public static (List<Maintain>? MaintenanceRegisters,int Offset, int Total) ViewMaintenanceHistory(int Offset)
+    // lists all maintenances that have been registered
+    // returns a list of all maintenance registers and the total number of maintenance registers summited at the moment
+    public static (List<Maintain>? MaintenanceRegisters,int Total) ViewMaintenanceHistory()
     {
-        using (bd_storage db = new())
+        using (bd_storage db = new()) // creates connection with the database
         {
-            IQueryable<Maintain>? maintain = db.Maintain
+            IQueryable<Maintain>? maintain = db.Maintain // finds all maintenance registers inside the db
                 .Include(m => m.Maintenance)
                 .Include(m => m.Maintenance.MaintenanceType)
                 .Include(m => m.Equipment)
@@ -41,20 +32,11 @@
                 .OrderBy(m => m.MaintenanceId)
                 .OrderByDescending(m => m.Maintenance.ProgrammedDate);
             // var maintainGroup = maintain.GroupBy(ma=>ma.Maintenance.MaintenanceId);
-
-            int offset = Offset;
-
             if (maintain is null || !maintain.Any())
             {
                 Console.WriteLine("There are no Maintenance Registers summited yet");
-                return(null, offset, 0);
+                return(null, 0);
             }
-
-            int countTotal = maintain.Count();
-            int batchS = 20;
-            int pages = countTotal / batchS;
-            if(countTotal%batchS != 0){pages+=1;}
-            var Maintenance = maintain.Skip(offset).Take(batchS);
 
             Console.WriteLine(
                 "|{0,-3}|{1,-12}|{2,-55}|{3,-11}|{4,-75}|{5, -15}|{6, -15}|",
@@ -73,7 +55,7 @@
             Console.WriteLine(
                 "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
             );
-            foreach (var m in Maintenance)
+            foreach (var m in maintain)
             {
                 Console.WriteLine(
                 "|{0,-3}|{1,-12}|{2,-55}|{3,-11}|{4,-75}|{5, -15}|{6, -15}|",
@@ -91,8 +73,8 @@
                 );
             }
             Console.WriteLine();
-            List<Maintain>? Maintain = Maintenance.ToList();
-            return (Maintain, offset, maintain.Count());
+            List<Maintain>? MaintainList = maintain.ToList();
+            return (MaintainList, MaintainList.Count()); // returns a complete list of all maintennace registers and the amount summited 
         }
     }
 }
@@ -102,13 +84,13 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/AddMaintenance">Add Maintenance Report</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/ViewMaintenanceNotMade" asp-route-username="@Model.UserName">Maintenance Registers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/FinishPendingMaintenance">Finish Pending Maintenance</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/AddMaintenance" asp-route-username="@Model.UserName">Add Maintenance Report</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/FullMaintenanceHistory">Full Maintenance History</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceCRUD/FullMaintenanceHistory" asp-route-username="@Model.UserName">Full Maintenance History</a>
                     </li>
                 </ul>
             </div>
@@ -118,13 +100,9 @@
 <div class="text-center">
     <h1 class="display-4">@ViewData["Title"]</h1>
     
-    <h2>Total: @Model.TotalMaintenances . Showing: @Model.Pages / @(@Model.TotalMaintenances/20)</h2>
-    <form method="get" action="/MaintenanceCRUD/ViewMaintenanceNotMade">
-        <button type="submit" name="action" value="Previous" @if (Model.Offset == 0) { <text>disabled</text> }>Previous</button>
-        <button type="submit" name="action" value="Next" @if (Model.Offset + 20 >= Model.TotalMaintenances) { <text>disabled</text> }>Next</button>
-    </form>
+    <h2>Total: @Model.TotalMaintenances</h2>
     @{
-    Console.WriteLine($"Offset: {Model.Offset}, TotalMaintenances: {Model.TotalMaintenances}"); // this is just so you can check
+    Console.WriteLine($"TotalMaintenances: {Model.TotalMaintenances}"); // this is just so you can check
     }
     <table class="table">
         <thead>
@@ -160,7 +138,6 @@
                         <td>@pMaintenance.Maintenance?.MaintenanceMaterialsDescription</td>
                     </tr>
                 }
-                Console.WriteLine($"Total: {Model.TotalMaintenances} . Showing: {Model.Pages} / {Model.TotalMaintenances/20}");
             }
             else
             {

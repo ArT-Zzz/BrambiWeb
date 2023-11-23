@@ -5,29 +5,6 @@
 @{
     ViewData["Title"] = "Search for a Student History By HIS/HER Id "; // title that will be shown in the page
 }
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewStudents">View All Students</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/SearchStudentHistory">Search For a Student's History</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/StudentsWithLateReturn">Student's with Late Returning</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewStudentsRequests">View Students Requests</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewTomorrowRequests">View Tomorrow Requests</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-</nav>
 
 @functions
 {
@@ -35,9 +12,11 @@
     Student? StudentExistence {get; set;}
     bool Ban {get; set;}
     List<RequestDetail>? StudentRequests {get; set;}
+    string? UserName {get; set; }
 
-    public void OnGet(string StudentIdText)
+    public void OnGet(string StudentIdText, string username)
     {
+        if(username != null)  Model.UserName = username;
         Model.Message = "";
         Model.Ban = false;
         if(StudentIdText != "" && StudentIdText is not null)
@@ -98,6 +77,32 @@
         }
     }
 }
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewStudents" asp-route-username="@Model.UserName">View All Students</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/SearchStudentHistory" asp-route-username="@Model.UserName">Search For a Student's History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/StudentsWithLateReturn" asp-route-username="@Model.UserName">Student's with Late Returning</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewStudentsRequests" asp-route-username="@Model.UserName">View Students Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewTomorrowRequests" asp-route-username="@Model.UserName">View Tomorrow Requests</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</nav>
+
+<h1 class="display-4">@ViewData["Title"]</h1>
 
 @if(Model.Ban == false)
 { // first part, so the storer can provide the Student ID

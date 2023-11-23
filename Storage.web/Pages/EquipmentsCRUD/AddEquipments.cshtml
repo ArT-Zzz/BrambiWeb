@@ -20,15 +20,19 @@
     List<Coordinator>? AllCoordinators {get; set;}
     List<Status>? AllStatus {get; set;}
     string Message ="";
+    string? UserName {get; set; }
     
-    public void OnGet(string EquipmentIdText, string NameText, short AreaText, string DescriptionText, byte StatusText, int YearText, string CoordinatorText, string ControlNumberText)
+    // is called when the page is refreshed or when another page redirects the user to this page
+    // receives all the fields necessary to add an equipment, previously entered by the user
+    public void OnGet(string username, string EquipmentIdText, string NameText, short AreaText, string DescriptionText, byte StatusText, int YearText, string CoordinatorText, string ControlNumberText)
     {
-        if(AreaText != 0 && StatusText != 0 && CoordinatorText!="0")
+        if(username != null)  Model.UserName = username;
+        if(AreaText != 0 && StatusText != 0 && CoordinatorText!="0") 
         {
-            var response = Functions.VerifyEquipmentIdControlNumber(EquipmentIdText, ControlNumberText);
+            var response = Functions.VerifyEquipmentIdControlNumber(EquipmentIdText, ControlNumberText); // verfies the control numbber is not already in use 
             if(response.ControlNumAffected == 0 && response.EquipAffected == 0)
             {
-                var result = AddEquipment(EquipmentIdText, NameText, AreaText,  DescriptionText, YearText, StatusText, ControlNumberText, CoordinatorText);
+                var result = AddEquipment(EquipmentIdText, NameText, AreaText,  DescriptionText, YearText, StatusText, ControlNumberText, CoordinatorText); // adds a new equipment too the database
                 if(result.Affected == 1)
                 {
                     Model.Message = $"The equipment {EquipmentIdText} was successfully added! ";
@@ -55,6 +59,8 @@
         Model.AllStatus = Functions.ListStatus();
     }
     
+    // receives all equipment fields and creates an object to add to the database
+    // returns number of rows affected and the equipment id oof the equipment that was just created
     static (int Affected, string EquipmentId) AddEquipment(string equipmentid, string name, short areaid, string description, int year, byte statusid, string controlnumber, string coordinatorid )
     {
         using(bd_storage db = new()) // creates connects connection with the database
@@ -80,6 +86,30 @@
  // next line is the start of the html, and the forms where all the information is indicated 
 }
 
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/ViewAllEquipments" asp-route-username="@Model.UserName">View inventory</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/AddEquipments" asp-route-username="@Model.UserName">Add Equipment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/UpdateEquipments" asp-route-username="@Model.UserName">Update Equipments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/SearchEquipmentById" asp-route-username="@Model.UserName">Search for One Equipment ID</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/EquipmentsCRUD/SearchEquipmentsByName" asp-route-username="@Model.UserName">Search By Equipment Name</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</nav>
+
 @if(Model.Message != "")
 {
     <h2>@Model.Message</h2>
@@ -87,6 +117,7 @@
 else
 {
 <form method="get" action="/EquipmentsCRUD/AddEquipments">
+    <input type="hidden" name="username" value="@Model.UserName">
     <div class="mb-3">
         <label class="form-label">Provide the new Equipment ID: </label>
         <input type="text" class="form-control" id="EquipmentIdText" name="EquipmentIdText" maxlength="15" required>

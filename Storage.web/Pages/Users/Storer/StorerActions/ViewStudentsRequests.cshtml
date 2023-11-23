@@ -12,19 +12,19 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewStudents">View All Students</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewStudents" asp-route-username="@Model.UserName">View All Students</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/SearchStudentHistory">Search For a Student's History</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/SearchStudentHistory" asp-route-username="@Model.UserName">Search For a Student's History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/StudentsWithLateReturn">Student's with Late Returning</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/StudentsWithLateReturn" asp-route-username="@Model.UserName">Student's with Late Returning</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewStudentsRequests">View Students Requests</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewStudentsRequests" asp-route-username="@Model.UserName">View Students Requests</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewTomorrowRequests">View Tomorrow Requests</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Users/StorerActions/ViewTomorrowRequests" asp-route-username="@Model.UserName">View Tomorrow Requests</a>
                     </li>
                 </ul>
             </div>
@@ -38,9 +38,11 @@
 {
     List<RequestDetail>? AllRequestsFound {get; set;} // declaration of the list that will store all the approved request details 
     string? Message {get; set;} // declare the string that later will store the sent messages
+    string? UserName {get; set; }
 
-    public void OnGet()
+    public void OnGet(string username)
     {
+        if(username != null)  Model.UserName = username;
         Model.AllRequestsFound = ListEquipmentsRequests(); // saves in the model, all the RequestDetails with ProfessorNip = 1 (accepted)
         if(Model.AllRequestsFound is null)
         {
