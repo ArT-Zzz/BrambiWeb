@@ -46,7 +46,7 @@
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
             <ul class="navbar-nav flex-grow-1">
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-page="/ProfessorsCRUD/UpdateProfessor">Update
+                    <a class="nav-link text-dark" asp-area="" asp-page="/Users/Professors/CRUD/UpdateProfessor">Update
                         Professor</a>
                 </li>
             </ul>
@@ -77,11 +77,11 @@
                     foreach (var professor in allProfessors)
                     {
                         <tr>
-                            <td>@professor.ProfessorId</td>
+                            <td>@Functions.Decrypt(professor.ProfessorId)</td>
                             <td>@professor.Name</td>
                             <td>@professor.LastNameP</td>
                             <td>@professor.LastNameM</td>
-                            <td>@professor.Nip</td>
+                            <td>@Functions.Decrypt(professor.Nip)</td>
                             <td>@professor.Password</td>
                         </tr>
                     }

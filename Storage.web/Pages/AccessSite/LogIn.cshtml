@@ -23,7 +23,9 @@
 }
 
 <div class="container">
-    <h1 class="display-4">Login</h1>
+    <div class="text-center">
+        <h1 class="display-4">Login</h1>
+    </div>
 
     <form method="post">
         <div class="form-group">
@@ -32,15 +34,22 @@
         </div>
 
         <div class="form-group">
-            <label class="form-label" for="password">Password:</label>
-            <input class="form-control" type="password" id="password" name="password" class="form-control" required />
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" class="form-control" required />
         </div>
 
-        <p></p>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </div>
     </form>
 
-    <a class="btn btn-warning" style="margin-top: 5px;" asp-page="/Password.Recovery">Forgot Password</a>
+    <div class="text-center mt-3">
+        <a class="btn btn-warning btn-sm" asp-page="/AccessSite/Password.Recovery">Forgot Password</a>
+    </div>
+
+    <div class="text-center mt-3">
+        <p>Don't have an account? <a href="/AccessSite/SignUp">Sign Up</a></p>
+    </div>
 
     @if (Request.Method == "POST" && !logged)
     {
@@ -80,19 +89,19 @@
         var professors = db.Professors.Where(p => p.ProfessorId == encryptedUsername && p.Password == encryptedPassword).ToList();
         if (professors.Any())
         {
-            return ("professors", encryptedUsername);
+            return ("professors", username);
         }
 
         var storers = db.Storers.Where(s => s.StorerId == encryptedUsername && s.Password == encryptedPassword).ToList();
         if (storers.Any())
         {
-            return ("storers", encryptedUsername);
+            return ("storers", username);
         }
 
         var coordinators = db.Coordinators.Where(c => c.CoordinatorId == encryptedUsername && c.Password == encryptedPassword).ToList();
         if (coordinators.Any())
         {
-            return ("coordinators", encryptedUsername);
+            return ("coordinators", username);
         }
 
         return (null, "");
@@ -106,7 +115,6 @@
             "professors" => "/Users/Professors/ProfessorPrincipal",
             "storers" => "/Users/Storer/StorerPrincipal",
             "coordinators" => "/Users/Coordinator/CoordinatorPrincipal",
-            _ => "/Error", // Cambia "/Error" a la página de error adecuada
         };
     }
 }

@@ -4,6 +4,9 @@
 @using AutoGens
 @{
     ViewData["Title"] = "List Equipment Requests"; // título que se mostrará en la página
+    string username = TempData["Username"]?.ToString() ?? "11111111";
+    ViewData["ShowNavBar"] = true;
+    var userTypeAndUsername = Tuple.Create("Coordinador", username);
 }
 
 @functions {
@@ -43,6 +46,10 @@
 }
 
 <div class="text-center">
+<div class="container">
+    <!-- Incluir la vista parcial y pasar el modelo -->
+    <partial name="_NavBar" model="userTypeAndUsername" />
+</div>
     <h1 class="display-4">@ViewData["Title"]</h1>
 
     <table class="table">
@@ -60,9 +67,10 @@
             </tr>
         </thead>
         <tbody>
-            @* @{
+            @{
                 List<RequestDetail> allRequestDetails;
-                if (ListEquipmentsRequests(out allRequestDetails) && allRequestDetails.Any())
+                string errorMessage = ListEquipmentsRequests(out allRequestDetails);
+                if (errorMessage == "" && allRequestDetails.Any())
                 {
                     foreach (var requestDetail in allRequestDetails)
                     {
@@ -83,7 +91,7 @@
                     <h2>No se encontraron solicitudes de equipos en la base de datos</h2>
                     WriteLine("No se encontraron solicitudes de equipos en la base de datos");
                 }
-            } *@
+            }
         </tbody>
     </table>
 </div>

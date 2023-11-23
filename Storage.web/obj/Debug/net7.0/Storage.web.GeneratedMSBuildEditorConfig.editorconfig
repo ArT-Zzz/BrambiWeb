@@ -160,8 +160,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVHJhbnNhY3Rpb25zXFN0dWRlbnREZWxpdmVyeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Coordinator/CoordinatorActions/GroupsCRUD/GroupUpdate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQ29vcmRpbmF0b3JcQ29vcmRpbmF0b3JBY3Rpb25zXEdyb3Vwc0NSVURcR3JvdXBVcGRhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Coordinator/CoordinatorActions/GroupsCRUD/ManageCRUD.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQ29vcmRpbmF0b3JcQ29vcmRpbmF0b3JBY3Rpb25zXEdyb3Vwc0NSVURcTWFuYWdlQ1JVRC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Coordinator/CoordinatorActions/GroupsCRUD/UpdateGroups.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQ29vcmRpbmF0b3JcQ29vcmRpbmF0b3JBY3Rpb25zXEdyb3Vwc0NSVURcVXBkYXRlR3JvdXBzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Coordinator/CoordinatorActions/GroupsCRUD/ViewGroups.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQ29vcmRpbmF0b3JcQ29vcmRpbmF0b3JBY3Rpb25zXEdyb3Vwc0NSVURcVmlld0dyb3Vwcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Coordinator/CoordinatorActions/SubjectCRUD/ManageCRUD.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQ29vcmRpbmF0b3JcQ29vcmRpbmF0b3JBY3Rpb25zXFN1YmplY3RDUlVEXE1hbmFnZUNSVUQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Coordinator/CoordinatorActions/SubjectCRUD/UpdateSubjects.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQ29vcmRpbmF0b3JcQ29vcmRpbmF0b3JBY3Rpb25zXFN1YmplY3RDUlVEXFVwZGF0ZVN1YmplY3RzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Coordinator/CoordinatorActions/SubjectCRUD/ViewSubjects.cshtml]
@@ -176,16 +196,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQ29vcmRpbmF0b3JcQ29vcmRpbmF0b3JQcmluY2lwYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/ProfessorProncipal.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcUHJvZmVzc29yUHJvbmNpcGFsLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Professors/CRUD/DeleteProfessor.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcUHJvZmVzc29yc1xDUlVEXERlbGV0ZVByb2Zlc3Nvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Professors/CRUD/ManageCRUD.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcUHJvZmVzc29yc1xDUlVEXE1hbmFnZUNSVUQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Professors/CRUD/ProfessorUpdate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcUHJvZmVzc29yc1xDUlVEXFByb2Zlc3NvclVwZGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Professors/CRUD/UpdateProfessor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcUHJvZmVzc29yc1xDUlVEXFVwZGF0ZVByb2Zlc3Nvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Professors/CRUD/ViewProfessors.cshtml]
@@ -202,6 +226,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Professors/ProfessorPrincipal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcUHJvZmVzc29yc1xQcm9mZXNzb3JQcmluY2lwYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Storer/CRUD/DeleteStorer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyXENSVURcRGVsZXRlU3RvcmVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Storer/CRUD/ManageCRUD.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyXENSVURcTWFuYWdlQ1JVRC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Storer/CRUD/StorerUpdate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyXENSVURcU3RvcmVyVXBkYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Storer/CRUD/UpdateStorer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyXENSVURcVXBkYXRlU3RvcmVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Storer/CRUD/ViewStorer.cshtml]
@@ -230,6 +270,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Storer/StorerPrincipal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3RvcmVyXFN0b3JlclByaW5jaXBhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Students/CRUD/DeleteStudent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3R1ZGVudHNcQ1JVRFxEZWxldGVTdHVkZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Students/CRUD/ManageCRUD.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3R1ZGVudHNcQ1JVRFxNYW5hZ2VDUlVELmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Students/CRUD/UpdateStudent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcU3R1ZGVudHNcQ1JVRFxVcGRhdGVTdHVkZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Samantha/Documents/progra/progra avanzada/Proyecto_WebPA/BrambiWeb/Storage.web/Pages/Users/Students/CRUD/ViewStudents.cshtml]

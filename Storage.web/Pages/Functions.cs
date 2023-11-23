@@ -338,4 +338,44 @@ public static partial class Functions
             }
         }
     }
+
+    public static int VerifyNotRepeatedNIP(string ProfessorId, string Nip)
+    {
+        int controlNumberAffected = 0;
+        using(bd_storage db = new())
+        {
+            IQueryable<Professor> professors = db.Professors
+                .Where(p=> p.Nip == Nip && p.ProfessorId != ProfessorId);                
+                if(professors is null || !professors.Any())
+                {
+                    controlNumberAffected = 0;
+                }
+                else
+                {
+                    WriteLine("That control number is already in use, try again.");
+                    controlNumberAffected = 1;
+                }
+        }
+        return controlNumberAffected;
+    }
+
+    public static int VerifyNotRepeatedNameGroup(string NameText)
+    {
+        int controlNumberAffected = 0;
+        using(bd_storage db = new())
+        {
+            IQueryable<Group> groups = db.Groups
+                .Where(p=> p.Name == NameText);                
+                if(groups is null || !groups.Any())
+                {
+                    controlNumberAffected = 0;
+                }
+                else
+                {
+                    WriteLine("That name exist, try again.");
+                    controlNumberAffected = 1;
+                }
+        }
+        return controlNumberAffected;
+    }
 }

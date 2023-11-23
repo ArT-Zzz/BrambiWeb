@@ -1,0 +1,82 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@{
+    ViewData["Title"] = "Update Professors";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@functions {
+    bool Ban = false;
+    Professor? ProfessorSearched { get; set; }
+    string Message = "";
+
+    public IActionResult OnGet(string ProfessorId, string NameText, string LastNamePText, string LastNameMText, string NipText, string PasswordText)
+    {
+        if (!string.IsNullOrEmpty(ProfessorId))
+        {
+            int ControlNumAffected = Functions.VerifyNotRepeatedNIP(ProfessorId, NipText);
+            if (ControlNumAffected == 0)
+            {
+                int affected = UpdateProfessor(ProfessorId, NameText, LastNamePText, LastNameMText, NipText, PasswordText);
+
+                if (affected == 0)
+                {
+                    WriteLine("The professor could not be updated");
+                    TempData["ResultInfoShown"] = "0";
+                }
+                else
+                {
+                    WriteLine($"The fields of the professor were updated!");
+                    TempData["ResultInfoShown"] = $"{affected}";
+
+                    // Añadir el mensaje de actualización correcta
+                    Message = "Professor updated successfully.";
+                }
+
+                TempData["ProfessorId"] = ProfessorId;
+            }
+            else if (ControlNumAffected == 1)
+            {
+                Message = "That NIP is already in use";
+            }
+            return Page();
+        }
+        else
+        {
+            Message = "Invalid Professor ID";
+            return Page();
+        }
+    }
+
+    public int UpdateProfessor(string professorId, string name, string lastNameP, string lastNameM, string nip, string password)
+    {
+        using (bd_storage db = new())
+        {
+            int affected = 0;
+            IQueryable<Professor> Professor = db.Professors.Where(p => p.ProfessorId == professorId);
+            if (Professor is not null && Professor.Any())
+            {
+                Professor.First().Name = name;
+                Professor.First().LastNameP = lastNameP;
+                Professor.First().LastNameM = lastNameM;
+                Professor.First().Nip = Functions.EncryptPass(nip);
+                Professor.First().Password = password;
+                affected = db.SaveChanges();
+            }
+            return affected;
+        }
+    }
+}
+
+@if (Message != "")
+{
+    <h2>@Message</h2>
+}
+
+<div>
+    <!-- Agregar el hipervínculo para regresar a la lista de profesores -->
+    <a class="btn btn-primary" asp-page="/Users/Professors/CRUD/ViewProfessors">Back to List</a>
+</div>

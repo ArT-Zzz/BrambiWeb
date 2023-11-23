@@ -1,0 +1,74 @@
+@page
+@using AutoGens
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@using System.Security.Cryptography;
+
+@{
+    ViewData["Title"] = "Update Groups";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to Update Groups.</p>
+
+@functions {
+    bool Ban = false;
+    Group? GroupSearched { get; set; }
+    string Message = "";
+
+    public void OnGet(int GroupId, string NameText)
+    {
+        if (GroupId != 0)
+        {
+            GroupSearched = Functions.FindGroups(GroupId);
+            Message = $"Variable: {GroupId}";
+
+            if (GroupSearched != null)
+            {
+                Ban = true;
+                Message = $"These are the fields you can update for Group {GroupId}:";
+            }
+            else
+            {
+                Message = $"{GroupId} - That Group does not exist.";
+                Ban = false;
+            }
+        }
+    }
+}
+
+@if (Ban == false)
+{
+    <h3>Provide the group id you would like to modify:</h3>
+    @if (Message != "")
+    {
+        <div class="error-message">
+            @Message
+        </div>
+    }
+    <form method="get" action="/Users/Coordinator/CoordinatorActions/GroupsCRUD/UpdateGroups">
+        <input type="text" class="form-control" id="GroupIdText" name="GroupId" maxlength="1" required>
+        <br>
+        <button type="submit" class="btn btn-primary" name="action" value="confirm">Confirm</button>
+    </form>
+}
+else
+{
+    <h3 class="mb-4">@Message</h3>
+    <br>
+
+    @if (GroupSearched is not null)
+    {
+        <form method="get" action="/Users/Coordinator/CoordinatorActions/GroupsCRUD/GroupUpdate">
+            <input hidden type="text" name="GroupId" value="@GroupSearched.GroupId" readonly>
+            <div class="mb-3">
+                <label class="form-label">Provide the new Group Name: </label>
+                <input type="text" class="form-control" id="NameText" name="NameText" value="@GroupSearched.Name" maxlength="40"
+                    required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" name="action" value="confirm">Update Group</button>
+        </form>
+    }
+}
