@@ -80,19 +80,19 @@
         var professors = db.Professors.Where(p => p.ProfessorId == encryptedUsername && p.Password == encryptedPassword).ToList();
         if (professors.Any())
         {
-            return ("professors", encryptedUsername);
+            return ("professors", username);
         }
 
         var storers = db.Storers.Where(s => s.StorerId == encryptedUsername && s.Password == encryptedPassword).ToList();
         if (storers.Any())
         {
-            return ("storers", encryptedUsername);
+            return ("storers", username);
         }
 
         var coordinators = db.Coordinators.Where(c => c.CoordinatorId == encryptedUsername && c.Password == encryptedPassword).ToList();
         if (coordinators.Any())
         {
-            return ("coordinators", encryptedUsername);
+            return ("coordinators", username);
         }
 
         return (null, "");
